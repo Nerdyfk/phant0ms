@@ -12,6 +12,6 @@ model Whitelist {
   address   String   @unique
   twitter   String?
   ip        String?
-  approved  Boolean  @default(false)
+  status    String   @default("PENDING")
   createdAt DateTime @default(now())
 }
