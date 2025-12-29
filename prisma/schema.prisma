@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Whitelist {
+  id        Int      @id @default(autoincrement())
+  address   String   @unique
+  twitter   String?
+  ip        String?
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
