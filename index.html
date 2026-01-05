@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="">
 <head>
   <meta charset="UTF-8" />
-  <title>Web3 Wallet Checker</title>
+  <title>PhantomS – Wallet Checker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- XLSX -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            bg: "#0B0F1A",
+            bgDark: "#0B0F1A",
             neonBlue: "#5B8CFF",
             neonPurple: "#8A5CFF",
             neonGreen: "#3CFF8F",
@@ -26,277 +30,165 @@
   </script>
 
   <style>
-    .blob {
-      filter: blur(120px);
-      opacity: 0.5;
-      animation: float 12s infinite alternate;
+    .parallax {
+      position: absolute;
+      pointer-events: none;
+      transition: transform 0.15s ease-out;
     }
-    @keyframes float {
-      from { transform: translateY(0); }
-      to { transform: translateY(-80px); }
-    }
-    
-  .parallax {
-    transition: transform 0.1s ease-out;
-    pointer-events: none;
-  }
-.grid img {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .grid img:hover {
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 
-<body class="bg-white text-black dark:bg-[#0B0F1A] dark:text-white transition-colors duration-500">
+<body class="bg-white text-black dark:bg-bgDark dark:text-white transition-colors duration-500">
 
-  <!-- Background Blobs -->
-  <div class="absolute top-0 left-0 w-96 h-96 bg-neonBlue blob"></div>
-  <div class="absolute bottom-0 right-0 w-96 h-96 bg-neonPurple blob"></div>
-
-  <!-- NAVBAR -->
- <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center">
+<!-- NAVBAR -->
+<header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center">
   <div class="text-2xl font-bold">PHANTOMS</div>
 
-  <!-- THEME TOGGLE -->
+  <!-- DARK MODE TOGGLE -->
   <button id="themeToggle"
-    class="w-12 h-6 rounded-full bg-gray-300 dark:bg-gray-700 relative transition">
+    class="w-12 h-6 rounded-full bg-gray-300 dark:bg-gray-700 relative">
     <span id="toggleDot"
       class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition"></span>
   </button>
 </header>
 
+<!-- HERO BACKGROUND -->
+<section class="relative min-h-screen overflow-hidden pt-32">
 
-  <!-- HERO SECTION -->
-<section id="home"
-  class="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg text-white">
+  <!-- PARALLAX NFTS -->
+  <img src="assets/nft1.png" class="parallax w-40 top-20 left-20 opacity-70" data-speed="2">
+  <img src="assets/nft2.png" class="parallax w-52 bottom-32 right-32 opacity-60" data-speed="4">
+  <img src="assets/nft3.png" class="parallax w-32 top-1/2 right-1/4 opacity-50" data-speed="6">
 
-<section class="py-32 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+</section>
 
-  <!-- LEFT TEXT -->
+<!-- ABOUT US -->
+<section class="relative z-10 py-32 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+
   <div>
     <h2 class="text-4xl font-extrabold mb-6">
       ABOUT <span class="text-blue-500">US</span>
     </h2>
 
-    <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+    <p class="text-gray-700 dark:text-gray-300 mb-6">
       Born from scattered pixels, Dotizen is an emerging civilization on Base,
       where each PFP carries a spark of our expanding on-chain world.
     </p>
 
-    <p class="text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-      This is a PFP civilization rising on Base — built by its citizens,
-      powered by lore for a world of explorers, builders, and dreamers forging
-      their own on-chain society.
+    <p class="text-gray-700 dark:text-gray-300 mb-8">
+      A PFP civilization built by citizens, powered by lore,
+      forging their own on-chain society.
     </p>
 
+    <a class="text-blue-500 font-bold hover:underline">READ THE LORE →</a>
   </div>
 
-  <!-- RIGHT NFT GRID -->
   <div class="grid grid-cols-2 gap-6">
-    <img src="assets/nft1.png" class="rounded-2xl shadow-xl" />
-    <img src="assets/nft2.png" class="rounded-2xl shadow-xl" />
-    <img src="assets/nft3.png" class="rounded-2xl shadow-xl" />
-    <img src="assets/nft4.png" class="rounded-2xl shadow-xl" />
-  </div>
-
-</section>
-
-  
-  <!-- PARALLAX BACKGROUND NFTS -->
-  <img src="assets/nft1.png"
-       class="parallax absolute w-40 top-20 left-20 opacity-70"
-       data-speed="2" />
-
-  <img src="assets/nft2.png"
-       class="parallax absolute w-52 bottom-32 right-32 opacity-60"
-       data-speed="4" />
-
-  <img src="assets/nft3.png"
-       class="parallax absolute w-32 top-1/2 right-1/4 opacity-50"
-       data-speed="6" />
-
-  <!-- CONTENT -->
-  <div class="relative z-10 text-center">
-    <h1 class="text-5xl md:text-6xl font-bold mb-6">
-      Enter the Web3 Realm
-    </h1>
-
-    <p class="text-gray-400 mb-10 max-w-xl mx-auto">
-      Check your whitelist status instantly with animated Web3 experience
-    </p>
-
-    <!-- ALIVE WALLET CHECKER BUTTON -->
-    <a href="wallet_checker.html"
-       class="group relative inline-block px-10 py-5 rounded-2xl text-lg font-semibold
-              bg-gradient-to-r from-neonBlue to-neonPurple
-              shadow-xl transition-transform duration-300
-              hover:scale-110">
-
-      <span class="relative z-10">Wallet Checker</span>
-
-      <!-- glow -->
-      <span class="absolute inset-0 rounded-2xl blur-xl opacity-0
-                   group-hover:opacity-100 transition
-                   bg-gradient-to-r from-neonBlue to-neonPurple"></span>
-    </a>
+    <img src="assets/nft1.png" class="rounded-2xl shadow-xl">
+    <img src="assets/nft2.png" class="rounded-2xl shadow-xl">
+    <img src="assets/nft3.png" class="rounded-2xl shadow-xl">
+    <img src="assets/nft4.png" class="rounded-2xl shadow-xl">
   </div>
 </section>
 
+<!-- WALLET CHECKER -->
+<section class="relative z-10 py-32 flex justify-center px-4">
+  <div class="w-full max-w-md p-6 rounded-2xl backdrop-blur-xl bg-white/10 border border-white/20">
 
-  <!-- FEATURES -->
-  <section class="relative z-10 py-24 px-6 max-w-6xl mx-auto">
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
-        <h3 class="text-xl font-semibold mb-2">No Wallet Connect</h3>
-        <p class="text-gray-400">Just paste your wallet address.</p>
-      </div>
-      <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
-        <h3 class="text-xl font-semibold mb-2">Instant Result</h3>
-        <p class="text-gray-400">Get whitelist status in seconds.</p>
-      </div>
-      <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
-        <h3 class="text-xl font-semibold mb-2">Secure & Simple</h3>
-        <p class="text-gray-400">No signing, no permissions.</p>
-      </div>
-    </div>
-  </section>
+    <h2 class="text-2xl font-bold text-center mb-4">Wallet Checker</h2>
 
-  <!-- CHECKER -->
-  <section id="checker" class="relative z-10 py-32 flex justify-center px-4">
-    <div class="w-full max-w-md p-6 rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-xl">
+    <input id="walletInput"
+      type="text"
+      placeholder="Paste wallet address (0x...)"
+      class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/20 focus:outline-none focus:border-neonBlue">
 
-      <h2 class="text-2xl font-bold text-center mb-4">Wallet Checker</h2>
+    <button onclick="checkWallet()"
+      class="w-full mt-4 py-3 rounded-xl font-semibold bg-gradient-to-r from-neonBlue to-neonPurple">
+      Check Status
+    </button>
 
-      <input
-  type="file"
-  accept=".csv,.xlsx"
-  onchange="loadFile(event)"
-  class="mb-4 w-full text-sm"
-/>
+    <div id="result" class="hidden mt-6 p-4 rounded-xl text-center font-semibold"></div>
+  </div>
+</section>
 
+<footer class="text-center py-8 text-gray-500">
+  © 2026 PhantomS
+</footer>
 
-      <button
-        onclick="checkWallet()"
-        class="w-full mt-4 py-3 rounded-xl font-semibold bg-gradient-to-r from-neonBlue to-neonPurple hover:scale-[1.02] transition"
-      >
-        Check Status
-      </button>
+<!-- JS -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
-      <div id="result" class="hidden mt-6 p-4 rounded-xl text-center font-semibold"></div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="relative z-10 text-center py-8 text-gray-500">
-    © 2026 PhantomS
-  </footer>
-
-  <!-- LOGIC -->
-  <script>
-  /* =====================
-     PARALLAX BACKGROUND
-  ====================== */
-  const parallaxItems = document.querySelectorAll(".parallax");
-
-  document.addEventListener("mousemove", (e) => {
-    const x = (window.innerWidth / 2 - e.clientX) / 30;
-    const y = (window.innerHeight / 2 - e.clientY) / 30;
-
-    parallaxItems.forEach((item) => {
-      const speed = item.getAttribute("data-speed");
-      item.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-    });
-  });
-
-  /* =====================
-     THEME TOGGLE
-  ====================== */
+  /* DARK MODE */
   const toggle = document.getElementById("themeToggle");
   const dot = document.getElementById("toggleDot");
 
-  toggle.addEventListener("click", () => {
+  toggle.onclick = () => {
     document.documentElement.classList.toggle("dark");
     dot.classList.toggle("translate-x-6");
+  };
+
+  /* PARALLAX */
+  const items = document.querySelectorAll(".parallax");
+  document.addEventListener("mousemove", e => {
+    const x = (window.innerWidth / 2 - e.clientX) / 40;
+    const y = (window.innerHeight / 2 - e.clientY) / 40;
+    items.forEach(el => {
+      const speed = el.dataset.speed;
+      el.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+    });
   });
 
-  /* =====================
-     WALLET CHECKER LOGIC
-  ====================== */
-  let whitelist = {};
+});
 
-  function checkWallet() {
-    const wallet = walletInput.value.trim().toLowerCase();
-    const result = document.getElementById("result");
+/* WHITELIST */
+let whitelist = {};
 
-    result.className = "mt-6 p-4 rounded-xl text-center font-semibold";
-    result.classList.remove("hidden");
-    result.innerHTML = "Checking...";
-
-    setTimeout(() => {
-      if (!wallet.startsWith("0x")) {
-        result.innerHTML = "Invalid wallet address";
-        result.classList.add("bg-neonRed/20", "text-neonRed");
-        return;
-      }
-
-      const status = whitelist[wallet];
-
-      if (status === "whitelisted") {
-        result.innerHTML = "✅ WHITELISTED";
-        result.classList.add("bg-neonGreen/20", "text-neonGreen");
-      } else if (status === "guaranteed") {
-        result.innerHTML = "⭐ GUARANTEED";
-        result.classList.add("bg-neonGold/20", "text-neonGold");
-      } else {
-        result.innerHTML = "❌ NOT WHITELISTED";
-        result.classList.add("bg-neonRed/20", "text-neonRed");
-      }
-    }, 500);
-  }
-    <script>
-function loadFile(event) {
-  const file = event.target.files[0];
-  whitelist = {};
-
-  if (file.name.endsWith(".csv")) {
-    Papa.parse(file, {
-      header: true,
-      complete: function(results) {
-        results.data.forEach(row => {
-          whitelist[row.wallet.toLowerCase()] = row.status.toLowerCase();
-        });
-        alert("CSV whitelist loaded");
-      }
+// CSV
+fetch("data/whitelist.csv")
+  .then(r => r.ok ? r.text() : "")
+  .then(csv => {
+    csv.split("\n").slice(1).forEach(r => {
+      const [w,s] = r.split(",");
+      if (w && s) whitelist[w.trim().toLowerCase()] = s.trim().toLowerCase();
     });
+  });
+
+// XLSX
+fetch("data/whitelist.xlsx")
+  .then(r => r.ok ? r.arrayBuffer() : null)
+  .then(buf => {
+    if (!buf) return;
+    const wb = XLSX.read(buf,{type:"array"});
+    XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])
+      .forEach(r => whitelist[r.wallet.toLowerCase()] = r.status.toLowerCase());
+  });
+
+function checkWallet() {
+  const w = walletInput.value.trim().toLowerCase();
+  const r = document.getElementById("result");
+  r.classList.remove("hidden");
+  r.className = "mt-6 p-4 rounded-xl text-center font-semibold";
+
+  if (!w.startsWith("0x")) {
+    r.textContent = "Invalid wallet address";
+    r.classList.add("text-neonRed");
+    return;
   }
 
-  if (file.name.endsWith(".xlsx")) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
-      const sheet = XLSX.utils.sheet_to_json(
-        workbook.Sheets[workbook.SheetNames[0]]
-      );
-
-      sheet.forEach(row => {
-        whitelist[row.wallet.toLowerCase()] = row.status.toLowerCase();
-      });
-
-      alert("Excel whitelist loaded");
-    };
-    reader.readAsArrayBuffer(file);
+  const s = whitelist[w];
+  if (s === "whitelisted") {
+    r.textContent = "✅ WHITELISTED";
+    r.classList.add("text-neonGreen");
+  } else if (s === "guaranteed") {
+    r.textContent = "⭐ GUARANTEED";
+    r.classList.add("text-neonGold");
+  } else {
+    r.textContent = "❌ NOT WHITELISTED";
+    r.classList.add("text-neonRed");
   }
 }
 </script>
-
-</script>
-
 
 </body>
 </html>
