@@ -2,7 +2,7 @@
 <html lang="en" class="">
 <head>
   <meta charset="UTF-8" />
-  <title>PhantomS – Wallet Checker</title>
+  <title>PHANTOMS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Tailwind -->
@@ -30,234 +30,172 @@
   </script>
 
   <style>
+    body { overflow-x: hidden; }
+
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+      100% { transform: translateY(0); }
+    }
+
     .parallax {
       position: absolute;
       pointer-events: none;
       transition: transform 0.15s ease-out;
     }
-    @keyframes glow {
-  0% { box-shadow: 0 0 0px transparent; }
-  50% { box-shadow: 0 0 25px currentColor; }
-  100% { box-shadow: 0 0 0px transparent; }
-}
 
-.result-glow {
-  animation: glow 1.6s ease-in-out infinite;
-}
-    #logo:hover {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 18px rgba(91,140,255,0.9));
-}
-    #logo {
-  will-change: transform, opacity;
-}
+    .line {
+      position: absolute;
+      width: 2px;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, #5B8CFF, transparent);
+      animation: lines 4s linear infinite;
+      opacity: 0.3;
+    }
+    @keyframes lines {
+      from { transform: translateY(-150px); }
+      to { transform: translateY(100vh); }
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 0 transparent; }
+      50% { box-shadow: 0 0 25px currentColor; }
+      100% { box-shadow: 0 0 0 transparent; }
+    }
+    .result-glow {
+      animation: glow 1.6s ease-in-out infinite;
+    }
   </style>
 </head>
 
-<body class="bg-white text-black dark:bg-bgDark dark:text-white transition-colors duration-500">
+<body class="bg-white dark:bg-bgDark text-black dark:text-white transition-colors duration-500">
 
-<!-- NAVBAR -->
 <!-- NAVBAR -->
 <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center">
-
-  <!-- LOGO -->
-  <div class="relative group">
-    <img
-      id="logo"
-      src="assets/logo.png"
-      alt="Logo"
-      class="w-8 md:w-10 opacity-0 scale-90
-             transition-all duration-500 ease-out
-             cursor-pointer relative z-10"
-    />
-
-    <!-- glow layer -->
-    <div
-      class="absolute inset-0 rounded-full blur-xl opacity-0
-             bg-gradient-to-r from-neonBlue to-neonPurple
-             transition-opacity duration-300
-             group-hover:opacity-100">
-    </div>
-  </div>
-
-  <!-- DARK MODE TOGGLE -->
-  <button id="themeToggle"
-    class="w-12 h-6 rounded-full bg-gray-300 dark:bg-gray-700 relative">
-    <span id="toggleDot"
-      class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition">
-    </span>
+  <img src="assets/logo.png" class="w-8 md:w-10 opacity-80 hover:scale-110 transition" />
+  <button id="themeToggle" class="w-12 h-6 rounded-full bg-gray-300 dark:bg-gray-700 relative">
+    <span id="toggleDot" class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition"></span>
   </button>
-
 </header>
 
+<!-- HERO -->
+<section class="relative min-h-screen flex flex-col justify-center items-center text-center pt-32">
 
-<!-- HERO BACKGROUND -->
-<section class="relative min-h-screen overflow-hidden pt-32">
+  <!-- NFTs LEFT -->
+  <div class="absolute left-6 top-1/2 -translate-y-1/2 space-y-6">
+    <img src="assets/nft1.png" class="w-24 float">
+    <img src="assets/nft2.png" class="w-24 float">
+    <img src="assets/nft3.png" class="w-24 float">
+    <img src="assets/nft4.png" class="w-24 float">
+  </div>
 
-  <!-- PARALLAX NFTS -->
-  <img src="assets/nft1.png" class="parallax w-40 top-20 left-20 opacity-70" data-speed="2">
-  <img src="assets/nft2.png" class="parallax w-52 bottom-32 right-32 opacity-60" data-speed="4">
-  <img src="assets/nft3.png" class="parallax w-32 top-1/2 right-1/4 opacity-50" data-speed="6">
+  <!-- NFTs RIGHT -->
+  <div class="absolute right-6 top-1/2 -translate-y-1/2 space-y-6">
+    <img src="assets/nft5.png" class="w-24 float">
+    <img src="assets/nft6.png" class="w-24 float">
+    <img src="assets/nft7.png" class="w-24 float">
+    <img src="assets/nft8.png" class="w-24 float">
+  </div>
 
+  <h1 class="text-6xl md:text-8xl font-extrabold mb-4">PHANTOMS</h1>
+  <p class="text-gray-500 dark:text-gray-400 max-w-xl">
+    A pixel-born civilization on Base
+  </p>
 </section>
 
-<!-- ABOUT US -->
-<section class="relative z-10 py-32 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
-
+<!-- ABOUT -->
+<section class="py-32 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
   <div>
-    <h2 class="text-4xl font-extrabold mb-6">
-      ABOUT <span class="text-blue-500">US</span>
-    </h2>
-
-    <p class="text-gray-700 dark:text-gray-300 mb-6">
-      Born from scattered pixels, Dotizen is an emerging civilization on Base,
-      where each PFP carries a spark of our expanding on-chain world.
+    <h2 class="text-4xl font-bold mb-6">ABOUT US</h2>
+    <p class="text-gray-600 dark:text-gray-300 mb-6">
+      Born from scattered pixels, PHANTOMS is an emerging civilization on Base.
     </p>
-
-    <p class="text-gray-700 dark:text-gray-300 mb-8">
-      A PFP civilization built by citizens, powered by lore,
-      forging their own on-chain society.
+    <p class="text-gray-600 dark:text-gray-300">
+      Built by citizens, powered by lore, forging an on-chain society.
     </p>
   </div>
-
   <div class="grid grid-cols-2 gap-6">
-    <img src="assets/nft1.png" class="rounded-2xl shadow-xl">
-    <img src="assets/nft2.png" class="rounded-2xl shadow-xl">
-    <img src="assets/nft3.png" class="rounded-2xl shadow-xl">
-    <img src="assets/nft4.png" class="rounded-2xl shadow-xl">
+    <img src="assets/nft1.png" class="rounded-xl">
+    <img src="assets/nft2.png" class="rounded-xl">
+    <img src="assets/nft3.png" class="rounded-xl">
+    <img src="assets/nft4.png" class="rounded-xl">
   </div>
+</section>
+
+<!-- SNEAKPEEKS -->
+<section class="relative min-h-screen overflow-hidden py-32 text-center">
+  <h2 class="text-4xl font-bold mb-12">PHANTOMS SNEAKPEEKS</h2>
+
+  <!-- animated lines -->
+  <div class="line" style="left:20%"></div>
+  <div class="line" style="left:50%"></div>
+  <div class="line" style="left:80%"></div>
+
+  <img src="assets/nft5.png" class="parallax w-32 left-1/4 top-1/3" data-speed="2">
+  <img src="assets/nft6.png" class="parallax w-32 right-1/4 top-1/2" data-speed="4">
 </section>
 
 <!-- WALLET CHECKER -->
-<section class="relative z-10 py-32 flex justify-center px-4">
-  <div class="w-full max-w-md p-6 rounded-2xl backdrop-blur-xl bg-white/10 border border-white/20">
-
-    <h2 class="text-2xl font-bold text-center mb-4">Wallet Checker</h2>
-
-    <input id="walletInput"
-      type="text"
-      placeholder="Paste wallet address (0x...)"
-      class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/20 focus:outline-none focus:border-neonBlue">
-
-    <button onclick="checkWallet()"
-      class="w-full mt-4 py-3 rounded-xl font-semibold bg-gradient-to-r from-neonBlue to-neonPurple">
+<section class="py-32 flex justify-center">
+  <div class="w-full max-w-md p-6 rounded-2xl bg-white/10 border border-white/20">
+    <h3 class="text-2xl font-bold mb-4 text-center">Wallet Checker</h3>
+    <input id="walletInput" class="w-full px-4 py-3 rounded-xl bg-black/40 border mb-4" placeholder="Paste wallet (0x...)">
+    <button onclick="checkWallet()" class="w-full py-3 rounded-xl bg-gradient-to-r from-neonBlue to-neonPurple">
       Check Status
     </button>
-
-    <div id="result" class="hidden mt-6 p-4 rounded-xl text-center font-semibold"></div>
+    <div id="result" class="hidden mt-6 p-4 rounded-xl text-center font-semibold result-glow"></div>
   </div>
 </section>
 
-<footer class="text-center py-8 text-gray-500">
-  © 2026 PhantomS
+<!-- FOOTER -->
+<footer class="py-12 flex justify-center gap-6">
+  <a class="px-6 py-3 rounded-xl bg-blue-500 text-white">Twitter</a>
+  <a class="px-6 py-3 rounded-xl bg-gray-800 text-white">OpenSea</a>
 </footer>
 
-<!-- JS -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+/* DARK MODE */
+const toggle = document.getElementById("themeToggle");
+const dot = document.getElementById("toggleDot");
+toggle.onclick = () => {
+  document.documentElement.classList.toggle("dark");
+  dot.classList.toggle("translate-x-6");
+};
 
-  /* DARK MODE */
-  const toggle = document.getElementById("themeToggle");
-  const dot = document.getElementById("toggleDot");
-
-  toggle.onclick = () => {
-    document.documentElement.classList.toggle("dark");
-    dot.classList.toggle("translate-x-6");
-  };
-
-  /* PARALLAX */
-document.addEventListener("DOMContentLoaded", () => {
-
-  const items = document.querySelectorAll(".parallax");
-
-  /* DESKTOP MOUSE PARALLAX */
-  document.addEventListener("mousemove", (e) => {
-    if (window.innerWidth < 768) return; // mobile ignore
-    const x = (window.innerWidth / 2 - e.clientX) / 40;
-    const y = (window.innerHeight / 2 - e.clientY) / 40;
-
-    items.forEach(el => {
-      const speed = el.dataset.speed;
-      el.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-    });
+/* PARALLAX */
+document.addEventListener("mousemove", e => {
+  document.querySelectorAll(".parallax").forEach(el => {
+    const s = el.dataset.speed;
+    el.style.transform =
+      `translate(${(window.innerWidth/2-e.clientX)/40*s}px,
+                 ${(window.innerHeight/2-e.clientY)/40*s}px)`;
   });
-
-  /* MOBILE GYROSCOPE PARALLAX */
-  window.addEventListener("deviceorientation", (e) => {
-    if (window.innerWidth >= 768) return;
-
-    const x = e.gamma / 3; // left-right
-    const y = e.beta / 6;  // front-back
-
-    items.forEach(el => {
-      const speed = el.dataset.speed;
-      el.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-    });
-  });
-
 });
 
-/* WHITELIST */
+/* WALLET */
 let whitelist = {};
-
-// CSV
-fetch("data/whitelist.csv")
-  .then(r => r.ok ? r.text() : "")
-  .then(csv => {
-    csv.split("\n").slice(1).forEach(r => {
-      const [w,s] = r.split(",");
-      if (w && s) whitelist[w.trim().toLowerCase()] = s.trim().toLowerCase();
-    });
+fetch("data/whitelist.csv").then(r=>r.text()).then(t=>{
+  t.split("\n").slice(1).forEach(r=>{
+    const [w,s]=r.split(",");
+    if(w) whitelist[w.trim().toLowerCase()]=s.trim().toLowerCase();
   });
+});
 
-// XLSX
-fetch("data/whitelist.xlsx")
-  .then(r => r.ok ? r.arrayBuffer() : null)
-  .then(buf => {
-    if (!buf) return;
-    const wb = XLSX.read(buf,{type:"array"});
-    XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])
-      .forEach(r => whitelist[r.wallet.toLowerCase()] = r.status.toLowerCase());
-  });
-
-function checkWallet() {
+function checkWallet(){
   const w = walletInput.value.trim().toLowerCase();
-  const r = document.getElementById("result");
-
-  r.className =
-    "mt-6 p-4 rounded-xl text-center font-semibold result-glow";
+  const r = result;
   r.classList.remove("hidden");
-
-  if (!w.startsWith("0x")) {
-    r.textContent = "Invalid wallet address";
-    r.style.color = "#FF4D4D";
-    return;
-  }
-
-  const s = whitelist[w];
-
-  if (s === "whitelisted") {
-    r.textContent = "✅ WHITELISTED";
-    r.style.color = "#3CFF8F";
-  } else if (s === "guaranteed") {
-    r.textContent = "⭐ GUARANTEED";
-    r.style.color = "#FFD36A";
-  } else {
-    r.textContent = "❌ NOT WHITELISTED";
-    r.style.color = "#FF4D4D";
+  if(whitelist[w]==="whitelisted"){
+    r.textContent="✅ WHITELISTED";
+    r.style.color="#3CFF8F";
+  }else{
+    r.textContent="❌ NOT WHITELISTED";
+    r.style.color="#FF4D4D";
   }
 }
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const logo = document.getElementById("logo");
-
-  // intro animation
-  setTimeout(() => {
-    logo.classList.remove("opacity-0", "scale-90");
-    logo.classList.add("opacity-100", "scale-100");
-  }, 300);
-});
 </script>
 
 </body>
