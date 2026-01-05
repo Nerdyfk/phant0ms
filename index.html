@@ -44,22 +44,52 @@
 .result-glow {
   animation: glow 1.6s ease-in-out infinite;
 }
+    #logo:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 18px rgba(91,140,255,0.9));
+}
+    #logo {
+  will-change: transform, opacity;
+}
   </style>
 </head>
 
 <body class="bg-white text-black dark:bg-bgDark dark:text-white transition-colors duration-500">
 
 <!-- NAVBAR -->
+<!-- NAVBAR -->
 <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center">
-  <div class="text-2xl font-bold">PHANTOMS</div>
+
+  <!-- LOGO -->
+  <div class="relative group">
+    <img
+      id="logo"
+      src="assets/logo.png"
+      alt="Logo"
+      class="w-8 md:w-10 opacity-0 scale-90
+             transition-all duration-500 ease-out
+             cursor-pointer relative z-10"
+    />
+
+    <!-- glow layer -->
+    <div
+      class="absolute inset-0 rounded-full blur-xl opacity-0
+             bg-gradient-to-r from-neonBlue to-neonPurple
+             transition-opacity duration-300
+             group-hover:opacity-100">
+    </div>
+  </div>
 
   <!-- DARK MODE TOGGLE -->
   <button id="themeToggle"
     class="w-12 h-6 rounded-full bg-gray-300 dark:bg-gray-700 relative">
     <span id="toggleDot"
-      class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition"></span>
+      class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition">
+    </span>
   </button>
+
 </header>
+
 
 <!-- HERO BACKGROUND -->
 <section class="relative min-h-screen overflow-hidden pt-32">
@@ -217,6 +247,17 @@ function checkWallet() {
     r.style.color = "#FF4D4D";
   }
 }
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const logo = document.getElementById("logo");
+
+  // intro animation
+  setTimeout(() => {
+    logo.classList.remove("opacity-0", "scale-90");
+    logo.classList.add("opacity-100", "scale-100");
+  }, 300);
+});
 </script>
 
 </body>
