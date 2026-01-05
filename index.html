@@ -40,28 +40,75 @@
     transition: transform 0.1s ease-out;
     pointer-events: none;
   }
-
+.grid img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .grid img:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
   </style>
 </head>
 
-<body class="bg-bg text-white overflow-x-hidden">
+<body class="bg-white text-black dark:bg-[#0B0F1A] dark:text-white transition-colors duration-500">
 
   <!-- Background Blobs -->
   <div class="absolute top-0 left-0 w-96 h-96 bg-neonBlue blob"></div>
   <div class="absolute bottom-0 right-0 w-96 h-96 bg-neonPurple blob"></div>
 
   <!-- NAVBAR -->
-  <header class="relative z-10 flex items-center justify-between px-6 py-5">
-    <div class="text-xl font-bold">YOUR LOGO</div>
-    <a href="#checker" class="px-5 py-2 rounded-xl bg-gradient-to-r from-neonBlue to-neonPurple">
-      Check Wallet
-    </a>
-  </header>
+ <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center">
+  <div class="text-2xl font-bold">PHANTOMS</div>
+
+  <!-- THEME TOGGLE -->
+  <button id="themeToggle"
+    class="w-12 h-6 rounded-full bg-gray-300 dark:bg-gray-700 relative transition">
+    <span id="toggleDot"
+      class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition"></span>
+  </button>
+</header>
+
 
   <!-- HERO SECTION -->
 <section id="home"
   class="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg text-white">
 
+<section class="py-32 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+
+  <!-- LEFT TEXT -->
+  <div>
+    <h2 class="text-4xl font-extrabold mb-6">
+      ABOUT <span class="text-blue-500">US</span>
+    </h2>
+
+    <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+      Born from scattered pixels, Dotizen is an emerging civilization on Base,
+      where each PFP carries a spark of our expanding on-chain world.
+    </p>
+
+    <p class="text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
+      This is a PFP civilization rising on Base — built by its citizens,
+      powered by lore for a world of explorers, builders, and dreamers forging
+      their own on-chain society.
+    </p>
+
+    <a href="#"
+       class="inline-block font-bold text-blue-500 hover:underline">
+      READ THE LORE →
+    </a>
+  </div>
+
+  <!-- RIGHT NFT GRID -->
+  <div class="grid grid-cols-2 gap-6">
+    <img src="assets/nft1.png" class="rounded-2xl shadow-xl" />
+    <img src="assets/nft2.png" class="rounded-2xl shadow-xl" />
+    <img src="assets/nft3.png" class="rounded-2xl shadow-xl" />
+    <img src="assets/nft4.png" class="rounded-2xl shadow-xl" />
+  </div>
+
+</section>
+
+  
   <!-- PARALLAX BACKGROUND NFTS -->
   <img src="assets/nft1.png"
        class="parallax absolute w-40 top-20 left-20 opacity-70"
@@ -199,9 +246,15 @@
       item.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
     });
   });
-</script>
 
-  </script>
+  const toggle = document.getElementById("themeToggle");
+  const dot = document.getElementById("toggleDot");
+
+  toggle.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark");
+    dot.classList.toggle("translate-x-6");
+  });
+</script>
 
 </body>
 </html>
