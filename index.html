@@ -35,6 +35,12 @@
       from { transform: translateY(0); }
       to { transform: translateY(-80px); }
     }
+    
+  .parallax {
+    transition: transform 0.1s ease-out;
+    pointer-events: none;
+  }
+
   </style>
 </head>
 
@@ -52,19 +58,50 @@
     </a>
   </header>
 
-  <!-- HERO -->
-  <section class="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-4">
-    <h1 class="text-4xl md:text-6xl font-bold mb-4">
-      Enter the Next Era of Web3
+  <!-- HERO SECTION -->
+<section id="home"
+  class="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg text-white">
+
+  <!-- PARALLAX BACKGROUND NFTS -->
+  <img src="assets/nft1.png"
+       class="parallax absolute w-40 top-20 left-20 opacity-70"
+       data-speed="2" />
+
+  <img src="assets/nft2.png"
+       class="parallax absolute w-52 bottom-32 right-32 opacity-60"
+       data-speed="4" />
+
+  <img src="assets/nft3.png"
+       class="parallax absolute w-32 top-1/2 right-1/4 opacity-50"
+       data-speed="6" />
+
+  <!-- CONTENT -->
+  <div class="relative z-10 text-center">
+    <h1 class="text-5xl md:text-6xl font-bold mb-6">
+      Enter the Web3 Realm
     </h1>
-    <p class="text-gray-400 max-w-xl mb-8">
-      Instantly check your whitelist status by pasting your wallet address.
+
+    <p class="text-gray-400 mb-10 max-w-xl mx-auto">
+      Check your whitelist status instantly with animated Web3 experience
     </p>
-    <a href="#checker"
-       class="px-8 py-4 rounded-2xl text-lg font-semibold bg-gradient-to-r from-neonBlue to-neonPurple hover:scale-105 transition">
-      Paste Wallet & Check
+
+    <!-- ALIVE WALLET CHECKER BUTTON -->
+    <a href="wallet_checker.html"
+       class="group relative inline-block px-10 py-5 rounded-2xl text-lg font-semibold
+              bg-gradient-to-r from-neonBlue to-neonPurple
+              shadow-xl transition-transform duration-300
+              hover:scale-110">
+
+      <span class="relative z-10">Wallet Checker</span>
+
+      <!-- glow -->
+      <span class="absolute inset-0 rounded-2xl blur-xl opacity-0
+                   group-hover:opacity-100 transition
+                   bg-gradient-to-r from-neonBlue to-neonPurple"></span>
     </a>
-  </section>
+  </div>
+</section>
+
 
   <!-- FEATURES -->
   <section class="relative z-10 py-24 px-6 max-w-6xl mx-auto">
@@ -110,7 +147,7 @@
 
   <!-- FOOTER -->
   <footer class="relative z-10 text-center py-8 text-gray-500">
-    © 2026 Your Project Name
+    © 2026 PhantomS
   </footer>
 
   <!-- LOGIC -->
@@ -150,6 +187,20 @@
         }
       }, 600);
     }
+    <script>
+  const parallaxItems = document.querySelectorAll(".parallax");
+
+  document.addEventListener("mousemove", (e) => {
+    const x = (window.innerWidth / 2 - e.clientX) / 30;
+    const y = (window.innerHeight / 2 - e.clientY) / 30;
+
+    parallaxItems.forEach((item) => {
+      const speed = item.getAttribute("data-speed");
+      item.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+    });
+  });
+</script>
+
   </script>
 
 </body>
