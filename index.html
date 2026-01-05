@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Web3 Wallet Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: "#0B0F1A",
+            neonBlue: "#5B8CFF",
+            neonPurple: "#8A5CFF",
+            neonGreen: "#3CFF8F",
+            neonRed: "#FF4D4D",
+            neonGold: "#FFD36A",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    .blob {
+      filter: blur(120px);
+      opacity: 0.5;
+      animation: float 12s infinite alternate;
+    }
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-80px); }
+    }
+  </style>
+</head>
+
+<body class="bg-bg text-white overflow-x-hidden">
+
+  <!-- Background Blobs -->
+  <div class="absolute top-0 left-0 w-96 h-96 bg-neonBlue blob"></div>
+  <div class="absolute bottom-0 right-0 w-96 h-96 bg-neonPurple blob"></div>
+
+  <!-- NAVBAR -->
+  <header class="relative z-10 flex items-center justify-between px-6 py-5">
+    <div class="text-xl font-bold">YOUR LOGO</div>
+    <a href="#checker" class="px-5 py-2 rounded-xl bg-gradient-to-r from-neonBlue to-neonPurple">
+      Check Wallet
+    </a>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-4">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+      Enter the Next Era of Web3
+    </h1>
+    <p class="text-gray-400 max-w-xl mb-8">
+      Instantly check your whitelist status by pasting your wallet address.
+    </p>
+    <a href="#checker"
+       class="px-8 py-4 rounded-2xl text-lg font-semibold bg-gradient-to-r from-neonBlue to-neonPurple hover:scale-105 transition">
+      Paste Wallet & Check
+    </a>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="relative z-10 py-24 px-6 max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+        <h3 class="text-xl font-semibold mb-2">No Wallet Connect</h3>
+        <p class="text-gray-400">Just paste your wallet address.</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+        <h3 class="text-xl font-semibold mb-2">Instant Result</h3>
+        <p class="text-gray-400">Get whitelist status in seconds.</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+        <h3 class="text-xl font-semibold mb-2">Secure & Simple</h3>
+        <p class="text-gray-400">No signing, no permissions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKER -->
+  <section id="checker" class="relative z-10 py-32 flex justify-center px-4">
+    <div class="w-full max-w-md p-6 rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-xl">
+
+      <h2 class="text-2xl font-bold text-center mb-4">Wallet Checker</h2>
+
+      <input
+        id="walletInput"
+        type="text"
+        placeholder="Paste wallet address (0x...)"
+        class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/20 focus:outline-none focus:border-neonBlue focus:ring-2 focus:ring-neonBlue/40 transition"
+      />
+
+      <button
+        onclick="checkWallet()"
+        class="w-full mt-4 py-3 rounded-xl font-semibold bg-gradient-to-r from-neonBlue to-neonPurple hover:scale-[1.02] transition"
+      >
+        Check Status
+      </button>
+
+      <div id="result" class="hidden mt-6 p-4 rounded-xl text-center font-semibold"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="relative z-10 text-center py-8 text-gray-500">
+    © 2026 Your Project Name
+  </footer>
+
+  <!-- LOGIC -->
+  <script>
+    const whitelist = {
+      "0x111": "whitelisted",
+      "0x222": "guaranteed",
+      "0x333": "whitelisted"
+    };
+
+    function checkWallet() {
+      const wallet = walletInput.value.trim().toLowerCase();
+      const result = document.getElementById("result");
+
+      result.className = "mt-6 p-4 rounded-xl text-center font-semibold";
+      result.classList.remove("hidden");
+      result.innerHTML = "Checking...";
+
+      setTimeout(() => {
+        if (!wallet.startsWith("0x")) {
+          result.innerHTML = "Invalid wallet address";
+          result.classList.add("bg-neonRed/20", "text-neonRed");
+          return;
+        }
+
+        const status = whitelist[wallet];
+
+        if (status === "whitelisted") {
+          result.innerHTML = "✅ WHITELISTED";
+          result.classList.add("bg-neonGreen/20", "text-neonGreen");
+        } else if (status === "guaranteed") {
+          result.innerHTML = "⭐ GUARANTEED";
+          result.classList.add("bg-neonGold/20", "text-neonGold");
+        } else {
+          result.innerHTML = "❌ NOT WHITELISTED";
+          result.classList.add("bg-neonRed/20", "text-neonRed");
+        }
+      }, 600);
+    }
+  </script>
+
+</body>
+</html>
