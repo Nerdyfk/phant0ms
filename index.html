@@ -35,6 +35,15 @@
       pointer-events: none;
       transition: transform 0.15s ease-out;
     }
+    @keyframes glow {
+  0% { box-shadow: 0 0 0px transparent; }
+  50% { box-shadow: 0 0 25px currentColor; }
+  100% { box-shadow: 0 0 0px transparent; }
+}
+
+.result-glow {
+  animation: glow 1.6s ease-in-out infinite;
+}
   </style>
 </head>
 
@@ -127,10 +136,29 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* PARALLAX */
+document.addEventListener("DOMContentLoaded", () => {
+
   const items = document.querySelectorAll(".parallax");
-  document.addEventListener("mousemove", e => {
+
+  /* DESKTOP MOUSE PARALLAX */
+  document.addEventListener("mousemove", (e) => {
+    if (window.innerWidth < 768) return; // mobile ignore
     const x = (window.innerWidth / 2 - e.clientX) / 40;
     const y = (window.innerHeight / 2 - e.clientY) / 40;
+
+    items.forEach(el => {
+      const speed = el.dataset.speed;
+      el.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+    });
+  });
+
+  /* MOBILE GYROSCOPE PARALLAX */
+  window.addEventListener("deviceorientation", (e) => {
+    if (window.innerWidth >= 768) return;
+
+    const x = e.gamma / 3; // left-right
+    const y = e.beta / 6;  // front-back
+
     items.forEach(el => {
       const speed = el.dataset.speed;
       el.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
@@ -165,25 +193,28 @@ fetch("data/whitelist.xlsx")
 function checkWallet() {
   const w = walletInput.value.trim().toLowerCase();
   const r = document.getElementById("result");
+
+  r.className =
+    "mt-6 p-4 rounded-xl text-center font-semibold result-glow";
   r.classList.remove("hidden");
-  r.className = "mt-6 p-4 rounded-xl text-center font-semibold";
 
   if (!w.startsWith("0x")) {
     r.textContent = "Invalid wallet address";
-    r.classList.add("text-neonRed");
+    r.style.color = "#FF4D4D";
     return;
   }
 
   const s = whitelist[w];
+
   if (s === "whitelisted") {
     r.textContent = "✅ WHITELISTED";
-    r.classList.add("text-neonGreen");
+    r.style.color = "#3CFF8F";
   } else if (s === "guaranteed") {
     r.textContent = "⭐ GUARANTEED";
-    r.classList.add("text-neonGold");
+    r.style.color = "#FFD36A";
   } else {
     r.textContent = "❌ NOT WHITELISTED";
-    r.classList.add("text-neonRed");
+    r.style.color = "#FF4D4D";
   }
 }
 </script>
