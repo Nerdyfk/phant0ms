@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wallet Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: "#0B0F1A",
+            neonBlue: "#5B8CFF",
+            neonPurple: "#8A5CFF",
+            neonGreen: "#3CFF8F",
+            neonRed: "#FF4D4D",
+            neonGold: "#FFD36A",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Gradient blob animation */
+    .blob {
+      filter: blur(120px);
+      opacity: 0.5;
+      animation: float 12s infinite alternate;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-80px); }
+    }
+  </style>
+</head>
+
+<body class="bg-bg text-white min-h-screen overflow-hidden">
+
+  <!-- Background Blobs -->
+  <div class="absolute top-0 left-0 w-96 h-96 bg-neonBlue blob"></div>
+  <div class="absolute bottom-0 right-0 w-96 h-96 bg-neonPurple blob"></div>
+
+  <!-- Page Wrapper -->
+  <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
+
+    <!-- Hero -->
+    <h1 class="text-4xl md:text-6xl font-bold text-center mb-4">
+      Wallet Status Checker
+    </h1>
+    <p class="text-gray-400 text-center mb-10">
+      Paste your wallet address to check whitelist status
+    </p>
+
+    <!-- Checker Card -->
+    <div class="w-full max-w-md p-6 rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-xl">
+
+      <input
+        id="walletInput"
+        type="text"
+        placeholder="Paste wallet address (0x...)"
+        class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/20 focus:outline-none focus:border-neonBlue focus:ring-2 focus:ring-neonBlue/40 transition"
+      />
+
+      <button
+        onclick="checkWallet()"
+        class="w-full mt-4 py-3 rounded-xl font-semibold bg-gradient-to-r from-neonBlue to-neonPurple hover:scale-[1.02] transition transform shadow-lg"
+      >
+        Check Status
+      </button>
+
+      <!-- Result -->
+      <div id="result" class="hidden mt-6 p-4 rounded-xl text-center font-semibold"></div>
+    </div>
+
+  </div>
+
+  <!-- Logic -->
+  <script>
+    // EDIT YOUR WHITELIST HERE
+    const whitelist = {
+      "0x111": "whitelisted",
+      "0x222": "guaranteed",
+      "0x333": "whitelisted"
+    };
+
+    function checkWallet() {
+      const input = document.getElementById("walletInput");
+      const result = document.getElementById("result");
+      const wallet = input.value.trim().toLowerCase();
+
+      result.className = "mt-6 p-4 rounded-xl text-center font-semibold";
+      result.innerHTML = "Checking...";
+      result.classList.remove("hidden");
+
+      setTimeout(() => {
+        if (!wallet.startsWith("0x") || wallet.length < 6) {
+          result.innerHTML = "Invalid wallet address";
+          result.classList.add("bg-neonRed/20", "text-neonRed");
+          return;
+        }
+
+        const status = whitelist[wallet];
+
+        if (status === "whitelisted") {
+          result.innerHTML = "✅ WHITELISTED<br>You are eligible to mint";
+          result.classList.add("bg-neonGreen/20", "text-neonGreen");
+        } else if (status === "guaranteed") {
+          result.innerHTML = "⭐ GUARANTEED<br>Mint access confirmed";
+          result.classList.add("bg-neonGold/20", "text-neonGold");
+        } else {
+          result.innerHTML = "❌ NOT WHITELISTED";
+          result.classList.add("bg-neonRed/20", "text-neonRed");
+        }
+      }, 700);
+    }
+  </script>
+
+</body>
+</html>
