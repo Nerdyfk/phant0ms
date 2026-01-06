@@ -4,34 +4,31 @@
 <meta charset="UTF-8">
 <title>PHANTOMS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="css/style.css">
 </head>
-  
+
 <body>
 
-<!-- GLITCH LOADING INTRO -->
+<!-- GLITCH INTRO -->
 <div id="intro">
   <div class="intro-inner">
     <div class="glitch-text">PHANTOMS</div>
     <div class="loader-bar"><span></span></div>
-    <div class="loading-percent" id="loadingPercent">0%</div>
+    <div id="loadingPercent">0%</div>
   </div>
 </div>
 
-<!-- GRADIENT CONTROL (TOP RIGHT) -->
+<!-- GRADIENT CONTROL -->
 <input id="gradCtl" type="range" min="0.15" max="0.6" step="0.01" value="0.32">
 
-<!-- HEADER -->
 <header class="site-header">
   <img src="assets/logo.png" class="logo">
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <h1>PHANTOMS</h1>
-  <p>A pixel-born civilization on Base</p>
+  <p>A pixel-born culture on Base</p>
 </section>
 
 <!-- ABOUT -->
@@ -47,18 +44,14 @@
   </p>
 </section>
 
-<!-- ICON ACTION BAR -->
+<!-- ACTION BAR -->
 <section class="action-bar">
-  <button onclick="openTwitter()" class="icon-btn">X</button>
-
   <button onclick="togglePanel('osPanel')" class="icon-btn">
     <img src="assets/opensea.png">
   </button>
-
   <button onclick="togglePanel('mePanel')" class="icon-btn">
     <img src="assets/magiceden.png">
   </button>
-
   <button onclick="togglePanel('storePanel')" class="icon-btn">
     <img src="assets/store.png">
   </button>
@@ -74,39 +67,21 @@
 </div>
 
 <section id="exploreBox">
-  <div class="blockchain"></div>
+  <svg id="snakeSVG" viewBox="0 0 1000 300">
+    <path id="snakePath"
+      d="M -100 50
+         Q 500 50 1000 50
+         Q 1100 150 500 150
+         Q -100 150 -100 250"
+      fill="none"/>
+  </svg>
 
-  <div id="snakeTrack">
-    <!-- Add unlimited NFTs -->
-    <div class="snakeItem"><img src="assets/nft9.png"></div>
-    <div class="snakeItem"><img src="assets/nft10.png"></div>
-    <div class="snakeItem"><img src="assets/nft11.png"></div>
-    <div class="snakeItem"><img src="assets/nft12.png"></div>
-    <div class="snakeItem"><img src="assets/nft13.png"></div>
-    <div class="snakeItem"><img src="assets/nft14.png"></div>
-    <div class="snakeItem"><img src="assets/nft15.png"></div>
-    <div class="snakeItem"><img src="assets/nft16.png"></div>
-    <div class="snakeItem"><img src="assets/nft17.png"></div>
-    <div class="snakeItem"><img src="assets/nft18.png"></div>
-    <div class="snakeItem"><img src="assets/nft1.png"></div>
-    <div class="snakeItem"><img src="assets/nft2.png"></div>
-    <div class="snakeItem"><img src="assets/nft3.png"></div>
-    <div class="snakeItem"><img src="assets/nft4.png"></div>
-    <div class="snakeItem"><img src="assets/nft5.png"></div>
-    <div class="snakeItem"><img src="assets/nft6.png"></div>
-    <div class="snakeItem"><img src="assets/nft7.png"></div>
-    <div class="snakeItem"><img src="assets/nft8.png"></div>
-    <div class="snakeItem"><img src="assets/nft19.png"></div>
-    <div class="snakeItem"><img src="assets/nft20.png"></div>
-    <div class="snakeItem"><img src="assets/nft21.png"></div>
-    <div class="snakeItem"><img src="assets/nft22.png"></div>
-    <div class="snakeItem"><img src="assets/nft23.png"></div>
-  </div>
+  <div id="snakeContainer"></div>
 </section>
 
-<!-- WALLET CHECKER -->
+<!-- WALLET -->
 <div class="explore-btn-wrap">
-  <button onclick="toggleWallet()">Wallet Checker</button>
+  <button onclick="toggleWallet()" class="wallet-toggle-btn">Wallet Checker</button>
 </div>
 
 <section id="walletBox" class="wallet-box">
@@ -120,7 +95,8 @@
 <!-- TRAIT MODAL -->
 <div id="traitModal">
   <div class="modal-box">
-    <p>Traits: Coming Soon</p>
+    <h3 id="traitTitle"></h3>
+    <pre id="traitContent"></pre>
     <button onclick="closeTrait()">Close</button>
   </div>
 </div>
