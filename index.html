@@ -7,10 +7,9 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-<!-- GLITCH INTRO -->
+<!-- GLITCH LOADING INTRO -->
 <div id="intro">
   <div class="intro-inner">
     <div class="glitch-text">PHANTOMS</div>
@@ -19,19 +18,18 @@
   </div>
 </div>
 
-<!-- GRADIENT CONTROL -->
+<!-- GRADIENT CONTROL (TOP RIGHT) -->
 <input id="gradCtl" type="range" min="0.15" max="0.6" step="0.01" value="0.32">
 
 <header class="site-header">
-  <img src="assets/logo.png" class="logo">
+  <img src="assets/logo.png" class="logo" alt="logo">
 </header>
 
 <section class="hero">
   <h1>PHANTOMS</h1>
-  <p>A pixel-born culture on Base</p>
+  <p>A pixel-born civilization on Base</p>
 </section>
 
-<!-- ABOUT -->
 <section class="about">
   <h2>About Phantoms</h2>
   <p id="aboutText">
@@ -44,17 +42,12 @@
   </p>
 </section>
 
-<!-- ACTION BAR -->
+<!-- ICON BAR -->
 <section class="action-bar">
-  <button onclick="togglePanel('osPanel')" class="icon-btn">
-    <img src="assets/opensea.png">
-  </button>
-  <button onclick="togglePanel('mePanel')" class="icon-btn">
-    <img src="assets/magiceden.png">
-  </button>
-  <button onclick="togglePanel('storePanel')" class="icon-btn">
-    <img src="assets/store.png">
-  </button>
+  <button class="icon-btn" onclick="openTwitter()"><img src="assets/twitter.png" alt="twitter"></button>
+  <button class="icon-btn" onclick="togglePanel('osPanel')"><img src="assets/opensea.png" alt="opensea"></button>
+  <button class="icon-btn" onclick="togglePanel('mePanel')"><img src="assets/magiceden.png" alt="magiceden"></button>
+  <button class="icon-btn" onclick="togglePanel('storePanel')"><img src="assets/store.png" alt="store"></button>
 </section>
 
 <section id="osPanel" class="slide-panel">OpenSea — Coming Soon</section>
@@ -67,26 +60,26 @@
 </div>
 
 <section id="exploreBox">
-  <svg id="snakeSVG" viewBox="0 0 1000 300">
+  <!-- SVG PATH (single, smooth) -->
+  <svg id="snakeSVG" viewBox="0 0 1000 300" aria-hidden="true">
     <path id="snakePath"
-      d="M -100 50
-         Q 500 50 1000 50
+      d="M -120 40
+         Q 500 40 1000 40
          Q 1100 150 500 150
-         Q -100 150 -100 250"
+         Q -120 150 -120 260"
       fill="none"/>
   </svg>
-
   <div id="snakeContainer"></div>
 </section>
 
 <!-- WALLET -->
 <div class="explore-btn-wrap">
-  <button onclick="toggleWallet()" class="wallet-toggle-btn">Wallet Checker</button>
+  <button class="wallet-toggle-btn" onclick="toggleWallet()">Wallet Checker</button>
 </div>
 
 <section id="walletBox" class="wallet-box">
   <div class="wallet-inner">
-    <input id="walletInput" placeholder="Paste wallet address">
+    <input id="walletInput" placeholder="Paste wallet address (0x...)">
     <button onclick="checkWallet()">Check Status</button>
     <p id="walletResult"></p>
   </div>
