@@ -34,3 +34,55 @@ function openTwitter(){
 function closeTrait(){
   document.getElementById("traitModal").style.display="none"
 }
+/* ================= WALLET ================= */
+function toggleWallet(){
+  document.getElementById("walletBox").classList.toggle("show")
+}
+
+function checkWallet(){
+  const w = document.getElementById("walletInput").value.trim()
+  const r = document.getElementById("walletResult")
+
+  if(!w){
+    r.textContent = "Please paste a wallet address"
+    return
+  }
+
+  // placeholder (real CSV/XLSX later)
+  r.textContent = "Status: Coming Soon"
+}
+
+/* ================= MOBILE GYRO ================= */
+function initGyro(){
+  if (
+    typeof DeviceOrientationEvent !== "undefined" &&
+    typeof DeviceOrientationEvent.requestPermission === "function"
+  ){
+    DeviceOrientationEvent.requestPermission().then(res=>{
+      if(res==="granted") startGyro()
+    })
+  } else {
+    startGyro()
+  }
+}
+
+function startGyro(){
+  window.addEventListener("deviceorientation", e=>{
+    const x = e.gamma || 0   // left-right
+    const y = e.beta || 0    // front-back
+
+    document.querySelectorAll(".snakeItem").forEach((el,i)=>{
+      const depth = (i+1) * 0.6
+      el.style.transform +=
+        ` translate(${x*0.4}px, ${y*0.25}px)`
+    })
+  })
+}
+
+/* auto-init gyro when explore opens */
+function toggleExplore(){
+  exploreBox.classList.toggle("show")
+  if(exploreBox.classList.contains("show")){
+    initGyro()
+  }
+}
