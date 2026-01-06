@@ -5,173 +5,107 @@
 <title>PHANTOMS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-<style>
-html{scroll-behavior:smooth}
-body{margin:0;font-family:system-ui;color:#fff;overflow-x:hidden}
-
-/* ================= INTRO ================= */
-#intro{
-  position:fixed;inset:0;z-index:100;
-  background:#000;
-  display:flex;align-items:center;justify-content:center;
-}
-.glitch{font-size:3rem;font-weight:900;letter-spacing:.2em;animation:glitch 2s infinite}
-@keyframes glitch{50%{transform:translate(-1px,1px)}}
-.loader{width:200px;height:6px;background:#222;margin:20px auto;overflow:hidden}
-.loader-fill{height:100%;background:linear-gradient(90deg,#5B8CFF,#FF4FD8,#3CFF8F);animation:load 4s forwards}
-@keyframes load{to{width:100%}}
-#intro p{opacity:.7}
-
-/* ================= GRADIENT ================= */
-body::before{
-content:"";position:fixed;inset:0;z-index:-2;
-background:linear-gradient(120deg,#5B8CFF,#8A5CFF,#00E5FF,#FF4FD8,#3CFF8F);
-background-size:400% 400%;animation:bg 18s ease infinite}
-@keyframes bg{50%{background-position:100% 50%}}
-body::after{content:"";position:fixed;inset:0;background:#000;opacity:.35;z-index:-1}
-
-/* ================= COMMON ================= */
-.glass{background:rgba(255,255,255,.12);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.25)}
-.hover{transition:.3s}
-.hover:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,255,255,.3)}
-
-/* ================= MARQUEE ================= */
-.marquee{display:flex;gap:20px;white-space:nowrap}
-.marquee img{width:96px;cursor:pointer}
-.left{animation:left 30s linear infinite}
-.right{animation:right 30s linear infinite}
-@keyframes left{to{transform:translateX(-50%)}}
-@keyframes right{to{transform:translateX(50%)}}
-
-/* ================= SLIDES ================= */
-.slide{max-height:0;overflow:hidden;transition:1s ease}
-.slide.show{max-height:800px}
-
-/* ================= MODAL ================= */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:50}
-</style>
+<!-- Custom CSS -->
+<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
 <!-- INTRO -->
 <div id="intro">
-  <div class="text-center">
+  <div class="intro-inner">
     <div class="glitch">PHANTOMS</div>
-    <p id="word">PIXELS</p>
     <div class="loader"><div class="loader-fill"></div></div>
-    <p>Loading <span id="pct">0</span>%</p>
   </div>
 </div>
 
-<header class="fixed top-0 left-0 w-full px-6 py-4 z-40">
-  <img src="assets/logo.png" class="w-8">
+<!-- GRADIENT CONTROL -->
+<input id="gradCtl" type="range" min="0.15" max="0.6" step="0.01" value="0.32">
+
+<!-- HEADER -->
+<header class="site-header">
+  <img src="assets/logo.png" class="logo">
 </header>
 
-<section class="min-h-screen flex flex-col justify-center items-center text-center pt-32">
-<h1 class="text-7xl font-extrabold">PHANTOMS</h1>
-<p class="opacity-80">A pixel-born civilization on Base</p>
+<!-- HERO -->
+<section class="hero">
+  <h1>PHANTOMS</h1>
+  <p>A pixel-born civilization on Base</p>
 </section>
+
+<!-- ABOUT -->
+<section class="about">
+  <h2>About Phantoms</h2>
+  <p id="aboutText">
+    Phantoms represent the Base ecosystem, pixel culture, creativity,
+    and the future of onchain art. Built on Base, Phantoms isn’t just art —
+    it’s identity, ownership, and culture in motion.
+    2222 Phantoms with 200+ traits,
+    each piece carrying a unique story.
+    Art by LoikaArts.
+    These aren’t avatars — they’re Phantoms.
+  </p>
+</section>
+
+<!-- ACTION ICONS -->
+<section class="action-bar">
+  <!-- Twitter -->
+  <button onclick="openTwitter()" class="icon-btn">
+    <svg viewBox="0 0 24 24"><path d="M18.9 2H22L14.7 10.4 23 22h-6.5l-5.1-7-6 7H2l7.8-8.8L2 2h6.6l4.6 6.3L18.9 2z"/></svg>
+  </button>
+
+  <!-- OpenSea -->
+  <button onclick="togglePanel('osPanel')" class="icon-btn">
+    <img src="assets/opensea.svg">
+  </button>
+
+  <!-- Magic Eden -->
+  <button onclick="togglePanel('mePanel')" class="icon-btn">
+    <img src="assets/magiceden.svg">
+  </button>
+
+  <!-- Store -->
+  <button onclick="togglePanel('storePanel')" class="icon-btn">
+    <svg viewBox="0 0 24 24"><path d="M3 9l1-5h16l1 5H3zm0 2h18v11H3V11z"/></svg>
+  </button>
+</section>
+
+<!-- PANELS -->
+<section id="osPanel" class="slide-panel">OpenSea — Coming Soon</section>
+<section id="mePanel" class="slide-panel">Magic Eden — Coming Soon</section>
+<section id="storePanel" class="slide-panel">Phantoms Store — Coming Soon</section>
+
+<!-- EXPLORE BUTTON -->
+<div class="explore-btn-wrap">
+  <button onclick="toggleExplore()">Explore Collection</button>
+</div>
 
 <!-- EXPLORE COLLECTION -->
-<section class="py-10 flex justify-center">
-<button onclick="toggleExplore()" class="hover px-8 py-3 rounded-xl bg-white/20">
-Explore Collection
-</button>
+<section id="exploreBox">
+  <div class="blockchain"></div>
+  <div class="code-layer"></div>
+
+  <div id="snakeTrack">
+    <div class="snakeItem"><img src="assets/nft9.png"></div>
+    <div class="snakeItem"><img src="assets/nft10.png"></div>
+    <div class="snakeItem"><img src="assets/nft11.png"></div>
+    <div class="snakeItem"><img src="assets/nft12.png"></div>
+    <div class="snakeItem"><img src="assets/nft13.png"></div>
+  </div>
 </section>
 
-<section id="explore" class="slide">
-<div class="space-y-6 py-10">
-
-<div class="marquee left">
-  <img src="assets/nft9.png" onclick="showTrait()">
-  <img src="assets/nft10.png" onclick="showTrait()">
-  <img src="assets/nft11.png" onclick="showTrait()">
-  <img src="assets/nft12.png" onclick="showTrait()">
+<!-- TRAIT MODAL -->
+<div id="traitModal">
+  <div class="modal-box">
+    <p>Traits: Coming Soon</p>
+    <button onclick="closeTrait()">Close</button>
+  </div>
 </div>
 
-<div class="marquee right">
-  <img src="assets/nft13.png" onclick="showTrait()">
-  <img src="assets/nft14.png" onclick="showTrait()">
-  <img src="assets/nft15.png" onclick="showTrait()">
-  <img src="assets/nft16.png" onclick="showTrait()">
-</div>
-
-<div class="marquee left">
-  <img src="assets/nft17.png" onclick="showTrait()">
-  <img src="assets/nft18.png" onclick="showTrait()">
-  <img src="assets/nft19.png" onclick="showTrait()">
-  <img src="assets/nft20.png" onclick="showTrait()">
-</div>
-
-<div class="marquee right">
-  <img src="assets/nft21.png" onclick="showTrait()">
-  <img src="assets/nft22.png" onclick="showTrait()">
-  <img src="assets/nft23.png" onclick="showTrait()">
-</div>
-
-</div>
-</section>
-
-<!-- WALLET -->
-<section class="py-10 flex justify-center">
-<button onclick="toggleWallet()" class="hover px-8 py-3 rounded-xl bg-white/20">Wallet Checker</button>
-</section>
-
-<section id="wallet" class="slide flex justify-center">
-<div class="glass p-6 rounded-xl w-full max-w-md">
-<input id="walletInput" class="w-full p-3 bg-black/30 mb-3" placeholder="Paste wallet">
-<button onclick="checkWallet()" class="hover w-full p-3 bg-gradient-to-r from-blue-400 to-purple-500">Check</button>
-<div id="result" class="hidden mt-4 text-center"></div>
-</div>
-</section>
-
-<!-- FOOTER -->
-<footer class="py-12 flex justify-center gap-4">
-<a href="https://x.com/Phanto0ms" target="_blank" class="hover">🐦</a>
-<button onclick="comingSoon()" class="hover">🌊</button>
-<button onclick="comingSoon()" class="hover">🪄</button>
-<button onclick="comingSoon()" class="hover">🏪</button>
-</footer>
-
-<div id="modal" class="modal">
-<div class="glass p-6 rounded-xl text-center">
-<p id="modalText">Coming Soon</p>
-<button onclick="closeModal()" class="mt-4 px-6 py-2 bg-blue-500 rounded">Close</button>
-</div>
-</div>
-
-<script>
-/* INTRO */
-const words=["PIXELS","ONCHAIN","BASE","CULTURE","PHANTOMS"];
-let i=0,p=0;
-setInterval(()=>{word.textContent=words[i++%words.length]},300);
-const pc=setInterval(()=>{pct.textContent=++p;if(p>=100)clearInterval(pc)},40);
-setTimeout(()=>intro.style.display="none",4300);
-
-/* TOGGLES */
-function toggleExplore(){explore.classList.toggle("show")}
-function toggleWallet(){wallet.classList.toggle("show")}
-
-/* MODALS */
-function comingSoon(){modal.style.display="flex"}
-function closeModal(){modal.style.display="none"}
-function showTrait(){modal.style.display="flex";modalText.textContent="Traits: Coming Soon"}
-
-/* WALLET */
-let whitelist={};
-fetch("data/whitelist.csv").then(r=>r.text()).then(t=>{
-t.split("\n").slice(1).forEach(r=>{
-const[w,s]=r.split(",");if(w)whitelist[w.trim().toLowerCase()]=s});
-});
-function checkWallet(){
-result.classList.remove("hidden");
-result.textContent=whitelist[walletInput.value.toLowerCase()]?"✅ WHITELISTED":"❌ NOT WHITELISTED";
-}
-</script>
-
+<!-- Custom JS -->
+<script src="js/main.js"></script>
 </body>
 </html>
