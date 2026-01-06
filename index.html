@@ -13,18 +13,111 @@ html{scroll-behavior:smooth}
 body{margin:0;font-family:system-ui;color:#fff;overflow-x:hidden}
 
 /* ================= INTRO SEQUENCE ================= */
+/* ================= PIXEL GLITCH INTRO ================= */
 #intro{
-  position:fixed; inset:0; z-index:100;
-  background:#000; display:flex;
-  align-items:center; justify-content:center;
-  flex-direction:column; text-align:center;
-  animation:introOut 1.2s ease forwards;
-  animation-delay:3s;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
-#intro h1{font-size:2.2rem;font-weight:700}
-#intro p{opacity:.7;margin-top:.5rem}
-@keyframes introOut{
-  to{opacity:0;pointer-events:none}
+
+.glitch-wrap{
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+
+.glitch{
+  font-size:3.5rem;
+  font-weight:900;
+  letter-spacing:0.15em;
+  position:relative;
+  color:#fff;
+  animation:glitchMove 2s infinite;
+}
+
+.glitch::before,
+.glitch::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  width:100%;
+  overflow:hidden;
+}
+
+.glitch::before{
+  color:#5B8CFF;
+  animation:glitchTop 1.5s infinite linear alternate-reverse;
+}
+
+.glitch::after{
+  color:#FF4FD8;
+  animation:glitchBottom 1.2s infinite linear alternate-reverse;
+}
+
+@keyframes glitchTop{
+  0%{clip-path:inset(0 0 80% 0);transform:translate(-2px,-2px)}
+  50%{clip-path:inset(30% 0 30% 0);transform:translate(2px,2px)}
+  100%{clip-path:inset(60% 0 0 0);transform:translate(-1px,1px)}
+}
+
+@keyframes glitchBottom{
+  0%{clip-path:inset(80% 0 0 0);transform:translate(2px,1px)}
+  50%{clip-path:inset(30% 0 30% 0);transform:translate(-2px,-1px)}
+  100%{clip-path:inset(0 0 60% 0);transform:translate(1px,-2px)}
+}
+
+@keyframes glitchMove{
+  0%,100%{transform:translate(0)}
+  25%{transform:translate(-1px,1px)}
+  50%{transform:translate(1px,-1px)}
+  75%{transform:translate(-1px,-1px)}
+}
+
+.intro-sub{
+  margin-top:1rem;
+  font-size:.95rem;
+  opacity:.75;
+}
+
+/* ================= LOADER ================= */
+.loader{
+  margin:2rem auto 0;
+  width:220px;
+  height:6px;
+  background:rgba(255,255,255,.15);
+  overflow:hidden;
+  border-radius:999px;
+}
+
+.loader-fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#5B8CFF,#FF4FD8,#3CFF8F);
+  animation:loading 3.5s linear forwards;
+}
+
+@keyframes loading{
+  to{width:100%}
+}
+
+/* ================= PIXEL FIELD ================= */
+.pixel-field span{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:#fff;
+  opacity:.15;
+  animation:pixelFloat linear infinite;
+}
+
+@keyframes pixelFloat{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-20px)}
 }
 
 /* ================= GRADIENT ================= */
@@ -132,10 +225,25 @@ body::after{
 <body>
 
 <!-- INTRO -->
+<!-- PIXEL GLITCH INTRO -->
 <div id="intro">
-  <h1>Welcome to the pixelated world.</h1>
-  <p>Explore the pixel arts</p>
+  <div class="glitch-wrap">
+    <h1 class="glitch" data-text="PHANTOMS">PHANTOMS</h1>
+    <p class="intro-sub">
+      Welcome to the pixelated world<br>
+      Explore the pixel arts
+    </p>
+
+    <!-- loading bar -->
+    <div class="loader">
+      <div class="loader-fill"></div>
+    </div>
+  </div>
+
+  <!-- floating pixels -->
+  <div class="pixel-field"></div>
 </div>
+
 
 <!-- NAV -->
 <header class="fixed top-0 left-0 w-full z-40 px-6 py-4 flex justify-between">
@@ -271,6 +379,25 @@ function checkWallet(){
  const w=walletInput.value.trim().toLowerCase();
  result.textContent=whitelist[w]==="whitelisted"?"✅ WHITELISTED":"❌ NOT WHITELISTED";
 }
+</script>
+<script>
+/* ========= PIXEL FIELD ========= */
+const field=document.querySelector(".pixel-field");
+for(let i=0;i<80;i++){
+  const p=document.createElement("span");
+  p.style.left=Math.random()*100+"%";
+  p.style.animationDuration=4+Math.random()*6+"s";
+  p.style.animationDelay=Math.random()*3+"s";
+  field.appendChild(p);
+}
+
+/* ========= INTRO EXIT ========= */
+setTimeout(()=>{
+  const intro=document.getElementById("intro");
+  intro.style.transition="1.2s ease";
+  intro.style.opacity="0";
+  intro.style.pointerEvents="none";
+},4200);
 </script>
 
 </body>
