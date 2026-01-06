@@ -10,16 +10,28 @@
 
 <style>
 html{scroll-behavior:smooth}
-body{margin:0;color:#fff;font-family:system-ui;overflow-x:hidden}
+body{margin:0;font-family:system-ui;color:#fff;overflow-x:hidden}
 
-/* ========= GRADIENT ========= */
-:root{ --intensity:0.35; }
+/* ================= INTRO SEQUENCE ================= */
+#intro{
+  position:fixed; inset:0; z-index:100;
+  background:#000; display:flex;
+  align-items:center; justify-content:center;
+  flex-direction:column; text-align:center;
+  animation:introOut 1.2s ease forwards;
+  animation-delay:3s;
+}
+#intro h1{font-size:2.2rem;font-weight:700}
+#intro p{opacity:.7;margin-top:.5rem}
+@keyframes introOut{
+  to{opacity:0;pointer-events:none}
+}
 
+/* ================= GRADIENT ================= */
+:root{--intensity:.32}
 body::before{
-  content:"";
-  position:fixed; inset:0; z-index:-2;
-  background:linear-gradient(
-    120deg,
+  content:""; position:fixed; inset:0; z-index:-2;
+  background:linear-gradient(120deg,
     rgba(91,140,255,var(--intensity)),
     rgba(138,92,255,var(--intensity)),
     rgba(0,229,255,var(--intensity)),
@@ -27,9 +39,9 @@ body::before{
     rgba(60,255,143,var(--intensity))
   );
   background-size:400% 400%;
-  animation:gradientFlow 18s ease infinite;
+  animation:grad 18s ease infinite;
 }
-@keyframes gradientFlow{
+@keyframes grad{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
@@ -39,115 +51,180 @@ body::after{
   background:#000; opacity:.35; z-index:-1;
 }
 
-/* ========= REVEALS ========= */
-.reveal,.rise{opacity:0;transform:translateY(80px);transition:1s cubic-bezier(.19,1,.22,1)}
-.reveal.active,.rise.active{opacity:1;transform:none}
+/* ================= REVEAL ================= */
+.reveal,.rise{
+  opacity:0; transform:translateY(60px);
+  transition:1s cubic-bezier(.19,1,.22,1);
+}
+.reveal.active,.rise.active{
+  opacity:1; transform:none;
+}
 
-/* ========= PARALLAX ========= */
-.parallax{position:absolute;transition:.15s ease-out;will-change:transform}
-
-/* ========= GLASS ========= */
+/* ================= GLASS ================= */
 .glass{
   background:rgba(255,255,255,.12);
   backdrop-filter:blur(14px);
   border:1px solid rgba(255,255,255,.25);
 }
 
-/* ========= MODAL ========= */
-.modal{
-  position:fixed; inset:0; background:rgba(0,0,0,.75);
-  display:none; align-items:center; justify-content:center; z-index:50;
+/* ================= HOVER FX ================= */
+.hover-fx{
+  transition:.25s ease;
+}
+.hover-fx:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 18px rgba(255,255,255,.35);
+}
+
+/* ================= SNEAKPEEKS ================= */
+#sneakpeeks{
+  position:relative;
+  overflow:hidden;
+}
+#sneakpeeks::before{
+  content:""; position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.05) 0px,
+      rgba(255,255,255,.05) 1px,
+      transparent 1px,
+      transparent 80px
+    );
+  mask-image:linear-gradient(#000 0%,#000 70%,transparent 100%);
+  animation:maskIn 1.5s ease forwards;
+}
+@keyframes maskIn{
+  from{transform:translateY(100%)}
+  to{transform:translateY(0)}
+}
+
+/* floating code blocks */
+.code{
+  position:absolute; font-family:monospace;
+  font-size:12px; opacity:.2;
+  animation:codeFloat linear infinite;
+}
+@keyframes codeFloat{
+  from{transform:translateY(120vh)}
+  to{transform:translateY(-120px)}
+}
+
+/* NFT parallax */
+.parallax{
+  position:absolute;
+  transition:.15s ease-out;
+  will-change:transform;
+}
+
+/* ================= WALLET SLIDE ================= */
+#walletWrap{
+  max-height:0;
+  overflow:hidden;
+  transition:1s ease;
+}
+#walletWrap.show{
+  max-height:500px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<header class="fixed top-0 left-0 w-full z-40 px-6 py-4 flex justify-between items-center">
+<!-- INTRO -->
+<div id="intro">
+  <h1>Welcome to the pixelated world.</h1>
+  <p>Explore the pixel arts</p>
+</div>
+
+<!-- NAV -->
+<header class="fixed top-0 left-0 w-full z-40 px-6 py-4 flex justify-between">
   <img src="assets/logo.png" class="w-8">
-  <!-- Gradient intensity -->
-  <input type="range" min="0.15" max="0.6" step="0.01"
-    value="0.35"
-    oninput="document.documentElement.style.setProperty('--intensity',this.value)">
 </header>
 
 <!-- HERO -->
 <section class="min-h-screen flex flex-col justify-center items-center text-center pt-32">
-  <h1 class="text-6xl md:text-8xl font-extrabold mb-4">PHANTOMS</h1>
-  <p class="opacity-80">A pixel-born civilization on Base</p>
+<h1 class="text-6xl md:text-8xl font-extrabold mb-4">PHANTOMS</h1>
+<p class="opacity-80">A pixel-born civilization on Base</p>
 </section>
 
 <!-- ABOUT -->
-<section class="rise py-32 px-6 max-w-4xl mx-auto text-center">
+<section class="rise py-20 px-6 max-w-4xl mx-auto text-center">
 <h2 class="text-4xl font-bold mb-6">About Phantoms</h2>
 <p class="opacity-80 leading-relaxed">
 Phantoms are here to represent base ecosystem, pixel vibes, creativity,
 pixel culture, and the future of onchain art.<br><br>
 Phantoms isn’t just art — it’s culture in the making. Built on <b>@base</b>.
 We’re scaling identity, ownership, and onchain creativity.
-Early roots, strong foundation — Phantoms is the presence.
 <b>@base</b> is the home. 👻
 </p>
 </section>
 
-<!-- COLLECTION INFO -->
-<section class="reveal py-32 px-6 max-w-5xl mx-auto text-center">
+<!-- COLLECTION -->
+<section class="reveal py-20 px-6 max-w-5xl mx-auto text-center">
 <h2 class="text-4xl font-bold mb-6">Collection Info</h2>
-<p class="opacity-80 leading-relaxed">
-<b>2222 Phantoms</b> entering the <b>@base</b> ecosystem.<br><br>
-200+ traits, each with a unique story.<br>
-Art by <b>@LoikaArts</b>.<br><br>
-These aren’t avatars — they’re <b>Phantoms</b>.
+<p class="opacity-80">
+<b>2222 Phantoms</b> entering <b>@base</b><br><br>
+200+ traits · Art by <b>@LoikaArts</b><br>
+These aren’t avatars — they’re <b>Phantoms</b>
 </p>
 </section>
 
 <!-- SNEAKPEEKS -->
-<section id="sneak" class="reveal relative min-h-screen py-32 text-center">
+<section id="sneakpeeks" class="reveal min-h-screen py-24 text-center">
 <h2 class="text-4xl font-bold mb-12">PHANTOMS SNEAKPEEKS</h2>
 
-<img class="parallax w-32 left-1/4 top-1/4" src="assets/nft1.png" data-speed="2">
-<img class="parallax w-36 right-1/4 top-1/3" src="assets/nft2.png" data-speed="3">
-<img class="parallax w-28 left-1/3 bottom-1/4" src="assets/nft3.png" data-speed="4">
-<img class="parallax w-40 right-1/3 top-1/2" src="assets/nft4.png" data-speed="5">
-<img class="parallax w-32 left-1/2 bottom-1/3" src="assets/nft5.png" data-speed="6">
+<!-- code blocks -->
+<script>
+for(let i=0;i<20;i++){
+  const s=document.createElement("span");
+  s.className="code";
+  s.textContent=Math.random()>0.5?"0xAF":"{}";
+  s.style.left=Math.random()*100+"%";
+  s.style.animationDuration=6+Math.random()*8+"s";
+  document.currentScript.parentElement.appendChild(s);
+}
+</script>
+
+<!-- NFTs -->
+<img class="parallax hover-fx w-32 left-1/4 top-1/4" src="assets/nft9.png" data-speed="2">
+<img class="parallax hover-fx w-36 right-1/4 top-1/3" src="assets/nft10.png" data-speed="3">
+<img class="parallax hover-fx w-28 left-1/3 bottom-1/4" src="assets/nft11.png" data-speed="4">
+<img class="parallax hover-fx w-40 right-1/3 top-1/2" src="assets/nft12.png" data-speed="5">
+<img class="parallax hover-fx w-32 left-1/2 bottom-1/3" src="assets/nft13.png" data-speed="6">
+</section>
+
+<!-- WALLET BUTTON -->
+<section class="py-10 flex justify-center">
+<button onclick="toggleWallet()"
+ class="hover-fx px-8 py-3 rounded-xl bg-white/20">
+Wallet Checker
+</button>
 </section>
 
 <!-- WALLET -->
-<section class="reveal py-32 flex justify-center">
+<section id="walletWrap" class="flex justify-center">
 <div class="glass w-full max-w-md p-6 rounded-2xl">
-<h3 class="text-2xl font-bold mb-4 text-center">Wallet Checker</h3>
-<input id="walletInput" class="w-full px-4 py-3 rounded-xl bg-black/30 border mb-4 text-white"
+<input id="walletInput"
+ class="w-full px-4 py-3 rounded-xl bg-black/30 mb-4 text-white"
  placeholder="Paste wallet (0x...)">
 <button onclick="checkWallet()"
- class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-400 to-purple-500">
+ class="hover-fx w-full py-3 rounded-xl bg-gradient-to-r from-blue-400 to-purple-500">
 Check Status
 </button>
-<div id="result" class="hidden mt-6 p-4 rounded-xl text-center font-semibold"></div>
+<div id="result" class="hidden mt-6 text-center font-semibold"></div>
 </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="py-12 flex justify-center gap-6">
 <a href="https://x.com/Phanto0ms" target="_blank"
- class="px-6 py-3 rounded-xl bg-blue-500">Twitter</a>
-<button onclick="openSeaModal()"
- class="px-6 py-3 rounded-xl bg-black/40">OpenSea</button>
+ class="hover-fx px-6 py-3 rounded-xl bg-blue-500">Twitter</a>
+<a class="hover-fx px-6 py-3 rounded-xl bg-black/40">OpenSea</a>
 </footer>
 
-<!-- OPENSEA MODAL -->
-<div id="osModal" class="modal">
-  <div class="glass p-6 rounded-xl text-center">
-    <h3 class="text-xl font-bold mb-2">Coming Soon</h3>
-    <p class="opacity-80 mb-4">OpenSea listing will be live soon.</p>
-    <button onclick="closeOS()" class="px-6 py-2 bg-blue-500 rounded-xl">
-      Close
-    </button>
-  </div>
-</div>
-
 <script>
-/* REVEALS */
+/* REVEAL */
 const io=new IntersectionObserver(e=>{
  e.forEach(x=>x.isIntersecting&&x.target.classList.add("active"))
 },{threshold:.2});
@@ -163,24 +240,19 @@ document.addEventListener("mousemove",e=>{
  });
 });
 
-/* PARALLAX MOBILE (touch + scroll) */
+/* PARALLAX MOBILE */
 window.addEventListener("scroll",()=>{
  document.querySelectorAll(".parallax").forEach((el,i)=>{
   el.style.transform=`translateY(${scrollY/40*(i+1)}px)`;
  });
 });
-window.addEventListener("touchmove",e=>{
- const t=e.touches[0];
- document.querySelectorAll(".parallax").forEach(el=>{
-  el.style.transform=`translate(${t.clientX/100}px,${t.clientY/100}px)`;
- });
-});
 
-/* OPENSEA */
-function openSeaModal(){ osModal.style.display="flex"; }
-function closeOS(){ osModal.style.display="none"; }
+/* WALLET TOGGLE */
+function toggleWallet(){
+ document.getElementById("walletWrap").classList.toggle("show");
+}
 
-/* WALLET */
+/* WHITELIST */
 let whitelist={};
 fetch("data/whitelist.csv").then(r=>r.text()).then(t=>{
  t.split("\n").slice(1).forEach(r=>{
