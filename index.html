@@ -97,7 +97,23 @@
     <button onclick="closeTrait()">Close</button>
   </div>
 </div>
+<!-- WALLET CHECKER BUTTON -->
+<div class="explore-btn-wrap">
+  <button onclick="toggleWallet()">Wallet Checker</button>
+</div>
 
+<!-- WALLET CHECKER PANEL -->
+<section id="walletBox" class="wallet-box">
+  <div class="wallet-inner">
+    <input
+      id="walletInput"
+      type="text"
+      placeholder="Paste wallet address (0x...)"
+    >
+    <button onclick="checkWallet()">Check Status</button>
+    <p id="walletResult"></p>
+  </div>
+</section>
 <script src="js/main.js"></script>
 </body>
 </html>
