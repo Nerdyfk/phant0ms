@@ -76,3 +76,56 @@ background-size:60px 60px}
 /* Modal */
 #traitModal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75);z-index:80}
 .modal-box{background:rgba(255,255,255,.12);padding:24px;border-radius:16px}
+/* ================= WALLET ================= */
+.wallet-box{
+  max-height:0;
+  overflow:hidden;
+  transition:1s ease;
+  display:flex;
+  justify-content:center;
+}
+.wallet-box.show{
+  max-height:260px;
+}
+
+.wallet-inner{
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:18px;
+  padding:24px;
+  width:100%;
+  max-width:420px;
+  text-align:center;
+}
+
+.wallet-inner input{
+  width:100%;
+  padding:14px;
+  margin-bottom:14px;
+  border-radius:12px;
+  background:rgba(0,0,0,.35);
+  color:#fff;
+  border:none;
+}
+
+.wallet-inner button{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  background:linear-gradient(90deg,#5B8CFF,#FF4FD8);
+  border:none;
+  color:#fff;
+}
+
+#walletResult{
+  margin-top:12px;
+  opacity:.8;
+}
+
+/* ================= MOBILE GYRO ================= */
+@media (max-width:768px){
+  .snakeItem{
+    transition:transform .2s ease-out;
+  }
+}
