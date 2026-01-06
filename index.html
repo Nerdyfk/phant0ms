@@ -11,22 +11,24 @@
 
 <body>
 
-<!-- INTRO -->
+<!-- GLITCH LOADING INTRO -->
 <div id="intro">
   <div class="intro-inner">
-    <div class="glitch">PHANTOMS</div>
-    <div class="loader"><div class="loader-fill"></div></div>
-    <p class="intro-sub">Loading...</p>
+    <div class="glitch-text">PHANTOMS</div>
+    <div class="loader-bar"><span></span></div>
+    <div class="loading-percent" id="loadingPercent">0%</div>
   </div>
 </div>
 
-<!-- GRADIENT CONTROL -->
+<!-- GRADIENT CONTROL (TOP RIGHT) -->
 <input id="gradCtl" type="range" min="0.15" max="0.6" step="0.01" value="0.32">
 
+<!-- HEADER -->
 <header class="site-header">
   <img src="assets/logo.png" class="logo">
 </header>
 
+<!-- HERO -->
 <section class="hero">
   <h1>PHANTOMS</h1>
   <p>A pixel-born civilization on Base</p>
@@ -45,32 +47,26 @@
   </p>
 </section>
 
-<!-- ACTION ICONS -->
+<!-- ICON ACTION BAR -->
 <section class="action-bar">
-  <!-- Twitter -->
-  <button onclick="openTwitter()" class="icon-btn">
-    <svg viewBox="0 0 24 24"><path fill="white" d="M18.9 2H22L14.7 10.4 23 22h-6.5l-5.1-7-6 7H2l7.8-8.8L2 2h6.6l4.6 6.3L18.9 2z"/></svg>
-  </button>
+  <button onclick="openTwitter()" class="icon-btn">X</button>
 
-  <!-- OpenSea -->
   <button onclick="togglePanel('osPanel')" class="icon-btn">
-    <svg viewBox="0 0 32 32"><path fill="#1E90FF" d="M16 2C9 8 5 13 5 18a11 11 0 0 0 22 0c0-5-4-10-11-16z"/></svg>
+    <img src="assets/opensea.png">
   </button>
 
-  <!-- Magic Eden -->
   <button onclick="togglePanel('mePanel')" class="icon-btn">
-    <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#7CFFB2"/></svg>
+    <img src="assets/magiceden.png">
   </button>
 
-  <!-- Store -->
   <button onclick="togglePanel('storePanel')" class="icon-btn">
-    <svg viewBox="0 0 24 24"><path fill="white" d="M3 9l1-5h16l1 5H3zm0 2h18v11H3V11z"/></svg>
+    <img src="assets/store.png">
   </button>
 </section>
 
 <section id="osPanel" class="slide-panel">OpenSea — Coming Soon</section>
 <section id="mePanel" class="slide-panel">Magic Eden — Coming Soon</section>
-<section id="storePanel" class="slide-panel">Phantoms Store — Coming Soon</section>
+<section id="storePanel" class="slide-panel">Store — Coming Soon</section>
 
 <!-- EXPLORE -->
 <div class="explore-btn-wrap">
@@ -81,12 +77,25 @@
   <div class="blockchain"></div>
 
   <div id="snakeTrack">
-    <!-- add unlimited NFTs here -->
+    <!-- Add unlimited NFTs -->
     <div class="snakeItem"><img src="assets/nft9.png"></div>
     <div class="snakeItem"><img src="assets/nft10.png"></div>
     <div class="snakeItem"><img src="assets/nft11.png"></div>
     <div class="snakeItem"><img src="assets/nft12.png"></div>
     <div class="snakeItem"><img src="assets/nft13.png"></div>
+  </div>
+</section>
+
+<!-- WALLET CHECKER -->
+<div class="explore-btn-wrap">
+  <button onclick="toggleWallet()">Wallet Checker</button>
+</div>
+
+<section id="walletBox" class="wallet-box">
+  <div class="wallet-inner">
+    <input id="walletInput" placeholder="Paste wallet address">
+    <button onclick="checkWallet()">Check Status</button>
+    <p id="walletResult"></p>
   </div>
 </section>
 
@@ -97,23 +106,7 @@
     <button onclick="closeTrait()">Close</button>
   </div>
 </div>
-<!-- WALLET CHECKER BUTTON -->
-<div class="explore-btn-wrap">
-  <button onclick="toggleWallet()">Wallet Checker</button>
-</div>
 
-<!-- WALLET CHECKER PANEL -->
-<section id="walletBox" class="wallet-box">
-  <div class="wallet-inner">
-    <input
-      id="walletInput"
-      type="text"
-      placeholder="Paste wallet address (0x...)"
-    >
-    <button onclick="checkWallet()">Check Status</button>
-    <p id="walletResult"></p>
-  </div>
-</section>
 <script src="js/main.js"></script>
 </body>
 </html>
