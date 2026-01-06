@@ -15,9 +15,7 @@ body{margin:0;font-family:system-ui;color:#fff;overflow-x:hidden}
 /* ================= INTRO SEQUENCE ================= */
 /* ================= PIXEL GLITCH INTRO ================= */
 #intro{
-  position:fixed;
-  inset:0;
-  z-index:100;
+  position:fixed; inset:0; z-index:100;
   background:#000;
   display:flex;
   align-items:center;
@@ -25,100 +23,88 @@ body{margin:0;font-family:system-ui;color:#fff;overflow-x:hidden}
   overflow:hidden;
 }
 
-.glitch-wrap{
-  text-align:center;
-  position:relative;
-  z-index:2;
-}
+.glitch-wrap{ text-align:center; z-index:2 }
 
 .glitch{
   font-size:3.5rem;
   font-weight:900;
-  letter-spacing:0.15em;
+  letter-spacing:.18em;
   position:relative;
-  color:#fff;
   animation:glitchMove 2s infinite;
 }
 
-.glitch::before,
-.glitch::after{
+.glitch::before,.glitch::after{
   content:attr(data-text);
-  position:absolute;
-  left:0;
-  width:100%;
-  overflow:hidden;
+  position:absolute; left:0; width:100%;
 }
 
 .glitch::before{
   color:#5B8CFF;
-  animation:glitchTop 1.5s infinite linear alternate-reverse;
+  animation:glitchTop 1.4s infinite alternate;
 }
-
 .glitch::after{
   color:#FF4FD8;
-  animation:glitchBottom 1.2s infinite linear alternate-reverse;
+  animation:glitchBottom 1.1s infinite alternate;
 }
 
 @keyframes glitchTop{
-  0%{clip-path:inset(0 0 80% 0);transform:translate(-2px,-2px)}
-  50%{clip-path:inset(30% 0 30% 0);transform:translate(2px,2px)}
-  100%{clip-path:inset(60% 0 0 0);transform:translate(-1px,1px)}
+  0%{clip-path:inset(0 0 70% 0);transform:translate(-2px,-2px)}
+  100%{clip-path:inset(30% 0 20% 0);transform:translate(2px,2px)}
 }
-
 @keyframes glitchBottom{
-  0%{clip-path:inset(80% 0 0 0);transform:translate(2px,1px)}
-  50%{clip-path:inset(30% 0 30% 0);transform:translate(-2px,-1px)}
-  100%{clip-path:inset(0 0 60% 0);transform:translate(1px,-2px)}
+  0%{clip-path:inset(70% 0 0 0);transform:translate(2px,1px)}
+  100%{clip-path:inset(20% 0 30% 0);transform:translate(-2px,-1px)}
 }
-
 @keyframes glitchMove{
-  0%,100%{transform:translate(0)}
-  25%{transform:translate(-1px,1px)}
-  50%{transform:translate(1px,-1px)}
-  75%{transform:translate(-1px,-1px)}
+  0%,100%{transform:none}
+  50%{transform:translate(-1px,1px)}
 }
 
-.intro-sub{
-  margin-top:1rem;
-  font-size:.95rem;
-  opacity:.75;
+/* Flicker word */
+.intro-flicker{
+  margin-top:.8rem;
+  font-size:.9rem;
+  letter-spacing:.3em;
+  opacity:.7;
+  animation:flicker .15s infinite alternate;
+}
+@keyframes flicker{
+  from{opacity:.3}
+  to{opacity:.8}
 }
 
-/* ================= LOADER ================= */
+/* Loader */
 .loader{
-  margin:2rem auto 0;
-  width:220px;
-  height:6px;
+  width:220px; height:6px;
+  margin:1.8rem auto .8rem;
   background:rgba(255,255,255,.15);
-  overflow:hidden;
-  border-radius:999px;
+  overflow:hidden; border-radius:999px;
 }
-
 .loader-fill{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,#5B8CFF,#FF4FD8,#3CFF8F);
-  animation:loading 3.5s linear forwards;
+  animation:loadBar 4s linear forwards;
+}
+@keyframes loadBar{ to{width:100%} }
+
+.loader-text{
+  font-size:.8rem;
+  opacity:.6;
 }
 
-@keyframes loading{
-  to{width:100%}
-}
-
-/* ================= PIXEL FIELD ================= */
+/* Pixels */
 .pixel-field span{
   position:absolute;
-  width:6px;
-  height:6px;
-  background:#fff;
-  opacity:.15;
+  width:6px;height:6px;
+  background:#fff;opacity:.15;
   animation:pixelFloat linear infinite;
 }
-
 @keyframes pixelFloat{
-  from{transform:translateY(110vh)}
+  from{transform:translateY(120vh)}
   to{transform:translateY(-20px)}
 }
+
 
 /* ================= GRADIENT ================= */
 :root{--intensity:.32}
@@ -229,20 +215,21 @@ body::after{
 <div id="intro">
   <div class="glitch-wrap">
     <h1 class="glitch" data-text="PHANTOMS">PHANTOMS</h1>
-    <p class="intro-sub">
-      Welcome to the pixelated world<br>
-      Explore the pixel arts
-    </p>
 
-    <!-- loading bar -->
+    <p class="intro-flicker" id="flickerText">PIXELS</p>
+
     <div class="loader">
       <div class="loader-fill"></div>
     </div>
+
+    <p class="loader-text">
+      Loading <span id="loadPercent">0</span>%
+    </p>
   </div>
 
-  <!-- floating pixels -->
   <div class="pixel-field"></div>
 </div>
+
 
 
 <!-- NAV -->
@@ -301,6 +288,14 @@ for(let i=0;i<20;i++){
 <img class="parallax hover-fx w-40 right-1/3 top-1/2" src="assets/nft12.png" data-speed="5">
 <img class="parallax hover-fx w-32 left-1/2 bottom-1/3" src="assets/nft13.png" data-speed="6">
 </section>
+  <!-- opensea -->
+<section id="openseaWrap" class="flex justify-center mt-6"
+ style="max-height:0;overflow:hidden;transition:1s ease">
+  <div class="glass w-full max-w-md p-6 rounded-2xl text-center">
+    <h3 class="text-xl font-bold mb-2">OpenSea</h3>
+    <p class="opacity-70">Coming soon on Base 🌊</p>
+  </div>
+</section>
 
 <!-- WALLET BUTTON -->
 <section class="py-10 flex justify-center">
@@ -324,11 +319,16 @@ Check Status
 </div>
 </section>
 
+
 <!-- FOOTER -->
 <footer class="py-12 flex justify-center gap-6">
 <a href="https://x.com/Phanto0ms" target="_blank"
  class="hover-fx px-6 py-3 rounded-xl bg-blue-500">Twitter</a>
-<a class="hover-fx px-6 py-3 rounded-xl bg-black/40">OpenSea</a>
+<button onclick="toggleOpenSea()"
+ class="hover-fx px-6 py-3 rounded-xl bg-black/40">
+OpenSea
+</button>
+
 </footer>
 
 <script>
@@ -354,6 +354,12 @@ window.addEventListener("scroll",()=>{
   el.style.transform=`translateY(${scrollY/40*(i+1)}px)`;
  });
 });
+/* opensea */
+<script>
+function toggleOpenSea(){
+  const el=document.getElementById("openseaWrap");
+  el.style.maxHeight = el.style.maxHeight==="500px" ? "0" : "500px";
+}
 
 /* WALLET TOGGLE */
 function toggleWallet(){
@@ -391,13 +397,37 @@ for(let i=0;i<80;i++){
   field.appendChild(p);
 }
 
+/* ========= INTRO PIXELS ========= */
+const field=document.querySelector(".pixel-field");
+for(let i=0;i<90;i++){
+  const p=document.createElement("span");
+  p.style.left=Math.random()*100+"%";
+  p.style.animationDuration=4+Math.random()*6+"s";
+  field.appendChild(p);
+}
+
+/* ========= RANDOM FLICKER WORDS ========= */
+const words=["PIXELS","ONCHAIN","BASE","CULTURE","PHANTOMS"];
+let w=0;
+setInterval(()=>{
+  flickerText.textContent=words[w%words.length];
+  w++;
+},300);
+
+/* ========= FAKE LOADING % ========= */
+let percent=0;
+const counter=setInterval(()=>{
+  percent++;
+  loadPercent.textContent=percent;
+  if(percent>=100) clearInterval(counter);
+},40);
+
 /* ========= INTRO EXIT ========= */
 setTimeout(()=>{
-  const intro=document.getElementById("intro");
   intro.style.transition="1.2s ease";
   intro.style.opacity="0";
   intro.style.pointerEvents="none";
-},4200);
+},4300);
 </script>
 
 </body>
