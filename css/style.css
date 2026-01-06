@@ -1,0 +1,78 @@
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui;color:#fff;overflow-x:hidden}
+
+/* Gradient background */
+:root{--g:.32}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:linear-gradient(120deg,
+    rgba(91,140,255,var(--g)),
+    rgba(138,92,255,var(--g)),
+    rgba(0,229,255,var(--g)),
+    rgba(255,79,216,var(--g)),
+    rgba(60,255,143,var(--g)));
+  background-size:400% 400%;
+  animation:bg 18s ease infinite;
+}
+@keyframes bg{50%{background-position:100% 50%}}
+body::after{content:"";position:fixed;inset:0;background:#000;opacity:.35;z-index:-1}
+
+/* Intro */
+#intro{position:fixed;inset:0;z-index:100;background:#000;display:flex;align-items:center;justify-content:center}
+.glitch{font-size:3rem;font-weight:900;letter-spacing:.2em;animation:glitch 2s infinite}
+@keyframes glitch{50%{transform:translate(-1px,1px)}}
+.loader{width:220px;height:6px;background:#222;margin:20px auto;overflow:hidden}
+.loader-fill{height:100%;background:linear-gradient(90deg,#5B8CFF,#FF4FD8,#3CFF8F);animation:load 4s forwards}
+@keyframes load{to{width:100%}}
+
+/* Header */
+.site-header{position:fixed;top:0;left:0;width:100%;padding:16px;z-index:40}
+.logo{width:32px}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.hero h1{font-size:4rem;font-weight:800}
+
+/* About */
+.about{max-width:800px;margin:0 auto;padding:80px 20px;text-align:center}
+.about span{display:inline-block;opacity:0;transform:translateY(14px);animation:rise .4s forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* Action bar */
+.action-bar{display:flex;justify-content:center;gap:24px}
+.icon-btn{width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:.3s}
+.icon-btn:hover{transform:scale(1.1)}
+.icon-btn svg,.icon-btn img{width:28px;fill:#fff}
+
+/* Slide panels */
+.slide-panel{max-height:0;overflow:hidden;transition:1s ease;text-align:center}
+.slide-panel.show{max-height:200px;padding:20px}
+
+/* Explore */
+.explore-btn-wrap{text-align:center;margin:40px 0}
+.explore-btn-wrap button{padding:16px 40px;border-radius:20px;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.35)}
+
+#exploreBox{max-height:0;overflow:hidden;transition:1s ease;position:relative;width:100%;max-width:900px;height:320px;margin:0 auto;border-radius:20px}
+#exploreBox.show{max-height:340px}
+
+/* Blockchain */
+.blockchain{position:absolute;inset:0;background:
+linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+background-size:60px 60px}
+
+/* Snake */
+#snakeTrack{position:relative;width:100%;height:320px}
+.snakeItem{position:absolute;left:-120px;animation:snake 18s linear infinite}
+.snakeItem img{width:80px;cursor:pointer}
+@keyframes snake{
+  0%{transform:translate(-120px,30px)}
+  25%{transform:translate(900px,30px)}
+  50%{transform:translate(900px,230px)}
+  75%{transform:translate(-120px,230px)}
+  100%{transform:translate(-120px,30px)}
+}
+
+/* Modal */
+#traitModal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75);z-index:80}
+.modal-box{background:rgba(255,255,255,.12);padding:24px;border-radius:16px}
