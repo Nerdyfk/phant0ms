@@ -67,3 +67,42 @@ setInterval(()=>{
     items.forEach(i=>row.appendChild(i));
   });
 },6000);
+// TOGGLES
+function toggleExplore(){
+  document.getElementById("exploreBox").classList.toggle("show");
+}
+function toggleWallet(){
+  document.getElementById("walletBox").classList.toggle("show");
+}
+
+// EXPLORE NFT LOAD + SHUFFLE
+const nftList = Array.from({length:23},(_,i)=>`assets/nft${i+1}.png`);
+const rows = document.querySelectorAll(".explore-row");
+
+function fillExplore(){
+  rows.forEach(row=>{
+    row.innerHTML="";
+    shuffle([...nftList]).slice(0,7).forEach(src=>{
+      const btn=document.createElement("button");
+      btn.className="nft-btn";
+      btn.innerHTML=`<img src="${src}">`;
+      row.appendChild(btn);
+    });
+  });
+}
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+fillExplore();
+setInterval(fillExplore,7000);
+
+// Twitter
+function openTwitter(){
+  window.open("https://x.com/Phanto0ms","_blank");
+}
