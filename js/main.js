@@ -1,100 +1,168 @@
-/* =========================
-   INTRO LOADER FIX
-========================= */
+/* ======================================================
+   INTRO : GLITCH + FAST CINEMATIC LOADING (FINAL)
+====================================================== */
 let load = 0;
 const percent = document.getElementById("loadingPercent");
 const bar = document.querySelector(".loading-bar");
 
 const introInterval = setInterval(() => {
-  load += Math.floor(Math.random() * 6) + 4;
+  load += Math.floor(Math.random() * 8) + 6; // fast cinematic
   if (load >= 100) {
     load = 100;
     clearInterval(introInterval);
 
     setTimeout(() => {
       const intro = document.getElementById("intro");
-      intro.style.opacity = "0";
-      intro.style.pointerEvents = "none";
+      if (intro) {
+        intro.style.opacity = "0";
+        intro.style.pointerEvents = "none";
 
-      setTimeout(() => {
-        intro.style.display = "none";   // 🔥 THIS LINE FIXES EVERYTHING
-      }, 1000);
-
-    }, 500);
+        setTimeout(() => {
+          intro.style.display = "none"; // 🔥 critical fix
+        }, 900);
+      }
+    }, 400);
   }
 
   if (percent) percent.textContent = load + "%";
   if (bar) bar.style.width = load + "%";
-}, 120);
+}, 110);
 
-/* ABOUT LETTER ANIM */
-const about=document.getElementById("aboutText");
-if(about){
-  const chars=about.innerHTML.split("");
-  about.innerHTML=chars.map((c,i)=>
-    c===" "?"&nbsp;":`<span style="animation-delay:${i*0.015}s">${c}</span>`
-  ).join("");
+
+/* ======================================================
+   HERO : ALWAYS-LIVE GRADIENT SHIMMER
+====================================================== */
+const hero = document.querySelector(".hero-title");
+if (hero) {
+  let hue = 0;
+  setInterval(() => {
+    hue = (hue + 1) % 360;
+    hero.style.backgroundImage =
+      `linear-gradient(90deg,
+        hsl(${hue},90%,70%),
+        hsl(${(hue + 60) % 360},90%,70%),
+        hsl(${(hue + 120) % 360},90%,70%)
+      )`;
+  }, 60);
 }
 
-/* TOGGLES */
-function toggleExplore(){
-  const b=document.getElementById("exploreBox");
-  b.classList.toggle("hidden");
-  setTimeout(()=>b.classList.toggle("show"),10);
-}
-function toggleWallet(){
-  const b=document.getElementById("walletBox");
-  b.classList.toggle("hidden");
-  setTimeout(()=>b.classList.toggle("show"),10);
-}
 
-/* EXPLORE SHUFFLE */
-const rows=document.querySelectorAll(".explore-row");
-const nftList=[...Array(23)].map((_,i)=>`assets/nft${i+1}.png`);
+/* ======================================================
+   SCROLL-BASED GLOW (SECTIONS)
+====================================================== */
+const glowSections = document.querySelectorAll(".about, .explore, .wallet");
 
-function shuffle(a){
-  for(let i=a.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
-  }
-  return a;
-}
-
-function fillExplore(){
-  rows.forEach(r=>{
-    r.innerHTML="";
-    shuffle([...nftList]).slice(0,7).forEach(src=>{
-      const b=document.createElement("button");
-      b.className="nft-btn";
-      b.innerHTML=`<img src="${src}">`;
-      r.appendChild(b);
+const glowObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("glow-active");
+      }
     });
-  });
-}
-fillExplore();
-setInterval(fillExplore,7000);
+  },
+  { threshold: 0.25 }
+);
 
-/* WHITELIST */
-let FCFS=[],GDT=[];
-fetch("data/fcfs.csv").then(r=>r.text()).then(t=>FCFS=t.split(/\r?\n/).map(v=>v.trim().toLowerCase()));
-fetch("data/gdt.csv").then(r=>r.text()).then(t=>GDT=t.split(/\r?\n/).map(v=>v.trim().toLowerCase()));
+glowSections.forEach(sec => glowObserver.observe(sec));
 
-function checkWhitelist(){
-  const w=document.getElementById("walletInput").value.trim().toLowerCase();
-  const r=document.getElementById("walletResult");
-  if(!w){r.textContent="Paste wallet address";return}
-  if(FCFS.includes(w)) r.textContent="✅ FCFS Whitelisted";
-  else if(GDT.includes(w)) r.textContent="🎟️ GDT Whitelisted";
-  else r.textContent="❌ Not Whitelisted";
-}
 
-/* LINKS */
-function openTwitter(){
-  window.open("https://x.com/Phanto0ms","_blank");
-}
+/* ======================================================
+   EXPLORE COLLECTION : 3-ROW HORIZONTAL LOOP
+====================================================== */
+const rows = document.querySelectorAll(".explore-row");
 
-/* SCROLL-BASED GLOW */
-window.addEventListener("scroll",()=>{
-  const sc=window.scrollY/window.innerHeight;
-  document.documentElement.style.setProperty("--glow",Math.min(.5,.25+sc*.3));
+rows.forEach((row, index) => {
+  let pos = index % 2 === 0 ? 0 : -row.scrollWidth / 2;
+  const speed = index % 2 === 0 ? 0.25 : -0.25;
+
+  function move() {
+    pos += speed;
+    if (Math.abs(pos) > row.scrollWidth / 2) pos = 0;
+    row.style.transform = `translateX(${pos}px)`;
+    requestAnimationFrame(move);
+  }
+  move();
 });
+
+// NFT click → trait modal (placeholder)
+document.querySelectorAll(".nft-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    showTrait();
+  });
+});
+
+function showTrait() {
+  const modal = document.getElementById("traitModal");
+  const content = document.getElementById("traitContent");
+  if (content) content.textContent = "Traits: Coming Soon";
+  if (modal) modal.style.display = "flex";
+}
+
+function closeTrait() {
+  const modal = document.getElementById("traitModal");
+  if (modal) modal.style.display = "none";
+}
+
+
+/* ======================================================
+   TOGGLES : EXPLORE & WALLET (HIDDEN BY DEFAULT)
+====================================================== */
+function toggleExplore() {
+  const box = document.getElementById("exploreBox");
+  if (box) box.classList.toggle("show");
+}
+
+function toggleWallet() {
+  const box = document.getElementById("walletBox");
+  if (box) box.classList.toggle("show");
+}
+
+
+/* ======================================================
+   WALLET CHECKER (CSV READY, PREMIUM TEXT)
+====================================================== */
+async function checkWallet() {
+  const input = document.getElementById("walletInput");
+  const result = document.getElementById("walletResult");
+  if (!input || !result) return;
+
+  const addr = input.value.trim().toLowerCase();
+  if (!addr) {
+    result.textContent = "Please enter a wallet address.";
+    return;
+  }
+
+  try {
+    const [fcfs, gtd] = await Promise.all([
+      fetch("data/fcfs.csv").then(r => r.text()),
+      fetch("data/gtd.csv").then(r => r.text())
+    ]);
+
+    if (fcfs.toLowerCase().includes(addr)) {
+      result.textContent = "✅ This wallet is whitelisted for FCFS slots.";
+    } else if (gtd.toLowerCase().includes(addr)) {
+      result.textContent = "✨ This wallet is whitelisted for GDT slots.";
+    } else {
+      result.textContent = "❌ This wallet is not whitelisted.";
+    }
+  } catch {
+    result.textContent = "Whitelist data unavailable. Please try later.";
+  }
+}
+
+
+/* ======================================================
+   SOCIAL LINKS
+====================================================== */
+function openTwitter() {
+  window.open("https://x.com/Phanto0ms", "_blank");
+}
+
+
+/* ======================================================
+   MOBILE PERFORMANCE SAFETY
+====================================================== */
+if (window.innerWidth < 640) {
+  document.documentElement.style.setProperty("--line-speed", "48s");
+  document.documentElement.style.setProperty("--glow", "0.22");
+}
