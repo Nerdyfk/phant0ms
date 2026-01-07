@@ -8,6 +8,7 @@
 <style>
 :root{--c1:#7afcff;--c2:#ff7adf}
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:system-ui,-apple-system,sans-serif;
@@ -22,9 +23,10 @@ body{
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
+
 section{padding:56px 16px;text-align:center}
 
-/* ===== BLOCKCHAIN LINES ===== */
+/* ===== BACKGROUND EFFECTS ===== */
 .lines{
   position:fixed;inset:0;pointer-events:none;z-index:-2;
 }
@@ -40,10 +42,7 @@ section{padding:56px 16px;text-align:center}
   to{transform:translateX(30%)}
 }
 
-/* ===== CODE MATRIX ===== */
-#codebg{
-  position:fixed;inset:0;z-index:-3;
-}
+#codebg{position:fixed;inset:0;z-index:-3}
 
 /* ===== INTRO ===== */
 #intro{
@@ -63,13 +62,12 @@ section{padding:56px 16px;text-align:center}
   background:linear-gradient(90deg,var(--c1),var(--c2));
 }
 
-/* ===== LOGO (TOP LEFT) ===== */
+/* ===== LOGO ===== */
 .top-logo{
   position:fixed;
   top:14px;left:14px;
   width:42px;height:42px;
   z-index:1000;
-  perspective:600px;
 }
 .top-logo img{
   width:100%;height:100%;
@@ -90,22 +88,29 @@ section{padding:56px 16px;text-align:center}
 }
 .hero p{opacity:.85}
 
-/* ===== SOCIAL ===== */
+/* ===== SOCIAL ICONS (FIXED SIZE) ===== */
 .social{
-  display:flex;gap:14px;justify-content:center;margin:22px 0
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  margin:26px 0;
 }
-.social a,.social img{
-  width:56px;height:56px;
-  padding:10px;
-  background:rgba(255,255,255,.06);
+.social a{
+  width:54px;
+  height:54px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.07);
   border-radius:14px;
-  cursor:pointer;
   transition:.25s;
-  display:flex;align-items:center;justify-content:center;
 }
-.social img{width:100%;height:100%}
-.social a:hover,.social img:hover{
-  transform:scale(1.1);
+.social img{
+  width:28px;
+  height:28px;
+}
+.social a:hover{
+  transform:scale(1.12);
   box-shadow:0 0 14px var(--c1);
 }
 
@@ -115,11 +120,11 @@ section{padding:56px 16px;text-align:center}
   padding:14px 34px;margin:8px;
   font-weight:600;cursor:pointer;
   background:linear-gradient(90deg,var(--c1),var(--c2));
-  color:#000;transition:.25s
+  color:#000;
+  transition:.25s;
 }
 .btn:hover{box-shadow:0 0 18px var(--c2)}
 
-/* ===== TOGGLE ===== */
 #explore,#wallet{display:none}
 .reveal{animation:rev .4s ease}
 @keyframes rev{
@@ -129,7 +134,7 @@ section{padding:56px 16px;text-align:center}
 
 /* ===== EXPLORE ===== */
 .explore-box{
-  width:320px;              /* 4 NFT visible */
+  width:320px;
   max-width:90vw;
   margin:20px auto;
   padding:14px;
@@ -137,25 +142,16 @@ section{padding:56px 16px;text-align:center}
   border-radius:18px;
   overflow:hidden;
 }
-.track{
-  display:flex;gap:10px;width:max-content;
-}
+.track{display:flex;gap:10px;width:max-content}
 .row1{animation:l 26s linear infinite}
 .row2{animation:r 30s linear infinite}
 .row3{animation:l 34s linear infinite}
-@keyframes l{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
-@keyframes r{
-  from{transform:translateX(-50%)}
-  to{transform:translateX(0)}
-}
+@keyframes l{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes r{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 .track img{
   width:70px;height:70px;
   border-radius:12px;
-  cursor:pointer;
-  transition:.25s
+  transition:.25s;
 }
 .track img:hover{
   transform:scale(1.15);
@@ -165,10 +161,8 @@ section{padding:56px 16px;text-align:center}
 /* ===== WALLET ===== */
 input{
   width:100%;max-width:420px;
-  padding:14px;border-radius:12px;border:none
+  padding:14px;border-radius:12px;border:none;
 }
-.status.ok{color:#7afcff;text-shadow:0 0 10px #7afcff}
-.status.no{color:#ff8a8a}
 
 /* ===== MODAL ===== */
 #modal{
@@ -180,7 +174,7 @@ input{
 #modal.show{display:flex}
 .modal-box{
   background:#111;
-  padding:28px;border-radius:18px;text-align:center
+  padding:28px;border-radius:18px;
 }
 
 /* ===== FOOTER ===== */
@@ -190,7 +184,6 @@ footer{padding:28px;opacity:.6;text-align:center}
 
 <body>
 
-<!-- BLOCKCHAIN LINES -->
 <div class="lines">
   <span style="top:20%"></span>
   <span style="top:40%"></span>
@@ -199,7 +192,6 @@ footer{padding:28px;opacity:.6;text-align:center}
 </div>
 <canvas id="codebg"></canvas>
 
-<!-- INTRO -->
 <div id="intro">
   <div style="text-align:center">
     <h1>PHANTOMS</h1>
@@ -209,9 +201,8 @@ footer{padding:28px;opacity:.6;text-align:center}
   </div>
 </div>
 
-<!-- LOGO -->
 <div class="top-logo">
-  <img src="assets/logo.png" alt="Logo">
+  <img src="assets/logo.png">
 </div>
 
 <section class="hero">
@@ -220,11 +211,11 @@ footer{padding:28px;opacity:.6;text-align:center}
 
   <div class="social">
     <a href="https://x.com/Phanto0ms" target="_blank">
-      <img src="assets/twitter.png">
+      <img src="assets/x.png" alt="X">
     </a>
-    <img src="assets/opensea.png" onclick="openModal()">
-    <img src="assets/magiceden.png" onclick="openModal()">
-    <img src="assets/store.png" onclick="openModal()">
+    <a onclick="openModal()"><img src="assets/opensea.png"></a>
+    <a onclick="openModal()"><img src="assets/magiceden.png"></a>
+    <a onclick="openModal()"><img src="assets/store.png"></a>
   </div>
 </section>
 
@@ -232,9 +223,7 @@ footer{padding:28px;opacity:.6;text-align:center}
   <h2>About Phantoms</h2>
   <p>
     Phantoms represent the Base ecosystem, pixel culture, and the future of onchain art.
-    Built on Base, Phantoms is identity, ownership, and digital culture.
-    A collection of 2222 Phantoms with over 200 unique traits.
-    These aren’t avatars — they’re Phantoms.
+    Built on Base. A collection of 2222 Phantoms with over 200 unique traits.
   </p>
   <button class="btn" onclick="toggle('explore')">Explore Collection</button>
   <button class="btn" onclick="toggle('wallet')">Check Wallet</button>
@@ -255,7 +244,6 @@ footer{padding:28px;opacity:.6;text-align:center}
 <div id="modal">
   <div class="modal-box">
     <h3>Coming Soon</h3>
-    <p>This feature is under development.</p>
     <button class="btn" onclick="closeModal()">Close</button>
   </div>
 </div>
@@ -263,7 +251,6 @@ footer{padding:28px;opacity:.6;text-align:center}
 <footer>© 2026 PHANTOMS — Built on Base</footer>
 
 <script>
-/* ===== INTRO LOADING ===== */
 let p=0;
 const bar=document.querySelector(".loading-bar");
 const lp=document.getElementById("lp");
@@ -271,88 +258,54 @@ const intro=document.getElementById("intro");
 const t=setInterval(()=>{
   p+=4;
   if(p>=100){
-    p=100;clearInterval(t);
-    setTimeout(()=>{
-      intro.classList.add("hide");
-      setTimeout(()=>intro.remove(),600);
-    },400);
+    clearInterval(t);
+    setTimeout(()=>{intro.classList.add("hide");setTimeout(()=>intro.remove(),600)},400);
   }
-  bar.style.width=p+"%";
-  lp.textContent=p+"%";
+  bar.style.width=p+"%";lp.textContent=p+"%";
 },60);
 
-/* ===== CODE MATRIX ===== */
+/* MATRIX */
 const c=document.getElementById("codebg");
 const ctx=c.getContext("2d");
-function resize(){
-  c.width=window.innerWidth;
-  c.height=window.innerHeight;
-}
-resize();window.addEventListener("resize",resize);
+function resize(){c.width=innerWidth;c.height=innerHeight}
+resize();addEventListener("resize",resize);
 const chars="01{}[]<>$#";
 let drops=Array(200).fill(1);
-function draw(){
+setInterval(()=>{
   ctx.fillStyle="rgba(0,0,0,0.05)";
   ctx.fillRect(0,0,c.width,c.height);
   ctx.fillStyle="rgba(122,252,255,0.25)";
   ctx.font="14px monospace";
   for(let i=0;i<drops.length;i++){
-    const text=chars[Math.floor(Math.random()*chars.length)];
-    ctx.fillText(text,i*10,drops[i]*10);
-    if(drops[i]*10>c.height||Math.random()>0.98)drops[i]=0;
+    const t=chars[Math.random()*chars.length|0];
+    ctx.fillText(t,i*10,drops[i]*10);
+    if(drops[i]*10>c.height||Math.random()>.98)drops[i]=0;
     drops[i]++;
   }
-}
-setInterval(draw,50);
+},50);
 
-/* ===== TOGGLE ===== */
 function toggle(id){
   const e=document.getElementById(id);
-  e.style.display=(e.style.display==="block")?"none":"block";
+  e.style.display=e.style.display==="block"?"none":"block";
   e.classList.add("reveal");
 }
 
-/* ===== EXPLORE ===== */
 const g=document.getElementById("gallery");
-const imgs=[...Array(23)].map((_,i)=>`assets/nft${i+1}.png`);
+const imgs=[...Array(20)].map((_,i)=>`assets/nft${i+1}.png`);
 const loop=[...imgs,...imgs];
 for(let r=0;r<3;r++){
   const row=document.createElement("div");
   row.className="track row"+(r+1);
-  loop.slice(0,14).forEach(src=>{
+  loop.slice(0,14).forEach(s=>{
     const i=document.createElement("img");
-    i.src=src;i.onclick=openModal;
+    i.src=s;i.onclick=openModal;
     row.appendChild(i);
   });
   g.appendChild(row);
 }
 
-/* ===== WALLET ===== */
-let fcfs=[],gdt=[];
-fetch("data/fcfs.csv").then(r=>r.text()).then(t=>fcfs=t.split(/\r?\n/));
-fetch("data/gdt.csv").then(r=>r.text()).then(t=>gdt=t.split(/\r?\n/));
-function checkWL(){
-  const a=document.getElementById("addr").value.trim().toLowerCase();
-  const r=document.getElementById("res");
-  r.textContent="Checking...";
-  setTimeout(()=>{
-    if(gdt.includes(a)){
-      r.textContent="✅ GDT Whitelisted";r.className="status ok";
-    }else if(fcfs.includes(a)){
-      r.textContent="✅ FCFS Whitelisted";r.className="status ok";
-    }else{
-      r.textContent="❌ Not Whitelisted";r.className="status no";
-    }
-  },800);
-}
-
-/* ===== MODAL ===== */
-function openModal(){
-  document.getElementById("modal").classList.add("show");
-}
-function closeModal(){
-  document.getElementById("modal").classList.remove("show");
-}
+function openModal(){modal.classList.add("show")}
+function closeModal(){modal.classList.remove("show")}
 </script>
 
 </body>
