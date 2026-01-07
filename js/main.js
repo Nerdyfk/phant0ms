@@ -95,3 +95,20 @@ function checkWhitelist(){
 function openTwitter(){
   window.open("https://x.com/Phanto0ms","_blank");
 }
+/* =========================
+   PREMIUM HOVER FX
+========================= */
+document.querySelectorAll(".cta-btn").forEach(btn=>{
+  btn.addEventListener("mousemove",e=>{
+    const r=btn.getBoundingClientRect();
+    btn.style.backgroundPosition=
+      `${(e.clientX-r.left)/r.width*100}% 50%`;
+  });
+});
+.about p{
+  max-width:760px;
+  margin:20px auto 0;
+  font-size:16px;
+  line-height:1.7;
+  opacity:0.95;
+}
