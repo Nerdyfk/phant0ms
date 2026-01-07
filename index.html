@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PHANTOMS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- BACKGROUND LINES -->
 <div class="bg-lines"></div>
 
 <!-- INTRO -->
@@ -25,7 +30,7 @@
 
 <!-- LOGO -->
 <header class="topbar">
-  <img src="assets/logo.png" class="logo" alt="Phantoms">
+  <img src="assets/logo.png" class="logo" alt="PHANTOMS logo">
 </header>
 
 <!-- HERO -->
@@ -36,52 +41,82 @@
 
 <!-- SOCIAL ICONS -->
 <section class="social-top">
-  <button class="icon-btn" onclick="openTwitter()"><img src="assets/twitter.png"></button>
-  <button class="icon-btn"><img src="assets/opensea.png"></button>
-  <button class="icon-btn"><img src="assets/magiceden.png"></button>
-  <button class="icon-btn"><img src="assets/store.png"></button>
+  <button class="icon-btn" onclick="openTwitter()">
+    <img src="assets/twitter.png">
+  </button>
+  <button class="icon-btn" onclick="comingSoon('OpenSea')">
+    <img src="assets/opensea.png">
+  </button>
+  <button class="icon-btn" onclick="comingSoon('Magic Eden')">
+    <img src="assets/magiceden.png">
+  </button>
+  <button class="icon-btn" onclick="comingSoon('Store')">
+    <img src="assets/store.png">
+  </button>
 </section>
 
 <!-- ABOUT -->
-<section class="about about-top">
+<section class="about">
   <h2 class="section-title shimmer">About Phantoms</h2>
-
-  <p id="aboutText">
+  <p>
     Phantoms represent the Base ecosystem, pixel culture, and the future of onchain art.
     Built on Base, Phantoms is not just art — it is identity, ownership, and digital culture.
     A collection of 2222 Phantoms, each crafted with over 200 unique traits.
-    Art by LoikaArts.
-    These aren’t avatars — they’re Phantoms.
+    Art by LoikaArts. These aren’t avatars — they’re Phantoms.
   </p>
 
   <div class="cta-wrap">
-    <button class="cta-btn pulse" onclick="toggleExplore()">Explore Collection</button>
-    <button class="cta-btn pulse" onclick="toggleWallet()">Wallet Checker</button>
+    <button class="cta-btn" onclick="toggleExplore()">Explore Collection</button>
+    <button class="cta-btn" onclick="toggleWallet()">Wallet Checker</button>
   </div>
 </section>
 
-<!-- EXPLORE -->
-<section id="exploreBox" class="explore hidden reveal">
+<!-- EXPLORE COLLECTION -->
+<section id="exploreBox" class="explore hidden">
   <div class="explore-box">
-    <div class="explore-row rtl"></div>
-    <div class="explore-row ltr"></div>
-    <div class="explore-row rtl"></div>
+    <div class="explore-row"></div>
+    <div class="explore-row"></div>
+    <div class="explore-row"></div>
   </div>
 </section>
 
-<!-- WALLET -->
-<section id="walletBox" class="wallet hidden reveal">
-  <h2 class="section-title shimmer">Whitelist Checker</h2>
+<!-- WALLET CHECKER -->
+<section id="walletBox" class="wallet hidden">
+  <h2 class="section-title">Whitelist Checker</h2>
   <input id="walletInput" placeholder="Paste wallet address">
-  <button class="cta-btn pulse" onclick="checkWhitelist()">Check Status</button>
+  <button class="cta-btn" onclick="checkWallet()">Check Status</button>
+
+  <div id="walletLoader" class="wallet-loader hidden">
+    <div class="spinner"></div>
+    <span>Checking whitelist…</span>
+  </div>
+
   <p id="walletResult"></p>
 </section>
 
+<!-- COMING SOON MODAL -->
+<div id="comingSoonModal" class="modal hidden">
+  <div class="modal-box">
+    <h3 id="comingSoonTitle">Coming Soon</h3>
+    <p>This feature is under development.</p>
+    <button class="cta-btn" onclick="closeComingSoon()">Close</button>
+  </div>
+</div>
+
+<!-- TRAIT MODAL -->
+<div id="traitModal" class="modal hidden">
+  <div class="modal-box">
+    <h3>Traits</h3>
+    <p>Traits are coming soon 👻</p>
+    <button class="cta-btn" onclick="closeTrait()">Close</button>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer class="footer">
-  © 2026 Phantoms — Built on Base 👻
+  © 2026 PHANTOMS — Built on Base
 </footer>
 
-<script src="js/main.js"></script>
+<script src="js/main.js" defer></script>
 </body>
 </html>
