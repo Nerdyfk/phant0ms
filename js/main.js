@@ -52,3 +52,18 @@ function toggleComing(id){
   const el=document.getElementById(id);
   if(el) el.classList.toggle("show");
 }
+function toggleExplore(){
+  document.getElementById("exploreBox").classList.toggle("show");
+}
+function toggleWallet(){
+  document.getElementById("walletBox").classList.toggle("show");
+}
+
+// auto shuffle NFTs
+setInterval(()=>{
+  document.querySelectorAll(".explore-row").forEach(row=>{
+    const items=[...row.children];
+    items.sort(()=>Math.random()-0.5);
+    items.forEach(i=>row.appendChild(i));
+  });
+},6000);
