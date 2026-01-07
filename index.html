@@ -12,22 +12,16 @@
 <!-- INTRO -->
 <div id="intro">
   <div class="intro-wrap">
-    <h1 class="intro-logo gradient-text">PHANTOMS</h1>
+    <h1 class="intro-title gradient-anim">PHANTOMS</h1>
     <p class="intro-line">Welcome to the pixelated world</p>
-    <div class="loading-box">
-      <div class="loading-bar"></div>
-    </div>
+    <div class="loading-box"><div class="loading-bar"></div></div>
     <div class="loading-text">Loading <span id="loadingPercent">0%</span></div>
   </div>
 </div>
 
-<header class="site-header">
-  <img src="assets/logo.png" class="logo">
-</header>
-
 <!-- HERO -->
 <section class="hero">
-  <h1 class="hero-title gradient-text-live">PHANTOMS</h1>
+  <h1 class="hero-title gradient-live">PHANTOMS</h1>
   <p>A pixel-born civilization on Base</p>
 </section>
 
@@ -35,45 +29,69 @@
 <section class="about">
   <h2>About Phantoms</h2>
   <p id="aboutText">
-    Phantoms represent the Base ecosystem, pixel culture, and the future of on-chain art.
+    Phantoms represent the Base ecosystem, pixel culture, and the future of onchain art.
     Built on Base, Phantoms is not just art — it is identity, ownership, and digital culture.
-    A collection of 2222 Phantoms with over 200+ unique traits,
-    each crafted with a story behind its creation.
+    A collection of 2222 Phantoms with over 200+ unique traits.
     Art by LoikaArts. These aren’t avatars — they’re Phantoms.
   </p>
 </section>
+<!-- ACTION BUTTONS -->
+<section class="action-bar">
+  <button class="icon-btn" onclick="openTwitter()">
+    <img src="assets/twitter.png" alt="Twitter">
+  </button>
 
+  <button class="icon-btn" onclick="toggleComing('osComing')">
+    <img src="assets/opensea.png" alt="OpenSea">
+  </button>
+
+  <button class="icon-btn" onclick="toggleComing('meComing')">
+    <img src="assets/magiceden.png" alt="Magic Eden">
+  </button>
+
+  <button class="icon-btn" onclick="toggleComing('storeComing')">
+    <img src="assets/store.png" alt="Store">
+  </button>
+</section>
+
+<!-- COMING SOON PANELS -->
+<div id="osComing" class="coming-panel">OpenSea — Coming Soon</div>
+<div id="meComing" class="coming-panel">Magic Eden — Coming Soon</div>
+<div id="storeComing" class="coming-panel">Store — Coming Soon</div>
+  
 <!-- EXPLORE -->
 <section class="explore">
   <h2>Explore Collection</h2>
 
   <div class="explore-box">
     <div class="blockchain"></div>
-    <div class="code-rain"></div>
 
     <div class="row row-rtl">
       <button class="nft-btn"><img src="assets/nft1.png"></button>
       <button class="nft-btn"><img src="assets/nft2.png"></button>
       <button class="nft-btn"><img src="assets/nft3.png"></button>
+      <button class="nft-btn"><img src="assets/nft4.png"></button>
     </div>
 
     <div class="row row-ltr">
-      <button class="nft-btn"><img src="assets/nft4.png"></button>
       <button class="nft-btn"><img src="assets/nft5.png"></button>
       <button class="nft-btn"><img src="assets/nft6.png"></button>
+      <button class="nft-btn"><img src="assets/nft7.png"></button>
+      <button class="nft-btn"><img src="assets/nft8.png"></button>
     </div>
 
     <div class="row row-rtl">
-      <button class="nft-btn"><img src="assets/nft7.png"></button>
-      <button class="nft-btn"><img src="assets/nft8.png"></button>
       <button class="nft-btn"><img src="assets/nft9.png"></button>
+      <button class="nft-btn"><img src="assets/nft10.png"></button>
+      <button class="nft-btn"><img src="assets/nft11.png"></button>
+      <button class="nft-btn"><img src="assets/nft12.png"></button>
     </div>
   </div>
 </section>
 
 <!-- WHITELIST -->
 <section class="wallet">
-  <h2>Check Whitelist</h2>
+  <h2>Whitelist Checker</h2>
   <input id="walletInput" placeholder="Paste wallet address">
   <button onclick="checkWhitelist()">Check Status</button>
   <p id="walletResult"></p>
