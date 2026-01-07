@@ -22,12 +22,33 @@ about.innerHTML=chars.map((c,i)=>
   c===" "?"&nbsp;":`<span style="animation-delay:${i*0.015}s">${c}</span>`
 ).join("");
 
-/* TOGGLES */
+/* =========================
+   REVEAL ON BUTTON CLICK
+========================= */
 function toggleExplore(){
-  document.getElementById("exploreBox").classList.toggle("hidden");
+  const box=document.getElementById("exploreBox");
+  box.classList.toggle("hidden");
+  setTimeout(()=>box.classList.toggle("show"),10);
 }
+
 function toggleWallet(){
-  document.getElementById("walletBox").classList.toggle("hidden");
+  const box=document.getElementById("walletBox");
+  box.classList.toggle("hidden");
+  setTimeout(()=>box.classList.toggle("show"),10);
+}
+
+/* =========================
+   CODE PARTICLE GENERATOR
+========================= */
+const codes=["0xA3F","{ }","NFT","BASE","WEB3","0110","<>"];
+for(let i=0;i<18;i++){
+  const s=document.createElement("span");
+  s.className="code-particle";
+  s.textContent=codes[Math.floor(Math.random()*codes.length)];
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  s.style.animationDuration=15+Math.random()*20+"s";
+  document.body.appendChild(s);
 }
 
 /* EXPLORE NFT SHUFFLE */
