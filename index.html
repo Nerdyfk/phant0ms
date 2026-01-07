@@ -25,41 +25,50 @@
 <!-- HERO -->
 <section class="hero">
   <h1 class="hero-title gradient-live">PHANTOMS</h1>
-  <p>A pixel-born civilization on Base</p>
+  <p>A pixel-born culture on Base</p>
 </section>
-<!-- ACTION BUTTONS -->
-<div class="cta-wrap">
-  <button class="cta-btn" onclick="toggleExplore()">Explore Collection</button>
-  <button class="cta-btn" onclick="toggleWallet()">Wallet Checker</button>
-</div>
 
-<!-- ABOUT -->
 <section class="about">
+  <!-- ICON BUTTONS (ABOUT-এর উপরে) -->
+  <div class="action-bar">
+    <button class="icon-btn" onclick="openTwitter()">
+      <img src="assets/twitter.png">
+    </button>
+    <button class="icon-btn">
+      <img src="assets/opensea.png">
+    </button>
+    <button class="icon-btn">
+      <img src="assets/magiceden.png">
+    </button>
+    <button class="icon-btn">
+      <img src="assets/store.png">
+    </button>
+  </div>
+
   <h2>About Phantoms</h2>
+
   <p id="aboutText">
-    Phantoms represent the Base ecosystem, pixel culture, and the future of onchain art.
-    Built on Base, Phantoms is not just art — it is identity, ownership, and digital culture.
-    A collection of 2222 Phantoms with over 200+ unique traits.
+    Phantoms represent the Base ecosystem, pixel culture, and the future of onchain art.<br>
+    Built on Base, Phantoms is not just art — it is identity, ownership, and digital culture.<br>
+    A collection of 2222 Phantoms with over 200+ unique traits.<br>
     Art by LoikaArts. These aren’t avatars — they’re Phantoms.
   </p>
+
+  <!-- CTA BUTTONS (ABOUT-এর নিচে) -->
+  <div class="cta-wrap">
+    <button class="cta-btn" onclick="toggleExplore()">Explore Collection</button>
+    <button class="cta-btn" onclick="toggleWallet()">Wallet Checker</button>
+  </div>
 </section>
-<!-- ACTION BUTTONS -->
-<section class="action-bar">
-  <button class="icon-btn" onclick="openTwitter()">
-    <img src="assets/twitter.png" alt="Twitter">
-  </button>
+  
+  <section id="exploreBox" class="explore">
+  <div class="explore-box">
 
-  <button class="icon-btn" onclick="toggleComing('osComing')">
-    <img src="assets/opensea.png" alt="OpenSea">
-  </button>
+    <div class="explore-row rtl"></div>
+    <div class="explore-row ltr"></div>
+    <div class="explore-row rtl"></div>
 
-  <button class="icon-btn" onclick="toggleComing('meComing')">
-    <img src="assets/magiceden.png" alt="Magic Eden">
-  </button>
-
-  <button class="icon-btn" onclick="toggleComing('storeComing')">
-    <img src="assets/store.png" alt="Store">
-  </button>
+  </div>
 </section>
 
 <!-- COMING SOON PANELS -->
