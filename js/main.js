@@ -1,127 +1,158 @@
 /* =========================
-   INTRO LOADER
+   INTRO : FAST CINEMATIC LOADING
 ========================= */
 let load = 0;
 const percent = document.getElementById("loadingPercent");
 const bar = document.querySelector(".loading-bar");
 
 const introInterval = setInterval(() => {
-  load += Math.floor(Math.random() * 8) + 6;
+  load += Math.floor(Math.random() * 8) + 5;
   if (load >= 100) {
     load = 100;
     clearInterval(introInterval);
+
     setTimeout(() => {
       const intro = document.getElementById("intro");
-      intro.style.opacity = "0";
-      setTimeout(() => intro.style.display = "none", 900);
+      if (intro) {
+        intro.style.opacity = "0";
+        setTimeout(() => (intro.style.display = "none"), 900);
+      }
     }, 400);
   }
-  percent.textContent = load + "%";
-  bar.style.width = load + "%";
-}, 110);
+
+  if (percent) percent.textContent = load + "%";
+  if (bar) bar.style.width = load + "%";
+}, 90);
 
 /* =========================
-   HERO LIVE SHIMMER
+   GLOBAL STATE
 ========================= */
-const hero = document.querySelector(".hero-title");
-let hue = 0;
-setInterval(() => {
-  hue = (hue + 1) % 360;
-  hero.style.backgroundImage =
-    `linear-gradient(90deg,
-      hsl(${hue},90%,70%),
-      hsl(${(hue+60)%360},90%,70%),
-      hsl(${(hue+120)%360},90%,70%)
-    )`;
-}, 60);
+let fcfsList = [];
+let gdtList = [];
 
 /* =========================
-   EXPLORE COLLECTION
+   CSV LOADER (AUTO-DEDUPE)
 ========================= */
-const nftList = Array.from({length:23},(_,i)=>`assets/nft${i+1}.png`);
-const rows = document.querySelectorAll(".explore-row");
+async function loadCSV(path) {
+  try {
+    const res = await fetch(path);
+    if (!res.ok) return [];
+    const text = await res.text();
 
-function shuffle(arr){
-  return arr.sort(()=>Math.random()-0.5);
-}
-
-function fillExplore(){
-  rows.forEach(r=>{
-    r.innerHTML="";
-    shuffle([...nftList]).slice(0,7).forEach(src=>{
-      const b=document.createElement("button");
-      b.className="nft-btn";
-      b.innerHTML=`<img src="${src}" loading="lazy">`;
-      b.onclick=()=>document.getElementById("traitModal").classList.remove("hidden");
-      r.appendChild(b);
-    });
-  });
-}
-
-rows.forEach((row,i)=>{
-  let x = i%2===0 ? 0 : -row.scrollWidth/2;
-  const speed = i%2===0 ? 0.25 : -0.25;
-  function move(){
-    x += speed;
-    if(Math.abs(x) > row.scrollWidth/2) x=0;
-    row.style.transform=`translateX(${x}px)`;
-    requestAnimationFrame(move);
+    return text
+      .split("\n")
+      .map(w => w.trim().toLowerCase())
+      .filter(w => w.startsWith("0x") && w.length === 42);
+  } catch {
+    return [];
   }
-  move();
+}
+
+async function initWhitelist() {
+  fcfsList = await loadCSV("data/fcfs.csv");
+  gdtList  = await loadCSV("data/gdt.csv");
+
+  // 🔔 ADMIN WARNING: same wallet in both lists
+  const overlap = fcfsList.filter(w => gdtList.includes(w));
+  if (overlap.length) {
+    console.warn(
+      "⚠️ Wallet(s) exist in BOTH GDT & FCFS lists:",
+      overlap
+    );
+  }
+}
+
+initWhitelist();
+
+/* =========================
+   WALLET CHECKER (FINAL LOGIC)
+========================= */
+function checkWallet() {
+  const input = document.getElementById("walletInput");
+  const res   = document.getElementById("walletResult");
+
+  if (!input || !res) return;
+
+  const wallet = input.value.trim().toLowerCase();
+
+  res.className = "wallet-result loading";
+  res.textContent = "Checking whitelist…";
+
+  setTimeout(() => {
+    res.className = "wallet-result";
+
+    // ❌ invalid address
+    if (!wallet.startsWith("0x") || wallet.length !== 42) {
+      res.classList.add("fail-glow");
+      res.textContent = "❌ Invalid wallet address";
+      return;
+    }
+
+    // ⭐ PRIORITY 1: GDT
+    if (gdtList.includes(wallet)) {
+      res.classList.add("success-glow");
+      res.textContent = "⭐ Guaranteed (GDT) — Priority access granted";
+      return;
+    }
+
+    // ✅ PRIORITY 2: FCFS
+    if (fcfsList.includes(wallet)) {
+      res.classList.add("success-glow");
+      res.textContent = "✅ FCFS Whitelisted — First come, first serve";
+      return;
+    }
+
+    // ❌ Not whitelisted
+    res.classList.add("fail-glow");
+    res.textContent = "❌ Wallet is not whitelisted";
+  }, 900);
+}
+
+/* =========================
+   TOGGLES (EXPLORE / WALLET)
+========================= */
+function toggleExplore() {
+  const box = document.getElementById("exploreBox");
+  if (box) box.classList.toggle("show");
+}
+
+function toggleWallet() {
+  const box = document.getElementById("walletBox");
+  if (box) box.classList.toggle("show");
+}
+
+/* =========================
+   COMING SOON MODAL
+========================= */
+function showComingSoon() {
+  const modal = document.getElementById("comingSoon");
+  if (modal) modal.classList.add("show");
+}
+
+function closeComingSoon() {
+  const modal = document.getElementById("comingSoon");
+  if (modal) modal.classList.remove("show");
+}
+
+/* =========================
+   NFT CLICK → TRAIT MODAL
+========================= */
+function showTrait() {
+  showComingSoon();
+}
+
+/* =========================
+   SOCIAL LINKS
+========================= */
+function openTwitter() {
+  window.open("https://x.com/Phanto0ms", "_blank");
+}
+
+/* =========================
+   SCROLL-BASED GLOW FX
+========================= */
+window.addEventListener("scroll", () => {
+  const glow = document.documentElement;
+  const y = window.scrollY;
+  glow.style.setProperty("--scrollGlow", Math.min(y / 600, 1));
 });
-
-/* =========================
-   TOGGLES
-========================= */
-function toggleExplore(){
-  const box=document.getElementById("exploreBox");
-  box.classList.remove("hidden");
-  box.classList.toggle("show");
-  fillExplore();
-}
-
-function toggleWallet(){
-  const box=document.getElementById("walletBox");
-  box.classList.remove("hidden");
-  box.classList.toggle("show");
-}
-
-/* =========================
-   WALLET CHECKER + SUCCESS GLOW
-========================= */
-async function checkWallet(){
-  const input=document.getElementById("walletInput");
-  const res=document.getElementById("walletResult");
-  const loader=document.getElementById("walletLoader");
-
-  loader.classList.remove("hidden");
-  res.textContent="";
-  res.className="";
-
-  setTimeout(()=>{
-    loader.classList.add("hidden");
-    res.textContent="✅ Wallet whitelisted — Access granted!";
-    res.classList.add("success-glow");
-  },1200);
-}
-
-/* =========================
-   MODALS
-========================= */
-function comingSoon(name){
-  document.getElementById("comingSoonTitle").textContent=name+" — Coming Soon";
-  document.getElementById("comingSoonModal").classList.remove("hidden");
-}
-function closeComingSoon(){
-  document.getElementById("comingSoonModal").classList.add("hidden");
-}
-function closeTrait(){
-  document.getElementById("traitModal").classList.add("hidden");
-}
-
-/* =========================
-   SOCIAL
-========================= */
-function openTwitter(){
-  window.open("https://x.com/Phanto0ms","_blank");
-}
