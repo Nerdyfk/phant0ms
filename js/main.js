@@ -1,26 +1,31 @@
-/* INTRO LOADER */
-document.addEventListener("DOMContentLoaded",()=>{
-  const intro=document.getElementById("intro");
-  const bar=document.querySelector(".loading-bar");
-  const per=document.getElementById("loadingPercent");
-  let p=0;
+/* =========================
+   INTRO LOADER FIX
+========================= */
+let load = 0;
+const percent = document.getElementById("loadingPercent");
+const bar = document.querySelector(".loading-bar");
 
-  const t=setInterval(()=>{
-    p+=Math.floor(Math.random()*12)+8;
-    if(p>=100){
-      p=100;
-      clearInterval(t);
-      setTimeout(()=>{
-        intro.style.opacity="0";
-        setTimeout(()=>intro.style.display="none",400);
-      },300);
-    }
-    if(bar) bar.style.width=p+"%";
-    if(per) per.textContent=p+"%";
-  },80);
+const introInterval = setInterval(() => {
+  load += Math.floor(Math.random() * 6) + 4;
+  if (load >= 100) {
+    load = 100;
+    clearInterval(introInterval);
 
-  setTimeout(()=>intro.style.display="none",4500);
-});
+    setTimeout(() => {
+      const intro = document.getElementById("intro");
+      intro.style.opacity = "0";
+      intro.style.pointerEvents = "none";
+
+      setTimeout(() => {
+        intro.style.display = "none";   // 🔥 THIS LINE FIXES EVERYTHING
+      }, 1000);
+
+    }, 500);
+  }
+
+  if (percent) percent.textContent = load + "%";
+  if (bar) bar.style.width = load + "%";
+}, 120);
 
 /* ABOUT LETTER ANIM */
 const about=document.getElementById("aboutText");
