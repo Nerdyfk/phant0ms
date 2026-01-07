@@ -1,179 +1,118 @@
-/* =========================
-   INTRO : GLITCH + LOADING
-========================= */
-let load = 0;
-const percent = document.getElementById("loadingPercent");
-const bar = document.querySelector(".loading-bar");
+/* ======================================================
+   INTRO : FAST CINEMATIC FAKE LOADING
+====================================================== */
+(function introLoader(){
+  let p = 0;
+  const percent = document.getElementById("loadingPercent");
+  const bar = document.querySelector(".loading-bar");
+  const intro = document.getElementById("intro");
 
-const introInterval = setInterval(() => {
-  load += Math.floor(Math.random() * 6) + 3;
-  if (load >= 100) {
-    load = 100;
-    clearInterval(introInterval);
+  if (!intro) return;
 
-    setTimeout(() => {
-      const intro = document.getElementById("intro");
-      intro.style.opacity = "0";
-      intro.style.pointerEvents = "none";
+  const t = setInterval(() => {
+    // faster, cinematic
+    p += Math.random() * 14 + 6;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(t);
       setTimeout(() => {
-        intro.style.display = "none";
-      }, 1200);
-    }, 600);
-  }
-
-  if (percent) percent.textContent = load + "%";
-  if (bar) bar.style.width = load + "%";
-}, 120);
-
-/* =========================
-   GRADIENT CONTROL
-========================= */
-const gradCtl = document.getElementById("gradCtl");
-if (gradCtl) {
-  gradCtl.addEventListener("input", (e) => {
-    document.documentElement.style.setProperty("--g", e.target.value);
-  });
-}
-
-/* =========================
-   ABOUT : LETTER ANIMATION
-========================= */
-const about = document.getElementById("aboutText");
-if (about) {
-  const chars = about.innerText.split("");
-  about.innerHTML = chars
-    .map(
-      (c, i) =>
-        `<span style="animation-delay:${i * 0.02}s">${
-          c === " " ? "&nbsp;" : c
-        }</span>`
-    )
-    .join("");
-}
-
-/* =========================
-   SVG SNAKE PATH (REAL)
-========================= */
-let traitsData = {};
-fetch("data/traits.json")
-  .then((r) => r.json())
-  .then((j) => (traitsData = j))
-  .catch(() => (traitsData = {}));
-
-const path = document.getElementById("snakePath");
-const container = document.getElementById("snakeContainer");
-
-let paused = false;
-
-if (path && container) {
-  const pathLength = path.getTotalLength();
-
-  const nftFiles = Array.from({ length: 23 }, (_, i) => `assets/nft${i + 1}.png`);
-
-  nftFiles.forEach((src, index) => {
-    const img = document.createElement("img");
-    img.src = src;
-    img.className = "snakeNFT";
-    container.appendChild(img);
-
-    let offset = index * 70;
-
-    img.addEventListener("click", () => {
-      paused = true;
-      showTrait(src);
-    });
-
-    function animate() {
-      if (!paused) {
-        offset = (offset + 0.35) % pathLength; // slow speed
-        const point = path.getPointAtLength(offset);
-        img.style.left = point.x - 36 + "px";
-        img.style.top = point.y - 36 + "px";
-      }
-      requestAnimationFrame(animate);
+        intro.style.opacity = "0";
+        setTimeout(() => {
+          intro.style.display = "none";
+        }, 450);
+      }, 200);
     }
-    animate();
-  });
-}
+    if (percent) percent.textContent = Math.floor(p) + "%";
+    if (bar) bar.style.width = p + "%";
+  }, 70);
+})();
 
-/* =========================
-   TRAIT MODAL
-========================= */
-function showTrait(src) {
+/* ======================================================
+   ABOUT : LETTER-BY-LETTER (READABLE)
+====================================================== */
+(function aboutLetters(){
+  const about = document.getElementById("aboutText");
+  if (!about) return;
+
+  const text = about.innerText;
+  const chars = text.split("");
+  about.innerHTML = chars.map((c, i) => {
+    if (c === " ") return "&nbsp;";
+    return `<span style="animation-delay:${i * 0.015}s">${c}</span>`;
+  }).join("");
+})();
+
+/* ======================================================
+   EXPLORE : NFT BUTTONS → TRAIT MODAL
+====================================================== */
+(function exploreNFTs(){
+  const buttons = document.querySelectorAll(".nft-btn");
+  const modal = document.getElementById("traitModal");
   const title = document.getElementById("traitTitle");
   const content = document.getElementById("traitContent");
-  const modal = document.getElementById("traitModal");
 
-  if (title) title.textContent = src.split("/").pop();
-  if (content) {
-    content.textContent = traitsData[src]
-      ? JSON.stringify(traitsData[src], null, 2)
-      : "Traits: Coming Soon";
-  }
-  if (modal) modal.style.display = "flex";
-}
+  if (!buttons.length || !modal) return;
 
-function closeTrait() {
-  paused = false;
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (title) title.textContent = "NFT Traits";
+      if (content) content.textContent = "Traits: Coming Soon";
+      modal.style.display = "flex";
+    });
+  });
+})();
+
+function closeTrait(){
   const modal = document.getElementById("traitModal");
   if (modal) modal.style.display = "none";
 }
 
-/* =========================
-   EXPLORE / WALLET / PANELS
-========================= */
-function toggleExplore() {
-  const box = document.getElementById("exploreBox");
-  if (!box) return;
-  box.classList.toggle("show");
-  if (box.classList.contains("show")) initGyro();
+/* ======================================================
+   WHITELIST CHECKER : FCFS / GDT CSV
+====================================================== */
+let FCFS_LIST = [];
+let GDT_LIST = [];
+
+function loadCSV(path, target){
+  return fetch(path)
+    .then(res => res.text())
+    .then(txt => {
+      target.length = 0;
+      txt.split(/\r?\n/).forEach(line => {
+        const v = line.trim().toLowerCase();
+        if (v) target.push(v);
+      });
+    })
+    .catch(() => {});
 }
 
-function toggleWallet() {
-  const w = document.getElementById("walletBox");
-  if (w) w.classList.toggle("show");
-}
+// preload lists
+loadCSV("data/fcfs.csv", FCFS_LIST);
+loadCSV("data/gdt.csv", GDT_LIST);
 
-function checkWallet() {
-  const res = document.getElementById("walletResult");
-  if (res) res.textContent = "Status: Coming Soon";
-}
+function checkWhitelist(){
+  const input = document.getElementById("walletInput");
+  const result = document.getElementById("walletResult");
+  if (!input || !result) return;
 
-function togglePanel(id) {
-  const p = document.getElementById(id);
-  if (p) p.classList.toggle("show");
-}
+  const addr = input.value.trim().toLowerCase();
+  if (!addr){
+    result.textContent = "Please paste a wallet address.";
+    return;
+  }
 
-function openTwitter() {
-  window.open("https://x.com/Phanto0ms", "_blank");
-}
-
-/* =========================
-   MOBILE GYRO (EXPLORE ONLY)
-========================= */
-function initGyro() {
-  if (
-    typeof DeviceOrientationEvent !== "undefined" &&
-    typeof DeviceOrientationEvent.requestPermission === "function"
-  ) {
-    DeviceOrientationEvent.requestPermission().then((res) => {
-      if (res === "granted") startGyro();
-    });
+  if (FCFS_LIST.includes(addr)){
+    result.textContent = "✅ This address is whitelisted for FCFS mint access.";
+  } else if (GDT_LIST.includes(addr)){
+    result.textContent = "🎟️ This address is whitelisted for Guaranteed (GDT) mint access.";
   } else {
-    startGyro();
+    result.textContent = "❌ This address is not whitelisted.";
   }
 }
 
-function startGyro() {
-  window.addEventListener(
-    "deviceorientation",
-    (e) => {
-      const x = e.gamma || 0;
-      const y = e.beta || 0;
-      document.querySelectorAll(".snakeNFT").forEach((el) => {
-        el.style.transform = `translate(${x * 0.2}px, ${y * 0.15}px)`;
-      });
-    },
-    { passive: true }
-  );
+/* ======================================================
+   UTILS : ICONS / LINKS (SAFE)
+====================================================== */
+function openTwitter(){
+  window.open("https://x.com/Phanto0ms", "_blank");
 }
