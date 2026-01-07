@@ -1,73 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>PHANTOMS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>PHANTOMS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- TOP LOGO -->
-<header class="topbar">
-  <img src="assets/logo.png" class="logo" alt="Phantoms Logo">
-</header>
+<!-- BACKGROUND LINES -->
+<div class="bg-lines"></div>
 
 <!-- INTRO -->
 <div id="intro">
   <div class="intro-wrap">
-    <h1 class="intro-title gradient">PHANTOMS</h1>
+    <h1 class="intro-title shimmer">PHANTOMS</h1>
     <p>Welcome to the pixelated world</p>
-    <div class="loading-box"><div class="loading-bar"></div></div>
+    <div class="loading-box">
+      <div class="loading-bar"></div>
+    </div>
     <span id="loadingPercent">0%</span>
   </div>
 </div>
 
+<!-- LOGO -->
+<header class="topbar">
+  <img src="assets/logo.png" class="logo" alt="Phantoms">
+</header>
+
 <!-- HERO -->
 <section class="hero">
-  <h1 class="hero-title gradient">PHANTOMS</h1>
-  <p>A pixel-born civilization on Base</p>
+  <h1 class="hero-title shimmer">PHANTOMS</h1>
+  <p class="hero-sub">A pixel-born civilization on Base</p>
 </section>
-<!-- SOCIAL ICON BAR (TOP) -->
+
+<!-- SOCIAL ICONS -->
 <section class="social-top">
-  <button class="icon-btn" onclick="openTwitter()">
-    <img src="assets/twitter.png">
-  </button>
-  <button class="icon-btn">
-    <img src="assets/opensea.png">
-  </button>
-  <button class="icon-btn">
-    <img src="assets/magiceden.png">
-  </button>
-  <button class="icon-btn">
-    <img src="assets/store.png">
-  </button>
+  <button class="icon-btn" onclick="openTwitter()"><img src="assets/twitter.png"></button>
+  <button class="icon-btn"><img src="assets/opensea.png"></button>
+  <button class="icon-btn"><img src="assets/magiceden.png"></button>
+  <button class="icon-btn"><img src="assets/store.png"></button>
 </section>
 
 <!-- ABOUT -->
 <section class="about about-top">
-  <h2>About Phantoms</h2>
+  <h2 class="section-title shimmer">About Phantoms</h2>
 
   <p id="aboutText">
-  Phantoms represent the Base ecosystem, pixel culture, and the future of onchain art.
-  <br><br>
-  Built on Base, Phantoms is not just art — it is identity, ownership, and digital culture.
-  <br><br>
-  A collection of 2222 Phantoms, each crafted with over 200 unique traits.
-  Art by LoikaArts.
-  <br><br>
-  These aren’t avatars — they’re Phantoms.
-</p>
+    Phantoms represent the Base ecosystem, pixel culture, and the future of onchain art.
+    <br><br>
+    Built on Base, Phantoms is not just art — it is identity, ownership, and digital culture.
+    <br><br>
+    A collection of 2222 Phantoms, each crafted with over 200 unique traits.
+    Art by LoikaArts.
+    <br><br>
+    These aren’t avatars — they’re Phantoms.
+  </p>
 
-
-  <!-- CTA BELOW -->
   <div class="cta-wrap">
-    <button class="cta-btn" onclick="toggleExplore()">Explore Collection</button>
-    <button class="cta-btn" onclick="toggleWallet()">Wallet Checker</button>
+    <button class="cta-btn pulse" onclick="toggleExplore()">Explore Collection</button>
+    <button class="cta-btn pulse" onclick="toggleWallet()">Wallet Checker</button>
   </div>
 </section>
 
-<!-- EXPLORE (HIDDEN BY DEFAULT) -->
+<!-- EXPLORE -->
 <section id="exploreBox" class="explore hidden reveal">
   <div class="explore-box">
     <div class="explore-row rtl"></div>
@@ -75,20 +71,20 @@
     <div class="explore-row rtl"></div>
   </div>
 </section>
-  
-<!-- WALLET (HIDDEN BY DEFAULT) -->
+
+<!-- WALLET -->
 <section id="walletBox" class="wallet hidden reveal">
-  <h2>Check Whitelist</h2>
+  <h2 class="section-title shimmer">Whitelist Checker</h2>
   <input id="walletInput" placeholder="Paste wallet address">
-  <button onclick="checkWhitelist()">Check Status</button>
+  <button class="cta-btn pulse" onclick="checkWhitelist()">Check Status</button>
   <p id="walletResult"></p>
 </section>
 
-<script src="js/main.js"></script>
-  <!-- FOOTER -->
+<!-- FOOTER -->
 <footer class="footer">
-  <p>© 2026 Phantoms — Built on Base 👻</p>
+  © 2026 Phantoms — Built on Base 👻
 </footer>
 
+<script src="js/main.js"></script>
 </body>
 </html>
