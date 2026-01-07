@@ -212,3 +212,112 @@ body{
   .cta-wrap{flex-direction:column}
   .explore-box{width:92%}
 }
+/* =========================
+   MOBILE OPTIMIZATION FIX
+========================= */
+@media (max-width: 640px){
+
+  /* HERO FIX */
+  .hero{
+    padding: 0 16px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-title{
+    font-size: 2.4rem;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .hero-sub{
+    font-size: 14px;
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  /* SOCIAL ICONS FIX */
+  .social-top{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 14px;
+  }
+
+  .icon-btn{
+    width: 52px;
+    height: 52px;
+  }
+
+  .icon-btn img{
+    width: 26px;
+  }
+
+  /* ABOUT SECTION FIX */
+  .about{
+    padding: 50px 16px 60px;
+    margin-top: 0;
+  }
+
+  .about-top{
+    margin-top: 0;
+  }
+
+  .section-title{
+    font-size: 1.6rem;
+    margin-bottom: 14px;
+  }
+
+  .about p{
+    font-size: 14px;
+    line-height: 1.8;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  /* CTA BUTTONS FIX */
+  .cta-wrap{
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 26px;
+  }
+
+  .cta-btn{
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 14px 0;
+    font-size: 14px;
+  }
+
+  /* EXPLORE BOX FIX */
+  .explore-box{
+    width: 100%;
+    max-width: 320px;
+    height: 240px;
+  }
+
+  .explore-row img{
+    width: 46px;
+  }
+
+  /* WALLET FIX */
+  .wallet{
+    padding: 0 16px;
+  }
+
+  .wallet input{
+    font-size: 14px;
+  }
+
+  .wallet button{
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  /* FOOTER */
+  .footer{
+    padding: 20px 12px;
+    font-size: 12px;
+  }
+}
