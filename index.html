@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<header class="topbar">
+  <img src="assets/logo.png" class="logo" alt="Phantoms Logo">
+</header>
 
 <!-- INTRO -->
 <div id="intro">
@@ -24,6 +27,11 @@
   <h1 class="hero-title gradient-live">PHANTOMS</h1>
   <p>A pixel-born civilization on Base</p>
 </section>
+<!-- ACTION BUTTONS -->
+<div class="cta-wrap">
+  <button class="cta-btn" onclick="toggleExplore()">Explore Collection</button>
+  <button class="cta-btn" onclick="toggleWallet()">Wallet Checker</button>
+</div>
 
 <!-- ABOUT -->
 <section class="about">
@@ -60,38 +68,34 @@
 <div id="storeComing" class="coming-panel">Store — Coming Soon</div>
   
 <!-- EXPLORE -->
-<section class="explore">
-  <h2>Explore Collection</h2>
-
+<section id="exploreBox" class="explore">
   <div class="explore-box">
-    <div class="blockchain"></div>
 
-    <div class="row row-rtl">
+    <div class="explore-row rtl">
       <button class="nft-btn"><img src="assets/nft1.png"></button>
       <button class="nft-btn"><img src="assets/nft2.png"></button>
       <button class="nft-btn"><img src="assets/nft3.png"></button>
-      <button class="nft-btn"><img src="assets/nft4.png"></button>
     </div>
 
-    <div class="row row-ltr">
+    <div class="explore-row ltr">
+      <button class="nft-btn"><img src="assets/nft4.png"></button>
       <button class="nft-btn"><img src="assets/nft5.png"></button>
       <button class="nft-btn"><img src="assets/nft6.png"></button>
-      <button class="nft-btn"><img src="assets/nft7.png"></button>
-      <button class="nft-btn"><img src="assets/nft8.png"></button>
     </div>
 
-    <div class="row row-rtl">
+    <div class="explore-row rtl">
+      <button class="nft-btn"><img src="assets/nft7.png"></button>
+      <button class="nft-btn"><img src="assets/nft8.png"></button>
       <button class="nft-btn"><img src="assets/nft9.png"></button>
-      <button class="nft-btn"><img src="assets/nft10.png"></button>
-      <button class="nft-btn"><img src="assets/nft11.png"></button>
-      <button class="nft-btn"><img src="assets/nft12.png"></button>
     </div>
+
   </div>
 </section>
 
+
 <!-- WHITELIST -->
-<section class="wallet">
-  <h2>Whitelist Checker</h2>
+<section id="walletBox" class="wallet">
+  <h2>Check Whitelist</h2>
   <input id="walletInput" placeholder="Paste wallet address">
   <button onclick="checkWhitelist()">Check Status</button>
   <p id="walletResult"></p>
