@@ -1,103 +1,68 @@
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui;
-  background:linear-gradient(135deg,#12001e,#2a003a);
-  color:#fff;
-  overflow-x:hidden;
-}
-
 /* INTRO */
-#intro{
-  position:fixed; inset:0;
-  display:flex; flex-direction:column;
-  justify-content:center; align-items:center;
-  background:#000; z-index:999;
-}
-.loader{width:200px;height:4px;background:#333}
-.loader span{display:block;height:100%;background:linear-gradient(90deg,#7cf,#f7c);width:0}
+let p=0;
+const bar=document.getElementById("loadBar");
+const pct=document.getElementById("loadPct");
+const t=setInterval(()=>{
+  p+=Math.random()*12;
+  if(p>=100){p=100;clearInterval(t);
+    setTimeout(()=>document.getElementById("intro").style.display="none",600);
+  }
+  bar.style.width=p+"%";
+  pct.textContent=Math.floor(p)+"%";
+},80);
 
-/* HEADER */
-.topbar{position:fixed;top:12px;left:12px;z-index:10}
-.logo{width:42px;animation:spin 6s linear infinite}
-@keyframes spin{to{transform:rotateY(360deg)}}
-
-/* HERO */
-.hero{text-align:center;padding:120px 20px 40px}
-.hero-title{font-size:48px}
-.shimmer{
-  background:linear-gradient(90deg,#9cf,#f9c,#9cf);
-  -webkit-background-clip:text;
-  color:transparent;
-  animation:shimmer 3s infinite;
+/* TOGGLES */
+function toggleExplore(){
+  document.getElementById("exploreBox").classList.toggle("show");
 }
-@keyframes shimmer{to{background-position:200%}}
-
-.social{
-  display:flex;justify-content:center;gap:14px
-}
-.social button{
-  background:rgba(255,255,255,.08);
-  border:none;border-radius:12px;
-  padding:12px
+function toggleWallet(){
+  document.getElementById("walletBox").classList.toggle("show");
 }
 
-/* ABOUT */
-.about{max-width:700px;margin:auto;padding:40px 20px;text-align:center}
-.cta button{
-  margin:10px;
-  padding:14px 26px;
-  border-radius:999px;
-  border:none;
-  background:linear-gradient(90deg,#7cf,#f7c);
-  color:#000;
+/* SOCIAL */
+function openTwitter(){
+  window.open("https://x.com/Phanto0ms","_blank");
+}
+function comingSoon(){
+  document.getElementById("modal").style.display="flex";
+}
+function closeModal(){
+  document.getElementById("modal").style.display="none";
 }
 
-/* PANELS */
-.panel{
-  max-height:0;
-  overflow:hidden;
-  transition:.6s ease;
-  opacity:0;
-}
-.panel.show{
-  max-height:900px;
-  opacity:1;
-  padding:40px 20px;
-}
+/* EXPLORE POPULATE */
+const rows=document.querySelectorAll(".row");
+let imgs=[];
+for(let i=1;i<=23;i++) imgs.push(`assets/nft${i}.png`);
+rows.forEach(r=>{
+  imgs.concat(imgs).forEach(src=>{
+    const im=document.createElement("img");
+    im.src=src;
+    im.onclick=comingSoon;
+    r.appendChild(im);
+  });
+});
 
-/* EXPLORE */
-.marquee{overflow:hidden}
-.row{
-  display:flex;
-  gap:12px;
-}
-.row img{
-  width:64px;
-  border-radius:8px;
-  cursor:pointer;
-}
-.r1{animation:mar1 25s linear infinite}
-.r2{animation:mar2 28s linear infinite}
-.r3{animation:mar1 32s linear infinite}
-@keyframes mar1{to{transform:translateX(-50%)}}
-@keyframes mar2{to{transform:translateX(50%)}}
+/* WALLET CHECKER */
+let fcfs=[],gdt=[];
+fetch("data/fcfs.csv").then(r=>r.text()).then(t=>fcfs=t.split(/\r?\n/));
+fetch("data/gdt.csv").then(r=>r.text()).then(t=>gdt=t.split(/\r?\n/));
 
-/* WALLET */
-#walletBox input{
-  width:100%;padding:14px;border-radius:12px;border:none
+function checkWallet(){
+  const w=document.getElementById("walletInput").value.trim();
+  const res=document.getElementById("walletResult");
+  res.textContent="Checking…";
+  res.className="";
+  setTimeout(()=>{
+    if(gdt.includes(w)){
+      res.textContent="⭐ Guaranteed (GDT) — Priority access granted";
+      res.classList.add("success");
+    }else if(fcfs.includes(w)){
+      res.textContent="✅ FCFS Whitelisted — First come, first serve";
+      res.classList.add("success");
+    }else{
+      res.textContent="❌ Wallet not whitelisted";
+      res.classList.add("fail");
+    }
+  },800);
 }
-#walletResult.success{color:#7f7;text-shadow:0 0 8px}
-#walletResult.fail{color:#f77}
-
-/* MODAL */
-#modal{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;justify-content:center;align-items:center
-}
-.modal-box{
-  background:#1a0026;padding:30px;border-radius:16px
-}
-
-footer{text-align:center;padding:30px;opacity:.6}
