@@ -1,83 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PHANTOMS — Built on Base</title>
-  <link rel="stylesheet" href="./css/style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PHANTOMS</title>
+
+<style>
+:root{--c1:#7afcff;--c2:#ff7adf}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:system-ui,-apple-system,sans-serif;
+  background:linear-gradient(120deg,#12001c,#2a003c,#120020);
+  background-size:400% 400%;
+  animation:bg 18s ease infinite;
+  color:#fff;overflow-x:hidden
+}
+@keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+section{text-align:center;padding:56px 16px}
+
+/* INTRO */
+#intro{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999}
+#intro.hide{opacity:0;transition:.6s}
+.loading-box{width:240px;height:6px;background:#222;border-radius:99px;overflow:hidden;margin:14px auto}
+.loading-bar{height:100%;width:0;background:linear-gradient(90deg,var(--c1),var(--c2))}
+
+/* LOGO */
+.logo-wrap{margin:18px auto;width:72px;height:72px;perspective:600px}
+.logo{
+  width:100%;height:100%;
+  animation:flip 10s infinite;
+}
+@keyframes flip{
+  0%{transform:rotateY(0)}
+  50%{transform:rotateY(360deg)}
+  100%{transform:rotateY(360deg)}
+}
+
+/* HERO */
+.hero h1{
+  font-size:46px;
+  background:linear-gradient(90deg,var(--c1),var(--c2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent
+}
+.hero p{opacity:.8}
+
+/* SOCIAL */
+.social{
+  display:flex;gap:14px;justify-content:center;margin:22px 0
+}
+.social img{
+  width:56px;height:56px;
+  padding:10px;
+  background:rgba(255,255,255,.06);
+  border-radius:14px;
+  cursor:pointer;
+  transition:.25s
+}
+.social img:hover{transform:scale(1.1);box-shadow:0 0 14px var(--c1)}
+
+/* BUTTON */
+.btn{
+  border:none;border-radius:999px;
+  padding:14px 34px;margin:8px;
+  font-weight:600;cursor:pointer;
+  background:linear-gradient(90deg,var(--c1),var(--c2));
+  color:#000;transition:.25s
+}
+.btn:hover{box-shadow:0 0 18px var(--c2)}
+
+/* TOGGLE */
+#explore,#wallet{display:none}
+.reveal{animation:rev .4s ease}
+@keyframes rev{from{opacity:0;transform:translateY(18px)}to{opacity:1}}
+
+/* EXPLORE */
+.explore-box{
+  max-width:760px;margin:auto;
+  background:rgba(0,0,0,.35);
+  border-radius:18px;padding:14px;overflow:hidden
+}
+.track{display:flex;gap:10px;width:max-content}
+.row1{animation:l 26s linear infinite}
+.row2{animation:r 30s linear infinite}
+.row3{animation:l 34s linear infinite}
+@keyframes l{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes r{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.track img{
+  width:70px;height:70px;border-radius:12px;
+  cursor:pointer;transition:.25s
+}
+.track img:hover{transform:scale(1.15);box-shadow:0 0 12px var(--c2)}
+
+/* WALLET */
+input{
+  width:100%;max-width:420px;
+  padding:14px;border-radius:12px;border:none
+}
+.status.ok{color:#7afcff;text-shadow:0 0 10px #7afcff}
+.status.no{color:#ff8a8a}
+
+/* MODAL */
+#modal{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;align-items:center;justify-content:center;z-index:999
+}
+#modal.show{display:flex}
+.modal-box{
+  background:#111;padding:28px;
+  border-radius:18px;text-align:center
+}
+
+/* FOOTER */
+footer{padding:28px;opacity:.6;text-align:center}
+</style>
 </head>
+
 <body>
-  <!-- INTRO -->
-  <div id="intro">
-    <div class="intro-wrap">
-      <h1 class="intro-title shimmer">PHANTOMS</h1>
-      <p>Welcome to the pixelated world</p>
-      <div class="loading-box"><div class="loading-bar"></div></div>
-      <span id="loadingPercent">0%</span>
-    </div>
+
+<!-- INTRO -->
+<div id="intro">
+  <div style="text-align:center">
+    <h1>PHANTOMS</h1>
+    <p>Welcome to the pixelated world</p>
+    <div class="loading-box"><div class="loading-bar"></div></div>
+    <div id="lp">0%</div>
   </div>
+</div>
 
-  <!-- HERO -->
-  <header class="topbar">
-    <img src="assets/logo.png" alt="PHANTOMS" class="logo" />
-  </header>
-
-  <section class="hero">
-    <h1 class="hero-title shimmer">PHANTOMS</h1>
-    <p class="hero-sub">A pixel-born culture on Base</p>
-  </section>
-
-  <!-- SOCIAL -->
-  <section class="social">
-    <button class="icon-btn" onclick="comingSoon()"><img src="assets/twitter.png" alt="Twitter"></button>
-    <button class="icon-btn" onclick="comingSoon()"><img src="assets/opensea.png" alt="OpenSea"></button>
-    <button class="icon-btn" onclick="comingSoon()"><img src="assets/magiceden.png" alt="MagicEden"></button>
-    <button class="icon-btn" onclick="comingSoon()"><img src="assets/store.png" alt="Store"></button>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about">
-    <h2 class="section-title shimmer">About Phantoms</h2>
-    <p>
-      Phantoms represent the Base ecosystem, pixel culture, and the future of on-chain art. 
-      Built on Base, Phantoms is identity, ownership, and digital culture. 
-      A collection of 2222 Phantoms, each crafted with over 200 unique traits. 
-      Art by LoikaArts. These aren’t avatars — they’re Phantoms.
-    </p>
-    <div class="cta">
-      <button onclick="openExplore()">Explore Collection</button>
-      <button onclick="scrollToChecker()">Check Whitelist</button>
-    </div>
-  </section>
-
-  <!-- EXPLORE -->
-  <section id="exploreBox" class="panel">
-    <div class="marquee" id="exploreGallery"></div>
-  </section>
-
-  <!-- WALLET CHECKER -->
-  <section id="walletChecker">
-    <h2 class="section-title">Check Whitelist</h2>
-    <input type="text" id="walletInput" placeholder="Paste wallet address" />
-    <button id="checkBtn" onclick="checkWallet()">Check Status</button>
-    <p id="walletStatus"></p>
-  </section>
-
-  <!-- COMING SOON MODAL -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <h3>🚧 Coming Soon</h3>
-      <p>This feature is under development.</p>
-      <button onclick="closeModal()">Close</button>
-    </div>
+<section class="hero">
+  <div class="logo-wrap">
+    <img src="assets/logo.png" class="logo" alt="logo">
   </div>
+  <h1>PHANTOMS</h1>
+  <p>A pixel-born culture on Base</p>
 
-  <!-- FOOTER -->
-  <footer>
-    © 2026 PHANTOMS — Built on Base
-  </footer>
+  <div class="social">
+    <img src="assets/twitter.png" onclick="openModal()">
+    <img src="assets/opensea.png" onclick="openModal()">
+    <img src="assets/magiceden.png" onclick="openModal()">
+    <img src="assets/store.png" onclick="openModal()">
+  </div>
+</section>
 
-  <canvas id="bg"></canvas>
-  <script src="./js/main.js"></script>
+<section>
+  <h2>About Phantoms</h2>
+  <p>
+    Phantoms represent the Base ecosystem, pixel culture, and the future of onchain art.
+    Built on Base, Phantoms is identity, ownership, and digital culture.
+    A collection of 2222 Phantoms with over 200 unique traits.
+    These aren’t avatars — they’re Phantoms.
+  </p>
+  <button class="btn" onclick="toggle('explore')">Explore Collection</button>
+  <button class="btn" onclick="toggle('wallet')">Wallet Checker</button>
+</section>
+
+<section id="explore">
+  <div class="explore-box" id="gallery"></div>
+</section>
+
+<section id="wallet">
+  <h2>Whitelist Checker</h2>
+  <input id="addr" placeholder="Paste wallet address">
+  <br><br>
+  <button class="btn" onclick="checkWL()">Check Status</button>
+  <div id="res"></div>
+</section>
+
+<div id="modal">
+  <div class="modal-box">
+    <h3>Coming Soon</h3>
+    <p>This feature is under development.</p>
+    <button class="btn" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<footer>© 2026 PHANTOMS — Built on Base</footer>
+
+<script>
+/* LOADING */
+let p=0;
+const bar=document.querySelector(".loading-bar");
+const lp=document.getElementById("lp");
+const intro=document.getElementById("intro");
+const t=setInterval(()=>{
+  p+=4;if(p>=100){p=100;clearInterval(t);
+    setTimeout(()=>{intro.classList.add("hide");
+      setTimeout(()=>intro.remove(),600)},400)}
+  bar.style.width=p+"%";lp.textContent=p+"%";
+},60);
+
+/* TOGGLE */
+function toggle(id){
+  const e=document.getElementById(id);
+  e.style.display=(e.style.display==="block")?"none":"block";
+  e.classList.add("reveal");
+}
+
+/* EXPLORE */
+const g=document.getElementById("gallery");
+const n=[...Array(23)].map((_,i)=>`assets/nft${i+1}.png`);
+const loop=[...n,...n];
+for(let r=0;r<3;r++){
+  const row=document.createElement("div");
+  row.className="track row"+(r+1);
+  loop.slice(0,14).forEach(s=>{
+    const i=document.createElement("img");
+    i.src=s;i.onclick=openModal;
+    row.appendChild(i);
+  });
+  g.appendChild(row);
+}
+
+/* WALLET */
+let fcfs=[],gdt=[];
+fetch("data/fcfs.csv").then(r=>r.text()).then(t=>fcfs=t.split(/\r?\n/));
+fetch("data/gdt.csv").then(r=>r.text()).then(t=>gdt=t.split(/\r?\n/));
+function checkWL(){
+  const a=document.getElementById("addr").value.trim().toLowerCase();
+  const r=document.getElementById("res");
+  r.textContent="Checking...";
+  setTimeout(()=>{
+    if(gdt.includes(a)){r.textContent="✅ GDT Whitelisted";r.className="status ok";}
+    else if(fcfs.includes(a)){r.textContent="✅ FCFS Whitelisted";r.className="status ok";}
+    else{r.textContent="❌ Not Whitelisted";r.className="status no";}
+  },800);
+}
+
+/* MODAL */
+function openModal(){document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+</script>
+
 </body>
 </html>
