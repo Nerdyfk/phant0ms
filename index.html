@@ -9,102 +9,80 @@
 </head>
 <body>
 
-<!-- INTRO (GLITCH LOADING) -->
+<!-- INTRO -->
 <div id="intro">
   <div class="intro-wrap">
-    <div class="glitch-title">
-      <span>PHANTOMS</span>
-      <span>PHANTOMS</span>
-      <span>PHANTOMS</span>
-    </div>
-
-    <p class="intro-line">
-      Welcome to the pixelated world
-    </p>
-
+    <h1 class="intro-logo gradient-text">PHANTOMS</h1>
+    <p class="intro-line">Welcome to the pixelated world</p>
     <div class="loading-box">
       <div class="loading-bar"></div>
     </div>
-
-    <div class="loading-text">
-      Loading <span id="loadingPercent">0%</span>
-    </div>
+    <div class="loading-text">Loading <span id="loadingPercent">0%</span></div>
   </div>
 </div>
 
-
-<!-- GRADIENT CONTROL (TOP RIGHT) -->
-<input id="gradCtl" type="range" min="0.15" max="0.6" step="0.01" value="0.32">
-
 <header class="site-header">
-  <img src="assets/logo.png" class="logo" alt="logo">
+  <img src="assets/logo.png" class="logo">
 </header>
 
+<!-- HERO -->
 <section class="hero">
-  <h1>PHANTOMS</h1>
-  <p>A pixel-born culture on Base</p>
+  <h1 class="hero-title gradient-text-live">PHANTOMS</h1>
+  <p>A pixel-born civilization on Base</p>
 </section>
 
+<!-- ABOUT -->
 <section class="about">
   <h2>About Phantoms</h2>
   <p id="aboutText">
-    Phantoms represent the Base ecosystem, pixel culture, creativity,
-    and the future of onchain art. Built on Base, Phantoms isn’t just art —
-    it’s identity, ownership, and culture in motion.
-    2222 Phantoms with 200+ traits.
-    Art by LoikaArts.
-    These aren’t avatars — they’re Phantoms.
+    Phantoms represent the Base ecosystem, pixel culture, and the future of on-chain art.
+    Built on Base, Phantoms is not just art — it is identity, ownership, and digital culture.
+    A collection of 2222 Phantoms with over 200+ unique traits,
+    each crafted with a story behind its creation.
+    Art by LoikaArts. These aren’t avatars — they’re Phantoms.
   </p>
 </section>
 
-<!-- ICON BAR -->
-<section class="action-bar">
-  <button class="icon-btn" onclick="openTwitter()"><img src="assets/twitter.png" alt="twitter"></button>
-  <button class="icon-btn" onclick="togglePanel('osPanel')"><img src="assets/opensea.png" alt="opensea"></button>
-  <button class="icon-btn" onclick="togglePanel('mePanel')"><img src="assets/magiceden.png" alt="magiceden"></button>
-  <button class="icon-btn" onclick="togglePanel('storePanel')"><img src="assets/store.png" alt="store"></button>
-</section>
-
-<section id="osPanel" class="slide-panel">OpenSea — Coming Soon</section>
-<section id="mePanel" class="slide-panel">Magic Eden — Coming Soon</section>
-<section id="storePanel" class="slide-panel">Store — Coming Soon</section>
-
 <!-- EXPLORE -->
-<div class="explore-btn-wrap">
-  <button onclick="toggleExplore()">Explore Collection</button>
-</div>
+<section class="explore">
+  <h2>Explore Collection</h2>
 
-<section id="exploreBox">
-  <!-- SVG PATH (single, smooth) -->
-  <svg id="snakeSVG" viewBox="0 0 1000 300" aria-hidden="true">
-    <path id="snakePath"
-      d="M -120 40
-         Q 500 40 1000 40
-         Q 1100 150 500 150
-         Q -120 150 -120 260"
-      fill="none"/>
-  </svg>
-  <div id="snakeContainer"></div>
+  <div class="explore-box">
+    <div class="blockchain"></div>
+    <div class="code-rain"></div>
+
+    <div class="row row-rtl">
+      <button class="nft-btn"><img src="assets/nft1.png"></button>
+      <button class="nft-btn"><img src="assets/nft2.png"></button>
+      <button class="nft-btn"><img src="assets/nft3.png"></button>
+    </div>
+
+    <div class="row row-ltr">
+      <button class="nft-btn"><img src="assets/nft4.png"></button>
+      <button class="nft-btn"><img src="assets/nft5.png"></button>
+      <button class="nft-btn"><img src="assets/nft6.png"></button>
+    </div>
+
+    <div class="row row-rtl">
+      <button class="nft-btn"><img src="assets/nft7.png"></button>
+      <button class="nft-btn"><img src="assets/nft8.png"></button>
+      <button class="nft-btn"><img src="assets/nft9.png"></button>
+    </div>
+  </div>
 </section>
 
-<!-- WALLET -->
-<div class="explore-btn-wrap">
-  <button class="wallet-toggle-btn" onclick="toggleWallet()">Wallet Checker</button>
-</div>
-
-<section id="walletBox" class="wallet-box">
-  <div class="wallet-inner">
-    <input id="walletInput" placeholder="Paste wallet address (0x...)">
-    <button onclick="checkWallet()">Check Status</button>
-    <p id="walletResult"></p>
-  </div>
+<!-- WHITELIST -->
+<section class="wallet">
+  <h2>Check Whitelist/h2>
+  <input id="walletInput" placeholder="Paste wallet address">
+  <button onclick="checkWhitelist()">Check Status</button>
+  <p id="walletResult"></p>
 </section>
 
 <!-- TRAIT MODAL -->
 <div id="traitModal">
   <div class="modal-box">
-    <h3 id="traitTitle"></h3>
-    <pre id="traitContent"></pre>
+    <p>Traits: Coming Soon</p>
     <button onclick="closeTrait()">Close</button>
   </div>
 </div>
