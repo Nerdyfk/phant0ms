@@ -58,15 +58,44 @@ async function checkWallet() {
   status.className = "";
   await new Promise(r => setTimeout(r, 1500));
 
-  // Random mock result
-  const granted = Math.random() > 0.5;
-  if (granted) {
-    status.textContent = "✅ Wallet whitelisted — Access granted!";
-    status.className = "success-glow";
-  } else {
-    status.textContent = "❌ Wallet not found.";
-    status.className = "error";
-  }
+  // ===== REAL CSV WHITELIST LOGIC =====
+
+// make sure CSV is loaded once (top of file ideally)
+if (!window.GDT_LIST) {
+  window.GDT_LIST = [];
+  fetch("data/gdt.csv")
+    .then(res => {
+      if (!res.ok) throw new Error("gdt.csv not found");
+      return res.text();
+    })
+    .then(text => {
+      window.GDT_LIST = text
+        .split(/\r?\n/)
+        .map(x => x.replace(/\uFEFF/g, "").trim().toLowerCase())
+        .filter(Boolean);
+
+      console.log("GDT loaded:", window.GDT_LIST.length);
+    })
+    .catch(err => {
+      console.error("CSV load failed:", err);
+    });
+}
+
+// normalize wallet
+const walletLower = wallet.toLowerCase();
+
+if (!window.GDT_LIST.length) {
+  status.textContent = "⏳ Whitelist loading… try again";
+  status.className = "error";
+} 
+else if (window.GDT_LIST.includes(walletLower)) {
+  status.textContent = "✅ GDT Whitelisted";
+  status.className = "success-glow";
+} 
+else {
+  status.textContent = "❌ Not Whitelisted";
+  status.className = "error";
+}
 
   btn.textContent = "Check Status";
 }
