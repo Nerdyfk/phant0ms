@@ -1,158 +1,103 @@
-/* =========================
-   INTRO : FAST CINEMATIC LOADING
-========================= */
-let load = 0;
-const percent = document.getElementById("loadingPercent");
-const bar = document.querySelector(".loading-bar");
-
-const introInterval = setInterval(() => {
-  load += Math.floor(Math.random() * 8) + 5;
-  if (load >= 100) {
-    load = 100;
-    clearInterval(introInterval);
-
-    setTimeout(() => {
-      const intro = document.getElementById("intro");
-      if (intro) {
-        intro.style.opacity = "0";
-        setTimeout(() => (intro.style.display = "none"), 900);
-      }
-    }, 400);
-  }
-
-  if (percent) percent.textContent = load + "%";
-  if (bar) bar.style.width = load + "%";
-}, 90);
-
-/* =========================
-   GLOBAL STATE
-========================= */
-let fcfsList = [];
-let gdtList = [];
-
-/* =========================
-   CSV LOADER (AUTO-DEDUPE)
-========================= */
-async function loadCSV(path) {
-  try {
-    const res = await fetch(path);
-    if (!res.ok) return [];
-    const text = await res.text();
-
-    return text
-      .split("\n")
-      .map(w => w.trim().toLowerCase())
-      .filter(w => w.startsWith("0x") && w.length === 42);
-  } catch {
-    return [];
-  }
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui;
+  background:linear-gradient(135deg,#12001e,#2a003a);
+  color:#fff;
+  overflow-x:hidden;
 }
 
-async function initWhitelist() {
-  fcfsList = await loadCSV("data/fcfs.csv");
-  gdtList  = await loadCSV("data/gdt.csv");
+/* INTRO */
+#intro{
+  position:fixed; inset:0;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  background:#000; z-index:999;
+}
+.loader{width:200px;height:4px;background:#333}
+.loader span{display:block;height:100%;background:linear-gradient(90deg,#7cf,#f7c);width:0}
 
-  // 🔔 ADMIN WARNING: same wallet in both lists
-  const overlap = fcfsList.filter(w => gdtList.includes(w));
-  if (overlap.length) {
-    console.warn(
-      "⚠️ Wallet(s) exist in BOTH GDT & FCFS lists:",
-      overlap
-    );
-  }
+/* HEADER */
+.topbar{position:fixed;top:12px;left:12px;z-index:10}
+.logo{width:42px;animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotateY(360deg)}}
+
+/* HERO */
+.hero{text-align:center;padding:120px 20px 40px}
+.hero-title{font-size:48px}
+.shimmer{
+  background:linear-gradient(90deg,#9cf,#f9c,#9cf);
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:shimmer 3s infinite;
+}
+@keyframes shimmer{to{background-position:200%}}
+
+.social{
+  display:flex;justify-content:center;gap:14px
+}
+.social button{
+  background:rgba(255,255,255,.08);
+  border:none;border-radius:12px;
+  padding:12px
 }
 
-initWhitelist();
-
-/* =========================
-   WALLET CHECKER (FINAL LOGIC)
-========================= */
-function checkWallet() {
-  const input = document.getElementById("walletInput");
-  const res   = document.getElementById("walletResult");
-
-  if (!input || !res) return;
-
-  const wallet = input.value.trim().toLowerCase();
-
-  res.className = "wallet-result loading";
-  res.textContent = "Checking whitelist…";
-
-  setTimeout(() => {
-    res.className = "wallet-result";
-
-    // ❌ invalid address
-    if (!wallet.startsWith("0x") || wallet.length !== 42) {
-      res.classList.add("fail-glow");
-      res.textContent = "❌ Invalid wallet address";
-      return;
-    }
-
-    // ⭐ PRIORITY 1: GDT
-    if (gdtList.includes(wallet)) {
-      res.classList.add("success-glow");
-      res.textContent = "⭐ Guaranteed (GDT) — Priority access granted";
-      return;
-    }
-
-    // ✅ PRIORITY 2: FCFS
-    if (fcfsList.includes(wallet)) {
-      res.classList.add("success-glow");
-      res.textContent = "✅ FCFS Whitelisted — First come, first serve";
-      return;
-    }
-
-    // ❌ Not whitelisted
-    res.classList.add("fail-glow");
-    res.textContent = "❌ Wallet is not whitelisted";
-  }, 900);
+/* ABOUT */
+.about{max-width:700px;margin:auto;padding:40px 20px;text-align:center}
+.cta button{
+  margin:10px;
+  padding:14px 26px;
+  border-radius:999px;
+  border:none;
+  background:linear-gradient(90deg,#7cf,#f7c);
+  color:#000;
 }
 
-/* =========================
-   TOGGLES (EXPLORE / WALLET)
-========================= */
-function toggleExplore() {
-  const box = document.getElementById("exploreBox");
-  if (box) box.classList.toggle("show");
+/* PANELS */
+.panel{
+  max-height:0;
+  overflow:hidden;
+  transition:.6s ease;
+  opacity:0;
+}
+.panel.show{
+  max-height:900px;
+  opacity:1;
+  padding:40px 20px;
 }
 
-function toggleWallet() {
-  const box = document.getElementById("walletBox");
-  if (box) box.classList.toggle("show");
+/* EXPLORE */
+.marquee{overflow:hidden}
+.row{
+  display:flex;
+  gap:12px;
+}
+.row img{
+  width:64px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.r1{animation:mar1 25s linear infinite}
+.r2{animation:mar2 28s linear infinite}
+.r3{animation:mar1 32s linear infinite}
+@keyframes mar1{to{transform:translateX(-50%)}}
+@keyframes mar2{to{transform:translateX(50%)}}
+
+/* WALLET */
+#walletBox input{
+  width:100%;padding:14px;border-radius:12px;border:none
+}
+#walletResult.success{color:#7f7;text-shadow:0 0 8px}
+#walletResult.fail{color:#f77}
+
+/* MODAL */
+#modal{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;justify-content:center;align-items:center
+}
+.modal-box{
+  background:#1a0026;padding:30px;border-radius:16px
 }
 
-/* =========================
-   COMING SOON MODAL
-========================= */
-function showComingSoon() {
-  const modal = document.getElementById("comingSoon");
-  if (modal) modal.classList.add("show");
-}
-
-function closeComingSoon() {
-  const modal = document.getElementById("comingSoon");
-  if (modal) modal.classList.remove("show");
-}
-
-/* =========================
-   NFT CLICK → TRAIT MODAL
-========================= */
-function showTrait() {
-  showComingSoon();
-}
-
-/* =========================
-   SOCIAL LINKS
-========================= */
-function openTwitter() {
-  window.open("https://x.com/Phanto0ms", "_blank");
-}
-
-/* =========================
-   SCROLL-BASED GLOW FX
-========================= */
-window.addEventListener("scroll", () => {
-  const glow = document.documentElement;
-  const y = window.scrollY;
-  glow.style.setProperty("--scrollGlow", Math.min(y / 600, 1));
-});
+footer{text-align:center;padding:30px;opacity:.6}
