@@ -28,18 +28,25 @@
   <h1 class="hero-title gradient">PHANTOMS</h1>
   <p>A pixel-born civilization on Base</p>
 </section>
+<!-- SOCIAL ICON BAR (TOP) -->
+<section class="social-top">
+  <button class="icon-btn" onclick="openTwitter()">
+    <img src="assets/twitter.png">
+  </button>
+  <button class="icon-btn">
+    <img src="assets/opensea.png">
+  </button>
+  <button class="icon-btn">
+    <img src="assets/magiceden.png">
+  </button>
+  <button class="icon-btn">
+    <img src="assets/store.png">
+  </button>
+</section>
 
 <!-- ABOUT -->
-<section class="about">
-
-  <!-- ICONS ABOVE -->
-  <div class="action-bar">
-    <button class="icon-btn" onclick="openTwitter()"><img src="assets/twitter.png"></button>
-    <button class="icon-btn"><img src="assets/opensea.png"></button>
-    <button class="icon-btn"><img src="assets/magiceden.png"></button>
-    <button class="icon-btn"><img src="assets/store.png"></button>
-  </div>
-
+<section class="about about-spaced">
+  
   <h2>About Phantoms</h2>
 
   <p id="aboutText">
@@ -57,17 +64,17 @@
 </section>
 
 <!-- EXPLORE (HIDDEN BY DEFAULT) -->
-<section id="exploreBox" class="explore hidden">
+<section id="exploreBox" class="explore hidden reveal">
   <div class="explore-box">
     <div class="explore-row rtl"></div>
     <div class="explore-row ltr"></div>
     <div class="explore-row rtl"></div>
   </div>
 </section>
-
+  
 <!-- WALLET (HIDDEN BY DEFAULT) -->
-<section id="walletBox" class="wallet hidden">
-  <h2>Whitelist Checker</h2>
+<section id="walletBox" class="wallet hidden reveal">
+  <h2>Check Whitelist</h2>
   <input id="walletInput" placeholder="Paste wallet address">
   <button onclick="checkWhitelist()">Check Status</button>
   <p id="walletResult"></p>
