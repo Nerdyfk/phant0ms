@@ -1,68 +1,114 @@
-/* INTRO */
-let p=0;
-const bar=document.getElementById("loadBar");
-const pct=document.getElementById("loadPct");
-const t=setInterval(()=>{
-  p+=Math.random()*12;
-  if(p>=100){p=100;clearInterval(t);
-    setTimeout(()=>document.getElementById("intro").style.display="none",600);
-  }
-  bar.style.width=p+"%";
-  pct.textContent=Math.floor(p)+"%";
-},80);
+// ===== Loading Animation =====
+window.addEventListener("load", () => {
+  let percent = 0;
+  const bar = document.querySelector(".loading-bar");
+  const text = document.getElementById("loadingPercent");
 
-/* TOGGLES */
-function toggleExplore(){
-  document.getElementById("exploreBox").classList.toggle("show");
-}
-function toggleWallet(){
-  document.getElementById("walletBox").classList.toggle("show");
-}
-
-/* SOCIAL */
-function openTwitter(){
-  window.open("https://x.com/Phanto0ms","_blank");
-}
-function comingSoon(){
-  document.getElementById("modal").style.display="flex";
-}
-function closeModal(){
-  document.getElementById("modal").style.display="none";
-}
-
-/* EXPLORE POPULATE */
-const rows=document.querySelectorAll(".row");
-let imgs=[];
-for(let i=1;i<=23;i++) imgs.push(`assets/nft${i}.png`);
-rows.forEach(r=>{
-  imgs.concat(imgs).forEach(src=>{
-    const im=document.createElement("img");
-    im.src=src;
-    im.onclick=comingSoon;
-    r.appendChild(im);
-  });
+  const interval = setInterval(() => {
+    percent += 2;
+    bar.style.width = percent + "%";
+    text.textContent = percent + "%";
+    if (percent >= 100) {
+      clearInterval(interval);
+      document.getElementById("intro").classList.add("hide");
+    }
+  }, 30);
 });
 
-/* WALLET CHECKER */
-let fcfs=[],gdt=[];
-fetch("data/fcfs.csv").then(r=>r.text()).then(t=>fcfs=t.split(/\r?\n/));
-fetch("data/gdt.csv").then(r=>r.text()).then(t=>gdt=t.split(/\r?\n/));
+// ===== Explore Collection =====
+function openExplore() {
+  const box = document.getElementById("exploreBox");
+  box.classList.add("show");
+  const gallery = document.getElementById("exploreGallery");
 
-function checkWallet(){
-  const w=document.getElementById("walletInput").value.trim();
-  const res=document.getElementById("walletResult");
-  res.textContent="Checking…";
-  res.className="";
-  setTimeout(()=>{
-    if(gdt.includes(w)){
-      res.textContent="⭐ Guaranteed (GDT) — Priority access granted";
-      res.classList.add("success");
-    }else if(fcfs.includes(w)){
-      res.textContent="✅ FCFS Whitelisted — First come, first serve";
-      res.classList.add("success");
-    }else{
-      res.textContent="❌ Wallet not whitelisted";
-      res.classList.add("fail");
+  if (!gallery.innerHTML.trim()) {
+    for (let i = 1; i <= 24; i++) {
+      const row = document.createElement("div");
+      row.className = "row";
+      for (let j = 1; j <= 12; j++) {
+        const img = document.createElement("img");
+        img.src = `assets/nft${((i + j) % 12) + 1}.png`;
+        row.appendChild(img);
+      }
+      gallery.appendChild(row);
     }
-  },800);
+  }
 }
+
+// ===== Scroll to Wallet Checker =====
+function scrollToChecker() {
+  document.getElementById("walletChecker").scrollIntoView({ behavior: "smooth" });
+}
+
+// ===== Wallet Checker =====
+async function checkWallet() {
+  const input = document.getElementById("walletInput");
+  const status = document.getElementById("walletStatus");
+  const btn = document.getElementById("checkBtn");
+  const wallet = input.value.trim();
+
+  if (!wallet) {
+    status.textContent = "⚠️ Please enter a wallet address.";
+    status.className = "error";
+    return;
+  }
+
+  btn.textContent = "Checking...";
+  status.textContent = "";
+  status.className = "";
+  await new Promise(r => setTimeout(r, 1500));
+
+  // Random mock result
+  const granted = Math.random() > 0.5;
+  if (granted) {
+    status.textContent = "✅ Wallet whitelisted — Access granted!";
+    status.className = "success-glow";
+  } else {
+    status.textContent = "❌ Wallet not found.";
+    status.className = "error";
+  }
+
+  btn.textContent = "Check Status";
+}
+
+// ===== Coming Soon Modal =====
+function comingSoon() {
+  document.getElementById("modal").classList.add("show");
+}
+function closeModal() {
+  document.getElementById("modal").classList.remove("show");
+}
+
+// ===== Background Animation =====
+const c = document.getElementById("bg");
+const ctx = c.getContext("2d");
+let w, h, lines = [];
+function resize() {
+  w = c.width = window.innerWidth;
+  h = c.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+function drawLine(x, y, len, spd) {
+  return { x, y, len, spd };
+}
+for (let i = 0; i < 40; i++) {
+  lines.push(drawLine(Math.random() * w, Math.random() * h, 80 + Math.random() * 120, 0.5 + Math.random()));
+}
+
+function animateBG() {
+  ctx.clearRect(0, 0, w, h);
+  ctx.strokeStyle = "rgba(255,255,255,0.05)";
+  ctx.lineWidth = 1;
+  lines.forEach(l => {
+    ctx.beginPath();
+    ctx.moveTo(l.x, l.y);
+    ctx.lineTo(l.x + l.len, l.y);
+    ctx.stroke();
+    l.x += l.spd;
+    if (l.x > w) l.x = -l.len;
+  });
+  requestAnimationFrame(animateBG);
+}
+animateBG();
