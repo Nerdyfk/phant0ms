@@ -117,3 +117,68 @@ body{
   .cta-wrap{flex-direction:column}
   .explore-box{width:92%}
 }
+/* =========================
+   LAYOUT SPACING FIX
+========================= */
+.about-spaced{
+  margin-top:40px;
+  margin-bottom:20px;
+}
+
+.social-top{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-top:20px;
+  margin-bottom:10px;
+}
+
+/* =========================
+   REVEAL ANIMATION (Explore + Wallet)
+========================= */
+.reveal{
+  opacity:0;
+  transform:translateY(40px) scale(.96);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+/* =========================
+   FULL PAGE BLOCKCHAIN GRID
+========================= */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  background:
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:80px 80px;
+  animation:gridFlow 30s linear infinite;
+}
+
+@keyframes gridFlow{
+  from{background-position:0 0,0 0}
+  to{background-position:80px 80px,80px 80px}
+}
+
+/* =========================
+   CODE BLOCK FLOATING EFFECT
+========================= */
+@keyframes codeFloat{
+  from{transform:translateY(0)}
+  to{transform:translateY(-40px)}
+}
+
+.code-particle{
+  position:fixed;
+  font-family:monospace;
+  font-size:12px;
+  opacity:.15;
+  animation:codeFloat 20s linear infinite;
+}
