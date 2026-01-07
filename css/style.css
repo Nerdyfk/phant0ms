@@ -7,7 +7,159 @@
 
 *{
   box-sizing:border-box;
-  margin:0;
+  margin:0;*{box-sizing:border-box;margin:0}
+body{background:#000;color:#fff;font-family:system-ui}
+
+/* INTRO */
+#intro{position:fixed;inset:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:center}
+.intro-wrap{text-align:center}
+.intro-title{font-size:3.5rem;font-weight:900;letter-spacing:.25em}
+.intro-line{opacity:.7;margin:10px 0}
+.loading-box{width:240px;height:6px;background:#222;margin:16px auto}
+.loading-bar{height:100%;width:0;background:linear-gradient(90deg,#5B8CFF,#FF4FD8,#3CFF8F)}
+.loading-text{font-size:12px;opacity:.7}
+
+/* GRADIENT TEXT */
+.gradient-anim,.gradient-live{
+  background:linear-gradient(90deg,#5B8CFF,#FF4FD8,#3CFF8F);
+  background-size:300% 300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:grad 4s linear infinite;
+}
+@keyframes grad{0%{background-position:0%}100%{background-position:100%}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hero-title{font-size:4rem}
+
+/* ACTION ICONS */
+.action-bar{display:flex;justify-content:center;gap:22px;margin:30px 0}
+.icon-btn{
+  width:72px;height:72px;border-radius:18px;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:.25s
+}
+.icon-btn:hover{transform:scale(1.08)}
+.icon-btn img{width:36px}
+.coming-panel{max-height:0;overflow:hidden;text-align:center;transition:1s;opacity:.85}
+.coming-panel.show{max-height:120px;padding:16px}
+
+/* ABOUT */
+.about{max-width:800px;margin:auto;padding:80px 20px;text-align:center}
+.about span{display:inline-block;opacity:0;transform:translateY(12px);animation:rise .4s forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* EXPLORE */
+.explore{text-align:center;padding:60px 0}
+.explore-box{
+  position:relative;width:90%;max-width:900px;height:260px;margin:auto;
+  overflow:hidden;border-radius:18px;border:1px solid rgba(255,255,255,.15);
+  background:rgba(0,0,0,.3)
+}
+.blockchain{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.row{display:flex;gap:16px;width:200%;padding:18px 0;position:relative;z-index:1}
+.row-rtl{animation:rtl 20s linear infinite}
+.row-ltr{animation:ltr 22s linear infinite}
+@keyframes rtl{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes ltr{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.nft-btn{background:none;border:none;cursor:pointer}
+.nft-btn img{width:72px;border-radius:12px;transition:.25s}
+.nft-btn:hover img{transform:scale(1.08)}
+
+/* WALLET */
+.wallet{max-width:420px;margin:80px auto;text-align:center}
+.wallet input{width:100%;padding:14px;border-radius:14px;border:none;background:#111;color:#fff}
+.wallet button{width:100%;margin-top:12px;padding:14px;border:none;border-radius:16px;background:linear-gradient(90deg,#5B8CFF,#FF4FD8);color:#fff}
+
+/* MODAL */
+#traitModal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75)}
+.modal-box{background:#111;padding:24px;border-radius:16px}
+*{box-sizing:border-box;margin:0}
+body{background:#000;color:#fff;font-family:system-ui}
+
+/* INTRO */
+#intro{position:fixed;inset:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:center}
+.intro-wrap{text-align:center}
+.intro-title{font-size:3.5rem;font-weight:900;letter-spacing:.25em}
+.intro-line{opacity:.7;margin:10px 0}
+.loading-box{width:240px;height:6px;background:#222;margin:16px auto}
+.loading-bar{height:100%;width:0;background:linear-gradient(90deg,#5B8CFF,#FF4FD8,#3CFF8F)}
+.loading-text{font-size:12px;opacity:.7}
+
+/* GRADIENT TEXT */
+.gradient-anim,.gradient-live{
+  background:linear-gradient(90deg,#5B8CFF,#FF4FD8,#3CFF8F);
+  background-size:300% 300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:grad 4s linear infinite;
+}
+@keyframes grad{0%{background-position:0%}100%{background-position:100%}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hero-title{font-size:4rem}
+
+/* ACTION ICONS */
+.action-bar{display:flex;justify-content:center;gap:22px;margin:30px 0}
+.icon-btn{
+  width:72px;height:72px;border-radius:18px;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:.25s
+}
+.icon-btn:hover{transform:scale(1.08)}
+.icon-btn img{width:36px}
+.coming-panel{max-height:0;overflow:hidden;text-align:center;transition:1s;opacity:.85}
+.coming-panel.show{max-height:120px;padding:16px}
+
+/* ABOUT */
+.about{max-width:800px;margin:auto;padding:80px 20px;text-align:center}
+.about span{display:inline-block;opacity:0;transform:translateY(12px);animation:rise .4s forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* EXPLORE */
+.explore{text-align:center;padding:60px 0}
+.explore-box{
+  position:relative;width:90%;max-width:900px;height:260px;margin:auto;
+  overflow:hidden;border-radius:18px;border:1px solid rgba(255,255,255,.15);
+  background:rgba(0,0,0,.3)
+}
+.blockchain{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.row{display:flex;gap:16px;width:200%;padding:18px 0;position:relative;z-index:1}
+.row-rtl{animation:rtl 20s linear infinite}
+.row-ltr{animation:ltr 22s linear infinite}
+@keyframes rtl{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes ltr{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.nft-btn{background:none;border:none;cursor:pointer}
+.nft-btn img{width:72px;border-radius:12px;transition:.25s}
+.nft-btn:hover img{transform:scale(1.08)}
+
+/* WALLET */
+.wallet{max-width:420px;margin:80px auto;text-align:center}
+.wallet input{width:100%;padding:14px;border-radius:14px;border:none;background:#111;color:#fff}
+.wallet button{width:100%;margin-top:12px;padding:14px;border:none;border-radius:16px;background:linear-gradient(90deg,#5B8CFF,#FF4FD8);color:#fff}
+
+/* MODAL */
+#traitModal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75)}
+.modal-box{background:#111;padding:24px;border-radius:16px}
+
   padding:0;
 }
 
