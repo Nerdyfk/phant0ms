@@ -1,168 +1,127 @@
-/* ======================================================
-   INTRO : GLITCH + FAST CINEMATIC LOADING (FINAL)
-====================================================== */
+/* =========================
+   INTRO LOADER
+========================= */
 let load = 0;
 const percent = document.getElementById("loadingPercent");
 const bar = document.querySelector(".loading-bar");
 
 const introInterval = setInterval(() => {
-  load += Math.floor(Math.random() * 8) + 6; // fast cinematic
+  load += Math.floor(Math.random() * 8) + 6;
   if (load >= 100) {
     load = 100;
     clearInterval(introInterval);
-
     setTimeout(() => {
       const intro = document.getElementById("intro");
-      if (intro) {
-        intro.style.opacity = "0";
-        intro.style.pointerEvents = "none";
-
-        setTimeout(() => {
-          intro.style.display = "none"; // 🔥 critical fix
-        }, 900);
-      }
+      intro.style.opacity = "0";
+      setTimeout(() => intro.style.display = "none", 900);
     }, 400);
   }
-
-  if (percent) percent.textContent = load + "%";
-  if (bar) bar.style.width = load + "%";
+  percent.textContent = load + "%";
+  bar.style.width = load + "%";
 }, 110);
 
-
-/* ======================================================
-   HERO : ALWAYS-LIVE GRADIENT SHIMMER
-====================================================== */
+/* =========================
+   HERO LIVE SHIMMER
+========================= */
 const hero = document.querySelector(".hero-title");
-if (hero) {
-  let hue = 0;
-  setInterval(() => {
-    hue = (hue + 1) % 360;
-    hero.style.backgroundImage =
-      `linear-gradient(90deg,
-        hsl(${hue},90%,70%),
-        hsl(${(hue + 60) % 360},90%,70%),
-        hsl(${(hue + 120) % 360},90%,70%)
-      )`;
-  }, 60);
-}
+let hue = 0;
+setInterval(() => {
+  hue = (hue + 1) % 360;
+  hero.style.backgroundImage =
+    `linear-gradient(90deg,
+      hsl(${hue},90%,70%),
+      hsl(${(hue+60)%360},90%,70%),
+      hsl(${(hue+120)%360},90%,70%)
+    )`;
+}, 60);
 
-
-/* ======================================================
-   SCROLL-BASED GLOW (SECTIONS)
-====================================================== */
-const glowSections = document.querySelectorAll(".about, .explore, .wallet");
-
-const glowObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("glow-active");
-      }
-    });
-  },
-  { threshold: 0.25 }
-);
-
-glowSections.forEach(sec => glowObserver.observe(sec));
-
-
-/* ======================================================
-   EXPLORE COLLECTION : 3-ROW HORIZONTAL LOOP
-====================================================== */
+/* =========================
+   EXPLORE COLLECTION
+========================= */
+const nftList = Array.from({length:23},(_,i)=>`assets/nft${i+1}.png`);
 const rows = document.querySelectorAll(".explore-row");
 
-rows.forEach((row, index) => {
-  let pos = index % 2 === 0 ? 0 : -row.scrollWidth / 2;
-  const speed = index % 2 === 0 ? 0.25 : -0.25;
+function shuffle(arr){
+  return arr.sort(()=>Math.random()-0.5);
+}
 
-  function move() {
-    pos += speed;
-    if (Math.abs(pos) > row.scrollWidth / 2) pos = 0;
-    row.style.transform = `translateX(${pos}px)`;
+function fillExplore(){
+  rows.forEach(r=>{
+    r.innerHTML="";
+    shuffle([...nftList]).slice(0,7).forEach(src=>{
+      const b=document.createElement("button");
+      b.className="nft-btn";
+      b.innerHTML=`<img src="${src}" loading="lazy">`;
+      b.onclick=()=>document.getElementById("traitModal").classList.remove("hidden");
+      r.appendChild(b);
+    });
+  });
+}
+
+rows.forEach((row,i)=>{
+  let x = i%2===0 ? 0 : -row.scrollWidth/2;
+  const speed = i%2===0 ? 0.25 : -0.25;
+  function move(){
+    x += speed;
+    if(Math.abs(x) > row.scrollWidth/2) x=0;
+    row.style.transform=`translateX(${x}px)`;
     requestAnimationFrame(move);
   }
   move();
 });
 
-// NFT click → trait modal (placeholder)
-document.querySelectorAll(".nft-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    showTrait();
-  });
-});
-
-function showTrait() {
-  const modal = document.getElementById("traitModal");
-  const content = document.getElementById("traitContent");
-  if (content) content.textContent = "Traits: Coming Soon";
-  if (modal) modal.style.display = "flex";
+/* =========================
+   TOGGLES
+========================= */
+function toggleExplore(){
+  const box=document.getElementById("exploreBox");
+  box.classList.remove("hidden");
+  box.classList.toggle("show");
+  fillExplore();
 }
 
-function closeTrait() {
-  const modal = document.getElementById("traitModal");
-  if (modal) modal.style.display = "none";
+function toggleWallet(){
+  const box=document.getElementById("walletBox");
+  box.classList.remove("hidden");
+  box.classList.toggle("show");
 }
 
+/* =========================
+   WALLET CHECKER + SUCCESS GLOW
+========================= */
+async function checkWallet(){
+  const input=document.getElementById("walletInput");
+  const res=document.getElementById("walletResult");
+  const loader=document.getElementById("walletLoader");
 
-/* ======================================================
-   TOGGLES : EXPLORE & WALLET (HIDDEN BY DEFAULT)
-====================================================== */
-function toggleExplore() {
-  const box = document.getElementById("exploreBox");
-  if (box) box.classList.toggle("show");
+  loader.classList.remove("hidden");
+  res.textContent="";
+  res.className="";
+
+  setTimeout(()=>{
+    loader.classList.add("hidden");
+    res.textContent="✅ Wallet whitelisted — Access granted!";
+    res.classList.add("success-glow");
+  },1200);
 }
 
-function toggleWallet() {
-  const box = document.getElementById("walletBox");
-  if (box) box.classList.toggle("show");
+/* =========================
+   MODALS
+========================= */
+function comingSoon(name){
+  document.getElementById("comingSoonTitle").textContent=name+" — Coming Soon";
+  document.getElementById("comingSoonModal").classList.remove("hidden");
+}
+function closeComingSoon(){
+  document.getElementById("comingSoonModal").classList.add("hidden");
+}
+function closeTrait(){
+  document.getElementById("traitModal").classList.add("hidden");
 }
 
-
-/* ======================================================
-   WALLET CHECKER (CSV READY, PREMIUM TEXT)
-====================================================== */
-async function checkWallet() {
-  const input = document.getElementById("walletInput");
-  const result = document.getElementById("walletResult");
-  if (!input || !result) return;
-
-  const addr = input.value.trim().toLowerCase();
-  if (!addr) {
-    result.textContent = "Please enter a wallet address.";
-    return;
-  }
-
-  try {
-    const [fcfs, gtd] = await Promise.all([
-      fetch("data/fcfs.csv").then(r => r.text()),
-      fetch("data/gtd.csv").then(r => r.text())
-    ]);
-
-    if (fcfs.toLowerCase().includes(addr)) {
-      result.textContent = "✅ This wallet is whitelisted for FCFS slots.";
-    } else if (gtd.toLowerCase().includes(addr)) {
-      result.textContent = "✨ This wallet is whitelisted for GDT slots.";
-    } else {
-      result.textContent = "❌ This wallet is not whitelisted.";
-    }
-  } catch {
-    result.textContent = "Whitelist data unavailable. Please try later.";
-  }
-}
-
-
-/* ======================================================
-   SOCIAL LINKS
-====================================================== */
-function openTwitter() {
-  window.open("https://x.com/Phanto0ms", "_blank");
-}
-
-
-/* ======================================================
-   MOBILE PERFORMANCE SAFETY
-====================================================== */
-if (window.innerWidth < 640) {
-  document.documentElement.style.setProperty("--line-speed", "48s");
-  document.documentElement.style.setProperty("--glow", "0.22");
+/* =========================
+   SOCIAL
+========================= */
+function openTwitter(){
+  window.open("https://x.com/Phanto0ms","_blank");
 }
