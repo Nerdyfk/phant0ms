@@ -182,3 +182,61 @@ body::after{
   opacity:.15;
   animation:codeFloat 20s linear infinite;
 }
+/* =========================
+   ABOUT POSITION FIX
+========================= */
+.about-top{
+  margin-top:-60px;   /* <-- এটাই About উপরে তুলছে */
+  padding-top:40px;
+}
+
+/* =========================
+   EXPLORE BOX HEIGHT FIX
+========================= */
+.explore-box{
+  height:260px;          /* আগের 320px থেকে কম */
+  justify-content:space-between;
+}
+
+/* extra empty gap remove */
+.explore-row{
+  min-height:60px;
+}
+
+/* =========================
+   PREMIUM GRADIENT MOTION
+========================= */
+body{
+  background:linear-gradient(120deg,#12071f,#2a0b3d,#0b1c3d);
+  background-size:300% 300%;
+  animation:bgShift 18s ease infinite;
+}
+
+@keyframes bgShift{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer{
+  margin-top:80px;
+  padding:24px 0;
+  text-align:center;
+  font-size:14px;
+  opacity:.7;
+}
+
+/* =========================
+   EXPLORE / WALLET REVEAL SMOOTHER
+========================= */
+.reveal.show{
+  animation:revealPop .6s ease forwards;
+}
+
+@keyframes revealPop{
+  from{opacity:0;transform:translateY(30px) scale(.96)}
+  to{opacity:1;transform:none}
+}
