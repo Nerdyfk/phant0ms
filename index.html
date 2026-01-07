@@ -2,85 +2,82 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PHANTOMS</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHANTOMS — Built on Base</title>
+  <link rel="stylesheet" href="./css/style.css" />
 </head>
 <body>
-
-<!-- INTRO -->
-<div id="intro">
-  <h1 id="introTitle">PHANTOMS</h1>
-  <p>Welcome to the pixelated world</p>
-  <div class="loader"><span id="loadBar"></span></div>
-  <span id="loadPct">0%</span>
-</div>
-
-<!-- HEADER -->
-<header class="topbar">
-  <img src="assets/logo.png" class="logo" />
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <h1 class="hero-title shimmer">PHANTOMS</h1>
-  <p class="hero-sub">A pixel-born culture on Base</p>
-</section>
-
-<!-- SOCIAL ICONS -->
-<section class="social">
-  <button onclick="openTwitter()"><img src="assets/twitter.png"></button>
-  <button onclick="comingSoon()"><img src="assets/opensea.png"></button>
-  <button onclick="comingSoon()"><img src="assets/magiceden.png"></button>
-  <button onclick="comingSoon()"><img src="assets/store.png"></button>
-</section>
-
-<!-- ABOUT -->
-<section class="about">
-  <h2>About Phantoms</h2>
-  <p>
-    Phantoms represent the Base ecosystem, pixel culture,
-    and the future of on-chain art.
-    Built on Base, Phantoms is identity, ownership,
-    and digital culture.
-    A collection of 2222 Phantoms with over 200 unique traits.
-    Art by LoikaArts. These aren’t avatars — they’re Phantoms.
-  </p>
-
-  <div class="cta">
-    <button onclick="toggleExplore()">Explore Collection</button>
-    <button onclick="toggleWallet()">Wallet Checker</button>
+  <!-- INTRO -->
+  <div id="intro">
+    <div class="intro-wrap">
+      <h1 class="intro-title shimmer">PHANTOMS</h1>
+      <p>Welcome to the pixelated world</p>
+      <div class="loading-box"><div class="loading-bar"></div></div>
+      <span id="loadingPercent">0%</span>
+    </div>
   </div>
-</section>
 
-<!-- EXPLORE -->
-<section id="exploreBox" class="panel">
-  <div class="marquee">
-    <div class="row r1"></div>
-    <div class="row r2"></div>
-    <div class="row r3"></div>
+  <!-- HERO -->
+  <header class="topbar">
+    <img src="assets/logo.png" alt="PHANTOMS" class="logo" />
+  </header>
+
+  <section class="hero">
+    <h1 class="hero-title shimmer">PHANTOMS</h1>
+    <p class="hero-sub">A pixel-born culture on Base</p>
+  </section>
+
+  <!-- SOCIAL -->
+  <section class="social">
+    <button class="icon-btn" onclick="comingSoon()"><img src="assets/twitter.png" alt="Twitter"></button>
+    <button class="icon-btn" onclick="comingSoon()"><img src="assets/opensea.png" alt="OpenSea"></button>
+    <button class="icon-btn" onclick="comingSoon()"><img src="assets/magiceden.png" alt="MagicEden"></button>
+    <button class="icon-btn" onclick="comingSoon()"><img src="assets/store.png" alt="Store"></button>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <h2 class="section-title shimmer">About Phantoms</h2>
+    <p>
+      Phantoms represent the Base ecosystem, pixel culture, and the future of on-chain art. 
+      Built on Base, Phantoms is identity, ownership, and digital culture. 
+      A collection of 2222 Phantoms, each crafted with over 200 unique traits. 
+      Art by LoikaArts. These aren’t avatars — they’re Phantoms.
+    </p>
+    <div class="cta">
+      <button onclick="openExplore()">Explore Collection</button>
+      <button onclick="scrollToChecker()">Check Whitelist</button>
+    </div>
+  </section>
+
+  <!-- EXPLORE -->
+  <section id="exploreBox" class="panel">
+    <div class="marquee" id="exploreGallery"></div>
+  </section>
+
+  <!-- WALLET CHECKER -->
+  <section id="walletChecker">
+    <h2 class="section-title">Check Whitelist</h2>
+    <input type="text" id="walletInput" placeholder="Paste wallet address" />
+    <button id="checkBtn" onclick="checkWallet()">Check Status</button>
+    <p id="walletStatus"></p>
+  </section>
+
+  <!-- COMING SOON MODAL -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h3>🚧 Coming Soon</h3>
+      <p>This feature is under development.</p>
+      <button onclick="closeModal()">Close</button>
+    </div>
   </div>
-</section>
 
-<!-- WALLET -->
-<section id="walletBox" class="panel">
-  <h2>Whitelist Checker</h2>
-  <input id="walletInput" placeholder="Paste wallet address">
-  <button onclick="checkWallet()">Check Status</button>
-  <div id="walletResult"></div>
-</section>
+  <!-- FOOTER -->
+  <footer>
+    © 2026 PHANTOMS — Built on Base
+  </footer>
 
-<!-- MODAL -->
-<div id="modal">
-  <div class="modal-box">
-    <h3>Coming Soon</h3>
-    <p>This feature is under development.</p>
-    <button onclick="closeModal()">Close</button>
-  </div>
-</div>
-
-<footer>© 2026 PHANTOMS — Built on Base</footer>
-
-<script src="./js/main.js"></script>
+  <canvas id="bg"></canvas>
+  <script src="./js/main.js"></script>
 </body>
 </html>
