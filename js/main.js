@@ -1,20 +1,20 @@
-/* ======================================================
+/* =====================================================
    INTRO : FAST CINEMATIC FAKE LOADING
-====================================================== */
-(function introLoader(){
-  let p = 0;
+===================================================== */
+(function () {
+  const intro = document.getElementById("intro");
   const percent = document.getElementById("loadingPercent");
   const bar = document.querySelector(".loading-bar");
-  const intro = document.getElementById("intro");
 
-  if (!intro) return;
+  if (!intro || !percent || !bar) return;
 
-  const t = setInterval(() => {
-    // faster, cinematic
-    p += Math.random() * 14 + 6;
+  let p = 0;
+  const timer = setInterval(() => {
+    p += Math.random() * 18 + 8; // fast
     if (p >= 100) {
       p = 100;
-      clearInterval(t);
+      clearInterval(timer);
+
       setTimeout(() => {
         intro.style.opacity = "0";
         setTimeout(() => {
@@ -22,30 +22,33 @@
         }, 450);
       }, 200);
     }
-    if (percent) percent.textContent = Math.floor(p) + "%";
-    if (bar) bar.style.width = p + "%";
-  }, 70);
+    percent.textContent = Math.floor(p) + "%";
+    bar.style.width = p + "%";
+  }, 60);
 })();
 
-/* ======================================================
-   ABOUT : LETTER-BY-LETTER (READABLE)
-====================================================== */
-(function aboutLetters(){
+/* =====================================================
+   ABOUT : LETTER BY LETTER (READABLE)
+===================================================== */
+(function () {
   const about = document.getElementById("aboutText");
   if (!about) return;
 
   const text = about.innerText;
   const chars = text.split("");
-  about.innerHTML = chars.map((c, i) => {
-    if (c === " ") return "&nbsp;";
-    return `<span style="animation-delay:${i * 0.015}s">${c}</span>`;
-  }).join("");
+  about.innerHTML = chars
+    .map((c, i) =>
+      c === " "
+        ? "&nbsp;"
+        : `<span style="animation-delay:${i * 0.015}s">${c}</span>`
+    )
+    .join("");
 })();
 
-/* ======================================================
-   EXPLORE : NFT BUTTONS → TRAIT MODAL
-====================================================== */
-(function exploreNFTs(){
+/* =====================================================
+   EXPLORE : NFT BUTTON → TRAIT MODAL
+===================================================== */
+(function () {
   const buttons = document.querySelectorAll(".nft-btn");
   const modal = document.getElementById("traitModal");
   const title = document.getElementById("traitTitle");
@@ -53,7 +56,7 @@
 
   if (!buttons.length || !modal) return;
 
-  buttons.forEach(btn => {
+  buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       if (title) title.textContent = "NFT Traits";
       if (content) content.textContent = "Traits: Coming Soon";
@@ -62,23 +65,23 @@
   });
 })();
 
-function closeTrait(){
+function closeTrait() {
   const modal = document.getElementById("traitModal");
   if (modal) modal.style.display = "none";
 }
 
-/* ======================================================
-   WHITELIST CHECKER : FCFS / GDT CSV
-====================================================== */
-let FCFS_LIST = [];
-let GDT_LIST = [];
+/* =====================================================
+   WHITELIST CHECKER : FCFS / GDT
+===================================================== */
+let FCFS = [];
+let GDT = [];
 
-function loadCSV(path, target){
-  return fetch(path)
-    .then(res => res.text())
-    .then(txt => {
+function loadCSV(path, target) {
+  fetch(path)
+    .then((r) => r.text())
+    .then((txt) => {
       target.length = 0;
-      txt.split(/\r?\n/).forEach(line => {
+      txt.split(/\r?\n/).forEach((line) => {
         const v = line.trim().toLowerCase();
         if (v) target.push(v);
       });
@@ -86,33 +89,36 @@ function loadCSV(path, target){
     .catch(() => {});
 }
 
-// preload lists
-loadCSV("data/fcfs.csv", FCFS_LIST);
-loadCSV("data/gdt.csv", GDT_LIST);
+// load lists
+loadCSV("data/fcfs.csv", FCFS);
+loadCSV("data/gdt.csv", GDT);
 
-function checkWhitelist(){
+function checkWhitelist() {
   const input = document.getElementById("walletInput");
   const result = document.getElementById("walletResult");
+
   if (!input || !result) return;
 
   const addr = input.value.trim().toLowerCase();
-  if (!addr){
+  if (!addr) {
     result.textContent = "Please paste a wallet address.";
     return;
   }
 
-  if (FCFS_LIST.includes(addr)){
-    result.textContent = "✅ This address is whitelisted for FCFS mint access.";
-  } else if (GDT_LIST.includes(addr)){
-    result.textContent = "🎟️ This address is whitelisted for Guaranteed (GDT) mint access.";
+  if (FCFS.includes(addr)) {
+    result.textContent =
+      "✅ This address is whitelisted for FCFS mint access.";
+  } else if (GDT.includes(addr)) {
+    result.textContent =
+      "🎟️ This address is whitelisted for Guaranteed (GDT) mint access.";
   } else {
     result.textContent = "❌ This address is not whitelisted.";
   }
 }
 
-/* ======================================================
-   UTILS : ICONS / LINKS (SAFE)
-====================================================== */
-function openTwitter(){
+/* =====================================================
+   LINKS
+===================================================== */
+function openTwitter() {
   window.open("https://x.com/Phanto0ms", "_blank");
 }
