@@ -129,6 +129,13 @@ footer{padding:28px;opacity:.6;text-align:center}
     transform:translateY(0);
   }
 }
+.action-buttons{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:18px;
+}
 
 </style>
 </head>
@@ -166,11 +173,15 @@ footer{padding:28px;opacity:.6;text-align:center}
 </section>
 
 <section>
-  <button class="btn" onclick="toggle('explore')">Explore Collection</button>
+<div class="action-buttons">
+ <button class="btn" onclick="toggleExplore()">Explore Collection</button>
+  <button class="btn" onclick="toggle('wallet')">Check Wallet</button>
   <button class="btn" onclick="openModal()">Check Rarity</button>
+</div>
+
 
   <!-- About text (animated, clean) -->
-  <div class="about-text">
+ <div id="about" class="about-text" style="display:none">
     <h2>About Phantoms</h2>
     <p>
       Phantoms represent the Base ecosystem, pixel culture,
@@ -297,6 +308,19 @@ function checkWallet(){
   else if(FCFS.includes(v)){s.textContent="✅ FCFS Whitelisted";s.className="status-ok";}
   else{s.textContent="❌ Not Whitelisted";s.className="status-no";}
 }
+  function toggleExplore(){
+  const explore = document.getElementById("explore");
+  const about = document.getElementById("about");
+
+  const isOpen = explore.style.display === "block";
+
+  explore.style.display = isOpen ? "none" : "block";
+  about.style.display = isOpen ? "none" : "block";
+
+  explore.classList.add("reveal");
+  about.classList.add("reveal");
+}
+
 </script>
 
 </body>
