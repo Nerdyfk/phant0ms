@@ -1,0 +1,11 @@
+{
+  "name": "phant0ms",
+  "version": "1.0.0",
+  "description": "Phantoms NFT Website",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0"
+  }
+}
