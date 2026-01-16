@@ -438,6 +438,8 @@ function loadGiveawayData(){
 function saveGiveawayData(){
   const data={entries:giveawayEntries,tasks:giveawayTasks,active:giveawayActive};
   localStorage.setItem('giveawayData',JSON.stringify(data));
+  // Notify other tabs/windows of changes
+  window.dispatchEvent(new Event('storage'));
 }
 
 const giveawayData=loadGiveawayData();
@@ -537,12 +539,32 @@ function submitGiveaway(){
   setTimeout(()=>{status.textContent=""},3000);
 }
 
-function openAdminLogin(){
-  document.getElementById('adminLoginModal').style.display='block';
-  document.getElementById('adminEmail').value='';
-  document.getElementById('adminPassword').value='';
-  document.getElementById('adminLoginError').style.display='none';
+function renderPartnerships(){
+  const content=document.getElementById('partnershipContent');
+  const partnershipData=JSON.parse(localStorage.getItem('partnershipData')||'{"partnerships":[]}');
+  content.innerHTML='';
+
+  if(partnershipData.partnerships.length===0){
+    content.innerHTML=`<div class="glass-card"><p style="font-size:16px;line-height:1.6;margin:20px 0">Interested in partnering with Phantoms? We're open to collaborations, brand partnerships, and community initiatives. Let's build together.</p><div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn" onclick="openModal()">Contact Us</button><button class="btn" onclick="openModal()">Sponsorship Info</button></div></div>`;
+    return;
+  }
+
+  partnershipData.partnerships.forEach(part=>{
+    const div=document.createElement('div');
+    div.className='glass-card';
+    div.style.marginBottom='16px';
+    div.innerHTML=`<h3 style="margin-bottom:8px">${part.title}</h3><p style="margin:8px 0;color:#b7c5ff">${part.desc}</p><p style="margin:12px 0;font-size:12px;color:#7afcff;font-weight:700">Tasks Required:</p><div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${part.tasks.map(t=>`<span style="padding:4px 10px;border-radius:6px;background:rgba(122,252,255,0.2);border:1px solid rgba(122,252,255,0.4);font-size:12px;color:#7afcff">${t}</span>`).join('')}</div><button class="btn" onclick="openModal()" style="width:100%">Join Partnership</button>`;
+    content.appendChild(div);
+  });
 }
+
+// Render partnerships on page load
+renderPartnerships();
+
+// Listen for storage changes from admin panel
+window.addEventListener('storage',()=>{
+  renderPartnerships();
+});
 
 function closeAdminLogin(){
   document.getElementById('adminLoginModal').style.display='none';
