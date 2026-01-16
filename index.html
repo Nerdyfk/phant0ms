@@ -355,7 +355,6 @@ footer{padding:28px;opacity:.6;text-align:center}
 
       <div style="margin-top:24px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.18)">
         <p style="color:#9fb2ff;font-size:12px;margin-bottom:12px">📊 Total Entries: <span id="entryCount" style="color:#7afcff;font-weight:700">0</span></p>
-        <button id="drawButton" class="btn" onclick="drawWinner()" style="width:100%;background:linear-gradient(120deg,#FFD36A,#FFA500);color:#000;display:none">Draw Winner (Admin)</button>
         <div id="winnerDisplay" style="margin-top:12px;padding:12px;border-radius:8px;background:rgba(255,211,106,0.15);border:1px solid rgba(255,211,106,0.35);display:none;text-align:center">
           <p style="font-size:12px;color:#b7c5ff;margin-bottom:4px">🎉 Winner</p>
           <p id="winnerName" style="font-size:18px;font-weight:700;color:#FFD36A"></p>
@@ -387,61 +386,7 @@ footer{padding:28px;opacity:.6;text-align:center}
   </div>
 </div>
 
-<div id="adminLoginModal" class="modal-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10001;width:90%;max-width:400px">
-  <h3>Admin Login</h3>
-  <div style="margin-top:20px;display:flex;gap:10px;flex-direction:column">
-    <input id="adminEmail" type="email" placeholder="Admin Email" style="padding:10px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
-    <input id="adminPassword" type="password" placeholder="Admin Password" style="padding:10px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
-    <button class="btn" onclick="validateAdminLogin()" style="background:linear-gradient(120deg,#5B8CFF,#8A5CFF);color:#fff">Login</button>
-    <div id="adminLoginError" style="text-align:center;margin-top:12px;color:#ff9b9b;display:none;font-weight:600"></div>
-  </div>
-</div>
-
-<div id="adminPanel" class="modal-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10000;width:90%;max-width:600px;max-height:90vh;overflow-y:auto">
-  <button onclick="closeAdmin()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:#fff;font-size:20px;cursor:pointer">✕</button>
-  <h3>Admin Panel</h3>
-
-  <div style="margin-top:16px;border-bottom:1px solid rgba(255,255,255,0.18);padding-bottom:16px">
-    <h4 style="margin-bottom:12px">🎯 Manage Tasks</h4>
-    <div style="display:flex;gap:8px;flex-direction:column;margin-bottom:12px">
-      <input id="newTaskInput" placeholder="Task name (e.g., Follow on X)" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
-      <input id="newTaskLink" placeholder="Task link (optional, e.g., https://x.com/Phanto0ms)" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
-      <button class="btn" onclick="addTask()" style="background:linear-gradient(120deg,#3CFF8F,#00FF9F);color:#000;font-weight:700">Add Task</button>
-    </div>
-    <div id="tasksList" style="display:flex;flex-direction:column;gap:8px"></div>
-  </div>
-
-  <div style="margin-top:16px;border-bottom:1px solid rgba(255,255,255,0.18);padding-bottom:16px">
-    <h4 style="margin-bottom:12px">📋 View Submissions (<span id="adminEntryCount">0</span>)</h4>
-    <div id="submissionsList" style="max-height:250px;overflow-y:auto;display:flex;flex-direction:column;gap:8px"></div>
-  </div>
-
-  <div style="margin-top:16px;border-bottom:1px solid rgba(255,255,255,0.18);padding-bottom:16px">
-    <h4 style="margin-bottom:12px">🤝 Manage Partnerships</h4>
-    <div style="display:flex;gap:8px;flex-direction:column;margin-bottom:12px">
-      <input id="partnerTitle" placeholder="Partnership Title (e.g., Brand X)" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
-      <textarea id="partnerDesc" placeholder="Partnership Description" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;min-height:60px;font-family:inherit"></textarea>
-      <input id="partnerTasks" placeholder="Tasks (comma-separated, e.g., Like Post, Share, Follow)" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
-      <button class="btn" onclick="publishPartnership()" style="background:linear-gradient(120deg,#8A5CFF,#5B8CFF);color:#fff;font-weight:700">Publish Partnership</button>
-    </div>
-    <div id="partnershipsList" style="display:flex;flex-direction:column;gap:8px"></div>
-  </div>
-
-  <div style="margin-top:16px">
-    <h4 style="margin-bottom:12px">🎲 Actions</h4>
-    <div style="display:flex;gap:8px;flex-direction:column">
-      <button class="btn" id="toggleGiveawayBtn" onclick="toggleGiveawayState()" style="background:linear-gradient(120deg,#5B8CFF,#8A5CFF);color:#fff;font-weight:700">Pause Giveaway</button>
-      <button class="btn" onclick="adminDrawWinner()" style="background:linear-gradient(120deg,#FFD36A,#FFA500);color:#000;font-weight:700">Draw Winner</button>
-      <button class="btn" onclick="resetGiveaway()" style="background:linear-gradient(120deg,#FF6B6B,#FF4444);color:#fff">Reset Giveaway</button>
-    </div>
-    <div id="adminWinnerDisplay" style="margin-top:12px;padding:12px;border-radius:8px;background:rgba(255,211,106,0.15);border:1px solid rgba(255,211,106,0.35);display:none;text-align:center">
-      <p style="font-size:12px;color:#b7c5ff;margin-bottom:4px">🎉 Winner</p>
-      <p id="adminWinnerName" style="font-size:16px;font-weight:700;color:#FFD36A"></p>
-    </div>
-  </div>
-</div>
-
-<footer>© 2026 PHANTOMS — Built on Base | <a href="https://www.phant0ms.com/admin" target="_blank" rel="noopener" style="color:#7afcff;text-decoration:none;font-size:12px">Admin Panel</a></footer>
+<footer>© 2026 PHANTOMS — Built on Base | <span id="visitorStats" style="color:#7afcff;font-size:12px;margin-left:12px"></span></footer>
 
 <script>
 /* INTRO */
@@ -489,20 +434,64 @@ function closeModal(){document.getElementById("modal").classList.remove("show")}
 
 /* ===== GIVEAWAY ===== */
 let giveawayEntries=[];
-let giveawayTasks=[
-  {label:"Follow on X",url:"https://x.com/Phanto0ms"},
-  {label:"Retweet/Like Post",url:""},
-  {label:"Join Discord",url:""}
-];
+let giveawayTasks=[];
 let adminLoggedIn=false;
-let partnerships=[];
-let giveawayActive=true;
+let giveawayActive=false;
 
-// Admin credentials (use environment variables in Vercel; safe for browser)
+// Admin credentials
 const ADMIN_CREDENTIALS={
-  email:(typeof process!="undefined" && process.env?.REACT_APP_ADMIN_EMAIL) || "admin@phantoms.com",
-  password:(typeof process!="undefined" && process.env?.REACT_APP_ADMIN_PASSWORD) || "admin123"
+  email:"admin@phant0ms.com",
+  password:"Phant0ms2026!"
 };
+
+/* ===== VISITOR TRACKING ===== */
+function initVisitorTracking(){
+  const now=Date.now();
+  const data=JSON.parse(localStorage.getItem('visitorData')||'{}');
+  
+  // Reset daily stats if 24h passed
+  if(!data.dailyReset || now-data.dailyReset>86400000){
+    data.dailyVisitors=0;
+    data.dailyReset=now;
+  }
+  
+  // Track 15-min window
+  if(!data.lastVisit || now-data.lastVisit>900000){ // 15 min
+    data.currentVisitors=(data.currentVisitors||0)+1;
+    data.dailyVisitors=(data.dailyVisitors||0)+1;
+    data.lastVisit=now;
+  }
+  
+  // Reset current visitors after 24h
+  if(!data.currentReset || now-data.currentReset>86400000){
+    data.currentVisitors=1;
+    data.currentReset=now;
+  }
+  
+  localStorage.setItem('visitorData',JSON.stringify(data));
+  updateVisitorDisplay();
+  
+  // Update every 15 mins
+  setInterval(updateVisitorDisplay,900000);
+}
+
+function updateVisitorDisplay(){
+  const data=JSON.parse(localStorage.getItem('visitorData')||'{}');
+  const stats=document.getElementById('visitorStats');
+  if(stats){
+    stats.textContent=`🌐 Today: ${data.dailyVisitors||0} visitors`;
+  }
+  const adminStats=document.getElementById('adminVisitorStats');
+  if(adminStats && adminLoggedIn){
+    adminStats.innerHTML=`
+      <p style="margin:4px 0">📊 Current Period: <strong>${data.currentVisitors||0}</strong> visitors</p>
+      <p style="margin:4px 0">📅 Daily Total: <strong>${data.dailyVisitors||0}</strong> visitors</p>
+      <p style="margin:4px 0;font-size:12px;opacity:0.7">Updates every 15 minutes</p>
+    `;
+  }
+}
+
+initVisitorTracking();
 
 function submitGiveaway(){
   const twitter=document.getElementById("giveawayTwitter").value.trim();
@@ -543,121 +532,126 @@ function submitGiveaway(){
   setTimeout(()=>{status.textContent=""},3000);
 }
 
-function drawWinner(){
-  if(!adminLoggedIn){
-    alert("Admins only: please log in to draw a winner.");
-    return;
-  }
-  if(!giveawayActive){
-    alert("Giveaway is not live.");
-    return;
-  }
-  if(giveawayEntries.length===0){
-    alert("No entries yet!");
-    return;
-  }
-
-  const winner=giveawayEntries[Math.floor(Math.random()*giveawayEntries.length)];
-  const display=document.getElementById("winnerDisplay");
-  document.getElementById("winnerName").textContent=`${winner.twitter} — ${winner.email}`;
-  display.style.display="block";
+function openAdminLogin(){
+  document.getElementById('adminLoginModal').style.display='block';
+  document.getElementById('adminEmail').value='';
+  document.getElementById('adminPassword').value='';
+  document.getElementById('adminLoginError').style.display='none';
 }
 
-function openAdmin(){
-  document.getElementById("adminLoginModal").style.display="block";
-  document.getElementById("adminEmail").value="";
-  document.getElementById("adminPassword").value="";
-  document.getElementById("adminLoginError").style.display="none";
+function closeAdminLogin(){
+  document.getElementById('adminLoginModal').style.display='none';
 }
 
 function validateAdminLogin(){
-  const email=document.getElementById("adminEmail").value.trim();
-  const password=document.getElementById("adminPassword").value.trim();
-  const errorBox=document.getElementById("adminLoginError");
+  const email=document.getElementById('adminEmail').value.trim();
+  const password=document.getElementById('adminPassword').value.trim();
+  const errorBox=document.getElementById('adminLoginError');
 
   if(email===ADMIN_CREDENTIALS.email && password===ADMIN_CREDENTIALS.password){
     adminLoggedIn=true;
-    document.getElementById("adminLoginModal").style.display="none";
-    document.getElementById("adminPanel").style.display="block";
-    document.getElementById("drawButton").style.display="block";
+    document.getElementById('adminLoginModal').style.display='none';
+    document.getElementById('adminPanel').style.display='block';
     refreshAdminPanel();
   }else{
-    errorBox.textContent="❌ Invalid email or password";
-    errorBox.style.display="block";
+    errorBox.textContent='❌ Invalid credentials';
+    errorBox.style.display='block';
   }
 }
 
 function closeAdmin(){
-  document.getElementById("adminPanel").style.display="none";
-  document.getElementById("adminLoginModal").style.display="none";
-  document.getElementById("drawButton").style.display="none";
+  document.getElementById('adminPanel').style.display='none';
   adminLoggedIn=false;
 }
 
 function addTask(){
-  const input=document.getElementById("newTaskInput");
-  const linkInput=document.getElementById("newTaskLink");
+  const input=document.getElementById('newTaskInput');
+  const linkInput=document.getElementById('newTaskLink');
   const name=input.value.trim();
   const url=linkInput.value.trim();
-  if(!name){
-    alert("Enter task name");
-    return;
-  }
+  if(!name){alert('Enter task name');return;}
   giveawayTasks.push({label:name,url});
-  input.value="";
-  linkInput.value="";
+  input.value='';
+  linkInput.value='';
   refreshAdminPanel();
   renderGiveawayTasks();
+  updateGiveawayUI();
 }
 
 function removeTask(idx){
   giveawayTasks.splice(idx,1);
   refreshAdminPanel();
   renderGiveawayTasks();
+  updateGiveawayUI();
 }
 
 function refreshAdminPanel(){
-  const tasksList=document.getElementById("tasksList");
-  tasksList.innerHTML="";
+  const tasksList=document.getElementById('tasksList');
+  tasksList.innerHTML='';
   giveawayTasks.forEach((task,idx)=>{
-    const div=document.createElement("div");
-    div.style.cssText="display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.18)";
-    const linkHtml = task.url ? `<a href=\"${task.url}\" target=\"_blank\" style=\"color:#7afcff;font-size:12px;margin-left:6px\">link</a>` : '';
+    const div=document.createElement('div');
+    div.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.18)';
+    const linkHtml=task.url?`<a href="${task.url}" target="_blank" style="color:#7afcff;font-size:12px;margin-left:6px">link</a>`:'';
     div.innerHTML=`<span>${task.label}${linkHtml}</span><button class="btn" onclick="removeTask(${idx})" style="padding:4px 8px;font-size:12px;background:rgba(255,77,77,0.3)">Remove</button>`;
     tasksList.appendChild(div);
   });
 
-  const subList=document.getElementById("submissionsList");
-  subList.innerHTML="";
+  const subList=document.getElementById('submissionsList');
+  subList.innerHTML='';
   giveawayEntries.forEach((entry,idx)=>{
-    const div=document.createElement("div");
-    div.style.cssText="padding:8px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.18);font-size:12px";
+    const div=document.createElement('div');
+    div.style.cssText='padding:8px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.18);font-size:12px';
     div.innerHTML=`<p style="margin:0"><strong>${entry.twitter}</strong></p><p style="margin:2px 0;color:#9fb2ff">${entry.email}</p><p style="margin:2px 0;color:#7afcff">${entry.wallet}</p><button class="btn" onclick="removeSubmission(${idx})" style="margin-top:4px;padding:4px 8px;font-size:10px;background:rgba(255,77,77,0.3)">Delete</button>`;
     subList.appendChild(div);
   });
 
-  document.getElementById("adminEntryCount").textContent=giveawayEntries.length;
-
-  const partList=document.getElementById("partnershipsList");
-  partList.innerHTML="";
-  partnerships.forEach((part,idx)=>{
-    const div=document.createElement("div");
-    div.style.cssText="padding:8px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.18);font-size:12px";
-    div.innerHTML=`<p style="margin:0"><strong>${part.title}</strong></p><p style="margin:2px 0;color:#7afcff">${part.tasks.join(", ")}</p><button class="btn" onclick="removePartnership(${idx})" style="margin-top:4px;padding:4px 8px;font-size:10px;background:rgba(255,77,77,0.3)">Delete</button>`;
-    partList.appendChild(div);
-  });
+  document.getElementById('adminEntryCount').textContent=giveawayEntries.length;
+  updateVisitorDisplay();
 }
 
 function removeSubmission(idx){
   giveawayEntries.splice(idx,1);
   refreshAdminPanel();
+  document.getElementById('entryCount').textContent=giveawayEntries.length;
+}
+
+function toggleGiveawayState(){
+  giveawayActive=!giveawayActive;
+  updateGiveawayUI();
+  alert(giveawayActive?'✅ Giveaway is now LIVE!':'⏸️ Giveaway paused');
+}
+
+function adminDrawWinner(){
+  if(giveawayEntries.length===0){alert('No entries!');return;}
+  const winner=giveawayEntries[Math.floor(Math.random()*giveawayEntries.length)];
+  const display=document.getElementById('adminWinnerDisplay');
+  document.getElementById('adminWinnerName').textContent=`${winner.twitter} — ${winner.email}`;
+  display.style.display='block';
+}
+
+function resetGiveaway(){
+  if(confirm('⚠️ Reset giveaway? This will clear all entries.')){
+    giveawayEntries=[];
+    document.getElementById('entryCount').textContent='0';
+    document.getElementById('winnerDisplay').style.display='none';
+    document.getElementById('adminWinnerDisplay').style.display='none';
+    refreshAdminPanel();
+    alert('✅ Giveaway reset!');
+  }
 }
 
 function renderGiveawayTasks(){
   const box=document.getElementById("giveawayTasksBox");
   if(!box) return;
-  box.innerHTML="";
-  giveawayTasks.forEach((task,idx)=>{
+  box.innerHTML="";  
+  if(giveawayTasks.length===0){
+    const msg=document.createElement('div');
+    msg.style.cssText='padding:20px;background:rgba(255,183,77,0.12);border:1px solid rgba(255,183,77,0.4);border-radius:8px;text-align:center;color:#ffb74d';
+    msg.innerHTML='<p style="margin:0;font-size:16px;font-weight:600">🎁 Giveaway Coming Soon</p><p style="margin:8px 0 0 0;font-size:14px;opacity:0.8">Tasks will be announced shortly!</p>';
+    box.appendChild(msg);
+    return;
+  }
+    giveawayTasks.forEach((task,idx)=>{
     const label=document.createElement("label");
     label.style.cssText="display:flex;align-items:center;gap:6px;cursor:pointer;background:rgba(255,255,255,0.05);padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12)";
     const input=document.createElement("input");
@@ -673,115 +667,40 @@ function renderGiveawayTasks(){
   });
 }
 
-function publishPartnership(){
-  const title=document.getElementById("partnerTitle").value.trim();
-  const desc=document.getElementById("partnerDesc").value.trim();
-  const taskStr=document.getElementById("partnerTasks").value.trim();
-
-  if(!title||!desc||!taskStr){
-    alert("Fill all partnership fields");
-    return;
-  }
-
-  const tasks=taskStr.split(",").map(t=>t.trim()).filter(Boolean);
-  partnerships.push({title,desc,tasks,date:new Date().toLocaleString()});
-
-  document.getElementById("partnerTitle").value="";
-  document.getElementById("partnerDesc").value="";
-  document.getElementById("partnerTasks").value="";
-
-  refreshAdminPanel();
-  renderPartnerships();
-  alert("✅ Partnership published!");
-}
-
-function removePartnership(idx){
-  partnerships.splice(idx,1);
-  refreshAdminPanel();
-  renderPartnerships();
-}
-
-function renderPartnerships(){
-  const content=document.getElementById("partnershipContent");
-  content.innerHTML="";
-
-  if(partnerships.length===0){
-    content.innerHTML=`<div class="glass-card"><p style="font-size:16px;line-height:1.6;margin:20px 0">Interested in partnering with Phantoms? We're open to collaborations, brand partnerships, and community initiatives. Let's build together.</p><div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn" onclick="openModal()">Contact Us</button><button class="btn" onclick="openModal()">Sponsorship Info</button></div></div>`;
-    return;
-  }
-
-  partnerships.forEach(part=>{
-    const div=document.createElement("div");
-    div.className="glass-card";
-    div.style.marginBottom="16px";
-    div.innerHTML=`<h3 style="margin-bottom:8px">${part.title}</h3><p style="margin:8px 0;color:#b7c5ff">${part.desc}</p><p style="margin:12px 0;font-size:12px;color:#7afcff;font-weight:700">Tasks Required:</p><div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${part.tasks.map(t=>`<span style="padding:4px 10px;border-radius:6px;background:rgba(122,252,255,0.2);border:1px solid rgba(122,252,255,0.4);font-size:12px;color:#7afcff">${t}</span>`).join("")}</div><button class="btn" onclick="openModal()" style="width:100%">Join Partnership</button>`;
-    content.appendChild(div);
-  });
-}
-
 function updateGiveawayUI(){
   const banner=document.getElementById("giveawayStatusBanner");
   const submitBtn=document.querySelector('#giveaway button.btn');
   const inputs=document.querySelectorAll('#giveaway input');
-  const toggleBtn=document.getElementById("toggleGiveawayBtn");
+  const hasNoTasks=giveawayTasks.length===0;
 
-  if(giveawayActive){
+  if(giveawayActive && !hasNoTasks){
     if(banner){
-      banner.textContent="Giveaway Live";
+      banner.textContent="🎉 Giveaway Live";
       banner.style.background="rgba(92,255,154,0.12)";
       banner.style.border="1px solid rgba(92,255,154,0.4)";
       banner.style.color="#3CFF8F";
     }
     inputs.forEach(i=>i.disabled=false);
     if(submitBtn) submitBtn.disabled=false;
-    if(toggleBtn) toggleBtn.textContent="Pause Giveaway";
   }else{
     if(banner){
-      banner.textContent="Giveaway is not live yet";
+      banner.textContent=hasNoTasks?"🎁 Giveaway Coming Soon":"⏸️ Giveaway Paused";
       banner.style.background="rgba(255,183,77,0.12)";
       banner.style.border="1px solid rgba(255,183,77,0.4)";
       banner.style.color="#ffb74d";
     }
     inputs.forEach(i=>i.disabled=true);
     if(submitBtn) submitBtn.disabled=true;
-    if(toggleBtn) toggleBtn.textContent="Start Giveaway";
   }
 }
 
-function toggleGiveawayState(){
-  giveawayActive=!giveawayActive;
-  updateGiveawayUI();
-}
-
-function adminDrawWinner(){
-  if(giveawayEntries.length===0){
-    alert("No entries!");
-    return;
+// Keyboard shortcut for admin (Ctrl+Shift+A)
+document.addEventListener('keydown',function(e){
+  if(e.ctrlKey && e.shiftKey && e.key==='A'){
+    e.preventDefault();
+    openAdminLogin();
   }
-  const winner=giveawayEntries[Math.floor(Math.random()*giveawayEntries.length)];
-  const display=document.getElementById("adminWinnerDisplay");
-  document.getElementById("adminWinnerName").textContent=`${winner.twitter} — ${winner.email} — ${winner.wallet}`;
-  display.style.display="block";
-}
-
-function resetGiveaway(){
-  if(confirm("⚠️ Reset giveaway? This will clear all entries and re-launch.")){
-    giveawayEntries=[];
-    giveawayTasks=[
-      {label:"Follow on X",url:"https://x.com/Phanto0ms"},
-      {label:"Retweet/Like Post",url:""},
-      {label:"Join Discord",url:""}
-    ];
-    giveawayActive=true;
-    document.getElementById("entryCount").textContent="0";
-    document.getElementById("winnerDisplay").style.display="none";
-    document.getElementById("adminWinnerDisplay").style.display="none";
-    refreshAdminPanel();
-    renderGiveawayTasks();
-    updateGiveawayUI();
-    alert("✅ Giveaway reset and re-launched!");
-  }
-}
+});
 
 // initial render for giveaway tasks
 renderGiveawayTasks();
