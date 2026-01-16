@@ -438,10 +438,10 @@ let giveawayTasks=[];
 let adminLoggedIn=false;
 let giveawayActive=false;
 
-// Admin credentials
+// Admin credentials (set ADMIN_EMAIL and ADMIN_PASSWORD in Vercel environment variables)
 const ADMIN_CREDENTIALS={
-  email:"admin@phant0ms.com",
-  password:"Phant0ms2026!"
+  email: (typeof process !== 'undefined' && process.env?.ADMIN_EMAIL) || "admin@phant0ms.com",
+  password: (typeof process !== 'undefined' && process.env?.ADMIN_PASSWORD) || "Phant0ms2026!"
 };
 
 /* ===== VISITOR TRACKING ===== */
