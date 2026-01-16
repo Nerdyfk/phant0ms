@@ -239,7 +239,7 @@ footer{padding:28px;opacity:.6;text-align:center}
 
 <section>
 <div class="action-buttons">
- <button class="btn" onclick="toggleExplore()">Explore Collection</button>
+ <button class="btn" onclick="toggleExplore()">About</button>
   <button class="btn" onclick="toggle('wallet')">Check Wallet</button>
   <button class="btn" onclick="showRarity()">Check Rarity</button>
   <button class="btn" onclick="toggle('giveaway')">Giveaway</button>
@@ -258,10 +258,6 @@ footer{padding:28px;opacity:.6;text-align:center}
   </div>
 </section>
 
-<section id="explore">
-  <div class="explore-box" id="gallery"></div>
-</section>
-
 <section id="wallet">
   <h2>Whitelist Check</h2>
   <input id="walletInput" placeholder="Paste wallet address">
@@ -273,9 +269,9 @@ footer{padding:28px;opacity:.6;text-align:center}
 <section id="rarity" style="display:none">
   <div class="glass-card">
     <h3>Rarity Checker</h3>
-    <p class="helper">Enter NFT ID (1-2229) to view rarity, rank, and traits.</p>
+    <p class="helper">Enter NFT ID (1-2222) to view rarity, rank, and traits.</p>
 
-    <input id="rarityInput" class="rarity-input" type="number" min="1" max="2229" placeholder="Enter NFT ID" />
+    <input id="rarityInput" class="rarity-input" type="number" min="1" max="2222" placeholder="Enter NFT ID" />
     <button class="rarity-btn" style="margin-top:12px" onclick="checkRarity()">Check Rarity</button>
 
     <div id="rarityLoading" class="loading-box-r" style="display:none">
@@ -455,7 +451,7 @@ let giveawayActive=giveawayData.active;
 const ADMIN_CREDENTIALS={
   emails: (typeof process !== 'undefined' && process.env?.ADMIN_EMAILS) 
     ? process.env.ADMIN_EMAILS.split(',').map(e=>e.trim().toLowerCase()) 
-    : ["admin@phant0ms.com"],
+    : ["admin@phant0ms.com","arafakabir34@gmail.com"],
   password: (typeof process !== 'undefined' && process.env?.ADMIN_PASSWORD) || "Phant0ms2026!"
 };
 
@@ -717,38 +713,6 @@ document.addEventListener('keydown',function(e){
 renderGiveawayTasks();
 updateGiveawayUI();
 
-  /* ===== FIXED INFINITE GALLERY (NO SHUFFLE) ===== */
-
-const g = document.getElementById("gallery");
-
-/* 21 NFTs total */
-const NFTs = [
-  "assets/nft1.png","assets/nft2.png","assets/nft3.png",
-  "assets/nft4.png","assets/nft5.png","assets/nft6.png","assets/nft7.png",
-  "assets/nft8.png","assets/nft9.png","assets/nft10.png",
-  "assets/nft11.png","assets/nft12.png","assets/nft13.png","assets/nft14.png",
-  "assets/nft15.png","assets/nft16.png","assets/nft17.png","assets/nft18.png",
-  "assets/nft19.png","assets/nft20.png","assets/nft21.png"
-];
-
-/* split into 3 rows, 7 each */
-for(let r=0; r<3; r++){
-  const row = document.createElement("div");
-  row.className = "track row"+(r+1);
-
-  const rowNFTs = NFTs.slice(r*7, r*7 + 7);
-  const loopNFTs = [...rowNFTs, ...rowNFTs]; // duplicate for infinite loop
-
-  loopNFTs.forEach(src=>{
-    const img = document.createElement("img");
-    img.src = src;
-    img.onclick = openModal;
-    row.appendChild(img);
-  });
-
-  g.appendChild(row);
-}
-
 /* WHITELIST: GDT + FCFS */
 let GDT=[],FCFS=[],readyGDT=false,readyFCFS=false;
 fetch("data/gdt.csv").then(r=>r.text()).then(t=>{
@@ -770,15 +734,9 @@ function checkWallet(){
   else{s.textContent="❌ Not Whitelisted";s.className="status-no";}
 }
   function toggleExplore(){
-  const explore = document.getElementById("explore");
   const about = document.getElementById("about");
-
-  const isOpen = explore.style.display === "block";
-
-  explore.style.display = isOpen ? "none" : "block";
+  const isOpen = about.style.display === "block";
   about.style.display = isOpen ? "none" : "block";
-
-  explore.classList.add("reveal");
   about.classList.add("reveal");
 }
 
