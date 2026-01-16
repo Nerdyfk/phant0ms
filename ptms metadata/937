@@ -1,0 +1,39 @@
+{
+  "name": "PTM937",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/937.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Light Teal"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Cursed Relic"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Umbral"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Enjoy Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "G Christmas Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/937.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

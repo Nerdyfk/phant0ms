@@ -1,0 +1,39 @@
+{
+  "name": "PTM1247",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1247.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Sand Beige"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Royal Phantom"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Glare"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Pale Green Beanie"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1247.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

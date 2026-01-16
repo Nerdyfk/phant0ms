@@ -1,0 +1,39 @@
+{
+  "name": "PTM843",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/843.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Taupe"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Nether Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Red Baseball Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/843.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

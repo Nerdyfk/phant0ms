@@ -1,0 +1,39 @@
+{
+  "name": "PTM1080",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1080.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pure White Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Celestial"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Umbral"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Skull Myth Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Skeleton Over Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1080.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

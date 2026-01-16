@@ -1,0 +1,39 @@
+{
+  "name": "PTM1163",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1163.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Sand Beige"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Frostwraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Amethyst"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Peer Black"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Brown Cowboy Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1163.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

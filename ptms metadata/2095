@@ -1,0 +1,39 @@
+{
+  "name": "PTM2095",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2095.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Emerald Green Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Spectral Shell"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Wraith"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Watcher"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Jed Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2095.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

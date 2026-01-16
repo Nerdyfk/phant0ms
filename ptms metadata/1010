@@ -1,0 +1,39 @@
+{
+  "name": "PTM1010",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1010.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Steel Blue"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Frostwraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Rift"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Blink"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Black Top Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1010.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

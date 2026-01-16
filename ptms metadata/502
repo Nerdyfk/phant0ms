@@ -1,0 +1,39 @@
+{
+  "name": "PTM502",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/502.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Off-White Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Carapace"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "lil Specter"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Stare"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Golden Dome Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/502.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

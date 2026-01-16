@@ -1,0 +1,39 @@
+{
+  "name": "PTM1961",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1961.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Light Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "King Cheif"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Abyss"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Wisp Drop Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Skull bon hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1961.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

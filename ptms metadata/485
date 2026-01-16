@@ -1,0 +1,39 @@
+{
+  "name": "PTM485",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/485.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Taupe"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Stormbound Wraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Wraith"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Fade Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Orange Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/485.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

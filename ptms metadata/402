@@ -1,0 +1,39 @@
+{
+  "name": "PTM402",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/402.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Ancient Revenant"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Umbral"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wiz hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/402.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

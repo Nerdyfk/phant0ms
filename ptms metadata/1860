@@ -1,0 +1,39 @@
+{
+  "name": "PTM1860",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1860.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Deep Purple  Violet"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "White Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Void"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Mist Wisp Drop"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Red-Trim Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1860.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

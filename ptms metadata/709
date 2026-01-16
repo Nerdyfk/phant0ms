@@ -1,0 +1,39 @@
+{
+  "name": "PTM709",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/709.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Blue Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Ancient Revenant"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Crimson"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Blink"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Orange Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/709.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

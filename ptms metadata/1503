@@ -1,0 +1,39 @@
+{
+  "name": "PTM1503",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1503.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Rose Red Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Skeleton Solid"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Solar"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Stare"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Captain JS hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1503.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

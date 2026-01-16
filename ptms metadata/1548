@@ -1,0 +1,39 @@
+{
+  "name": "PTM1548",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1548.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Olive Beige"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Vamp Cheif"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Amethyst"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Wisp Drop Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Christmas hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1548.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

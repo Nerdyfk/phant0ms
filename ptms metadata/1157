@@ -1,0 +1,39 @@
+{
+  "name": "PTM1157",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1157.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Cream Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Nether Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Echo"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Watcher"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Brown Fedora Headwrap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1157.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

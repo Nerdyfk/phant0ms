@@ -1,0 +1,39 @@
+{
+  "name": "PTM1813",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1813.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Dusty Rose"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Ashen Spirit"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Phantom Prime"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Apes Core Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Poet Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1813.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

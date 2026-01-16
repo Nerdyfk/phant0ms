@@ -1,0 +1,39 @@
+{
+  "name": "PTM2058",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2058.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Cool Gray Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Frostwraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Phantom Prime"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "R Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Poet Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2058.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

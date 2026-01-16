@@ -1,0 +1,39 @@
+{
+  "name": "PTM33",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/33.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pure White Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Celestial"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Phantom Hollow"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Wisp Drop Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Red-Trim Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/33.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

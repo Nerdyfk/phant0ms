@@ -1,0 +1,39 @@
+{
+  "name": "PTM2051",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2051.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Deep Teal Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Wraith Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Abyss"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Apes Core Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Orange Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2051.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

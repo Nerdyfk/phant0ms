@@ -1,0 +1,39 @@
+{
+  "name": "PTM1342",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1342.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Blue Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Spider Cloak"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Rift"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Watcher"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Solder Black Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1342.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

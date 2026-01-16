@@ -1,0 +1,39 @@
+{
+  "name": "PTM889",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/889.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Cool Gray Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Spider Cloak"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Oblivion"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Solder Black Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/889.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM410",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/410.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Olive Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Mythic T-Shirt"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Ascended boy"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Watcher"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Brown Cowboy Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/410.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

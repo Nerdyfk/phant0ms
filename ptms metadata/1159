@@ -1,0 +1,39 @@
+{
+  "name": "PTM1159",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1159.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Light Teal"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "White Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Deep Warden"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Fade Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "VR Skull Goggles"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1159.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

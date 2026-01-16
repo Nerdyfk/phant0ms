@@ -1,0 +1,39 @@
+{
+  "name": "PTM2027",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2027.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Olive Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Wraith Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Oblivion max"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Enjoy Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "G Christmas Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2027.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

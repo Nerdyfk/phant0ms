@@ -1,0 +1,39 @@
+{
+  "name": "PTM1883",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1883.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Light Teal"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Ashen Spirit"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Umbral"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Solder Black Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1883.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

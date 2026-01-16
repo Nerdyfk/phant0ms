@@ -1,0 +1,39 @@
+{
+  "name": "PTM1504",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1504.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Peach Orange"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "King Adv"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Mirage"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Constraction Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Turtle Solder Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1504.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

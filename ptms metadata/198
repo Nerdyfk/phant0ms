@@ -1,0 +1,39 @@
+{
+  "name": "PTM198",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/198.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pink Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Celestial"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Venom"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Blink"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Red-Trim Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/198.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

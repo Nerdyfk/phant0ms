@@ -1,0 +1,39 @@
+{
+  "name": "PTM634",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/634.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Deep Purple  Violet"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Mythic T-Shirt"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Mirage"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Stare"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Brown Fedora Headwrap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/634.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

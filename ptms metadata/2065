@@ -1,0 +1,39 @@
+{
+  "name": "PTM2065",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2065.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Peach Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Skull Cheif Cloak"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Wraith"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Apes Core Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Pale Green Beanie"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2065.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

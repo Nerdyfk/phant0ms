@@ -1,0 +1,39 @@
+{
+  "name": "PTM1322",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1322.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Peach Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Luminous Haunt"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Abyss"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Constraction Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Red-Trim Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1322.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

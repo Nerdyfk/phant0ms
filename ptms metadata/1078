@@ -1,0 +1,39 @@
+{
+  "name": "PTM1078",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1078.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Cool Gray Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Haunted Vessel"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Crimson"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Pale Green Beanie"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1078.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

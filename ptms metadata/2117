@@ -1,0 +1,39 @@
+{
+  "name": "PTM2117",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2117.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Stormbound Wraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Rift"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Mist Wisp Drop"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Red Baseball Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2117.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM930",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/930.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Taupe"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Haunted Vessel"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Neon Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Wisp Drop Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Black Top Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/930.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

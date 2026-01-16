@@ -1,0 +1,39 @@
+{
+  "name": "PTM458",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/458.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Olive Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Luminous Haunt"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Toxic"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Blink"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Macdonald Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/458.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

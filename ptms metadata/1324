@@ -1,0 +1,39 @@
+{
+  "name": "PTM1324",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1324.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Echoform solder"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Azure"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Watcher"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wiz hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1324.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

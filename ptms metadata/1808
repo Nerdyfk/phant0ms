@@ -1,0 +1,39 @@
+{
+  "name": "PTM1808",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1808.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Emerald Green Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Stormbound Wraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Crimson"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Apes Core Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Brown Cowboy Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1808.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

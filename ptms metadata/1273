@@ -1,0 +1,39 @@
+{
+  "name": "PTM1273",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1273.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Peach Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Skull Cheif Cloak"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Venom"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Rage"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Captain JS hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1273.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

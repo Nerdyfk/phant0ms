@@ -1,0 +1,39 @@
+{
+  "name": "PTM123",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/123.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Peach Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Royal Phantom"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Deep Warden"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "G Christmas Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/123.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

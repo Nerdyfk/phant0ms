@@ -1,0 +1,39 @@
+{
+  "name": "PTM1757",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1757.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Cream Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Royal Phantom"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Venom"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wiz hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1757.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

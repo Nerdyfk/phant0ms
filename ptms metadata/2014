@@ -1,0 +1,39 @@
+{
+  "name": "PTM2014",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2014.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Light Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Carapace"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Umbral"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Skeleton Deep R Laser"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wiz hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2014.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

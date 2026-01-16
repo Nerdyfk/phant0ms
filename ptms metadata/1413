@@ -1,0 +1,39 @@
+{
+  "name": "PTM1413",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1413.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pink Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Mythic T-Shirt"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Abyss"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Peer Black"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Solder Black Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1413.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

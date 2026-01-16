@@ -1,0 +1,39 @@
+{
+  "name": "PTM88",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/88.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pink Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Vamp Cheif"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Solar"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Blink"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Orange Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/88.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

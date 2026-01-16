@@ -1,0 +1,39 @@
+{
+  "name": "PTM2208",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2208.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pink Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Spectral Shell"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Solar"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Fade Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Black Top Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2208.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

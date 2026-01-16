@@ -1,0 +1,39 @@
+{
+  "name": "PTM282",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/282.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Soft Aqua Blue"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Abyssal"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Azure"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Skull Myth Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Skeleton Over Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/282.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

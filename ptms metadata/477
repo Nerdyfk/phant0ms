@@ -1,0 +1,39 @@
+{
+  "name": "PTM477",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/477.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Golden Yellow Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Celestial"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Watcher"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Macdonald Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/477.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

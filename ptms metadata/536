@@ -1,0 +1,39 @@
+{
+  "name": "PTM536",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/536.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Dusty Rose"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Echoform solder"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Venom"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Peer Black"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Dark Green Top Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/536.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM897",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/897.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Blue Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Soulbound Torso"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Toxic"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Jed Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/897.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

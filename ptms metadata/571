@@ -1,0 +1,39 @@
+{
+  "name": "PTM571",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/571.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Light Ivory"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Frostwraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Deep Warden"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Ruin Laser"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Red Baseball Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/571.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

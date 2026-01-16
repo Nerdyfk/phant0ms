@@ -1,0 +1,39 @@
+{
+  "name": "PTM2000",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2000.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Peach Orange"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Soulbound"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Azure"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Wisp Drop Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Spiked Shadow Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2000.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

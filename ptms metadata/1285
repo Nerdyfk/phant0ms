@@ -1,0 +1,39 @@
+{
+  "name": "PTM1285",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1285.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Light Teal"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Skeleton Solid"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Amethyst"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Fade Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Silver Knight Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1285.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

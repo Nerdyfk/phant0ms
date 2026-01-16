@@ -1,0 +1,39 @@
+{
+  "name": "PTM1117",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1117.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Light Lime Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Ember"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Oblivion"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "VR Skull Goggles"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1117.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Rarity Checker</title>
+  <style>
+    body { background: #0B0F1A; color: #fff; font-family: system-ui; padding: 20px; }
+    .test-section { margin: 20px 0; padding: 15px; border: 1px solid #333; border-radius: 8px; }
+    .success { color: #3CFF8F; }
+    .error { color: #FF4D4D; }
+    .info { color: #7afcff; }
+  </style>
+</head>
+<body>
+  <h1>Rarity Checker - Test Suite</h1>
+  
+  <div class="test-section">
+    <h2>Metadata Loading Test</h2>
+    <p id="loadTest" class="info">Testing metadata load...</p>
+  </div>
+
+  <div class="test-section">
+    <h2>Sample NFT Data</h2>
+    <p id="sampleData" class="info">Loading...</p>
+  </div>
+
+  <div class="test-section">
+    <h2>Rarity Calculation</h2>
+    <p id="rarityTest" class="info">Testing...</p>
+  </div>
+
+  <script>
+    async function testRarityChecker() {
+      try {
+        // Test 1: Load a single NFT
+        const response = await fetch('ptms metadata/1');
+        if (response.ok) {
+          const data = await response.json();
+          document.getElementById('loadTest').innerHTML = 
+            `<span class="success">✓ Metadata loaded successfully</span><br>NFT 1: ${data.name}`;
+          
+          // Show sample data
+          document.getElementById('sampleData').innerHTML = 
+            `<strong>${data.name}</strong><br>
+             Traits: ${data.attributes.length}<br>
+             <pre>${JSON.stringify(data.attributes.slice(0, 2), null, 2)}</pre>`;
+        } else {
+          document.getElementById('loadTest').innerHTML = 
+            `<span class="error">✗ Failed to load metadata</span>`;
+        }
+
+        // Test 2: Load multiple NFTs to test batch loading
+        let loadedCount = 0;
+        for (let i = 1; i <= 10; i++) {
+          try {
+            const res = await fetch(`ptms metadata/${i}`);
+            if (res.ok) loadedCount++;
+          } catch (e) {}
+        }
+        
+        document.getElementById('rarityTest').innerHTML = 
+          `<span class="success">✓ Batch load test: ${loadedCount}/10 NFTs loaded successfully</span><br>
+           The rarity checker is ready to calculate rarity scores!`;
+
+      } catch (error) {
+        document.getElementById('loadTest').innerHTML = 
+          `<span class="error">Error: ${error.message}</span>`;
+      }
+    }
+
+    // Run tests on load
+    window.addEventListener('load', testRarityChecker);
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "PTM1396",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1396.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Soft Aqua Light"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Mythic T-Shirt"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Phantom Prime"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Gaze Fram"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Poet Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1396.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

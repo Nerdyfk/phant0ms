@@ -1,0 +1,39 @@
+{
+  "name": "PTM277",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/277.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Soft Aqua Blue"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Skull Cheif Cloak"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Toxic"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Mist Wisp Drop"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Vamp hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/277.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

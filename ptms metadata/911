@@ -1,0 +1,39 @@
+{
+  "name": "PTM911",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/911.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Soft Aqua Light"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Nether Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Oblivion max"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Peer Black"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Poet Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/911.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

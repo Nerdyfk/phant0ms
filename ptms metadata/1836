@@ -1,0 +1,39 @@
+{
+  "name": "PTM1836",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1836.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Rose Red Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Mythic T-Shirt"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Neon Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Enjoy Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Constarction light Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1836.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

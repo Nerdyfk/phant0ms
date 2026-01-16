@@ -1,0 +1,39 @@
+{
+  "name": "PTM216",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/216.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Cool Gray Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Skull Cheif Cloak"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Azure"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Watcher"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Solder Black Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/216.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

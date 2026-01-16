@@ -1,0 +1,39 @@
+{
+  "name": "PTM208",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/208.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Light Lime Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "christmas cloak"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Peer Black"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Jed Y Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/208.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

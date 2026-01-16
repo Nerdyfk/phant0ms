@@ -1,0 +1,39 @@
+{
+  "name": "PTM1898",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1898.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Peach Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Nether Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Crimson"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Mist Wisp Drop"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Yellow Headwrap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1898.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM925",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/925.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Light Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Soulbound Torso"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Venom"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Gaze Fram"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Turtle Solder Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/925.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

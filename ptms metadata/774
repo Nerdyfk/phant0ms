@@ -1,0 +1,39 @@
+{
+  "name": "PTM774",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/774.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Light Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Skeleton Solid"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Solar"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Strike Golden Laser"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Pale Green Beanie"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/774.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

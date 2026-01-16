@@ -1,0 +1,39 @@
+{
+  "name": "PTM1834",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1834.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Peach Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Haunted Vessel"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "lil Specter"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Enjoy Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Chef Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1834.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

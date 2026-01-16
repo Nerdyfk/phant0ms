@@ -1,0 +1,39 @@
+{
+  "name": "PTM1346",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1346.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Light Lime Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Abyssal"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "lil Specter"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Blink"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Solder Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1346.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM2102",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2102.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Coral Orange"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Luminous Haunt"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Wraith"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Silver Knight Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2102.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

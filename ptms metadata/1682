@@ -1,0 +1,39 @@
+{
+  "name": "PTM1682",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1682.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Cool Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Spectral Shell"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Deep Warden"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Constraction Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Turtle Solder Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1682.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

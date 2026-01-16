@@ -1,0 +1,39 @@
+{
+  "name": "PTM1833",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1833.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Charcoal Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Skull Cheif Cloak"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Venom"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Dark Green Top Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1833.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

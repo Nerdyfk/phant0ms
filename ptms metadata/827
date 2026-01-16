@@ -1,0 +1,39 @@
+{
+  "name": "PTM827",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/827.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Steel Blue"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Spectral Shell"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "R Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Blue Baseball Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/827.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

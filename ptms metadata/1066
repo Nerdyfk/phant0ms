@@ -1,0 +1,39 @@
+{
+  "name": "PTM1066",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1066.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Soft Aqua Blue"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Venom Specter"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Crimson"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Glare"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Brown Cowboy Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1066.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

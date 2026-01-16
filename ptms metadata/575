@@ -1,0 +1,39 @@
+{
+  "name": "PTM575",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/575.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Golden Yellow Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Frostwraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Umbral"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Fade Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Constarction light Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/575.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

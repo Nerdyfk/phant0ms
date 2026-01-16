@@ -1,0 +1,39 @@
+{
+  "name": "PTM826",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/826.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Olive Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Stormbound Wraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Solar"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Stare"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Jed Y Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/826.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

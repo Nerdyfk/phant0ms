@@ -1,0 +1,39 @@
+{
+  "name": "PTM2216",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2216.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Deep Teal Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Venom Specter"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Umbral"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "R Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Chef Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2216.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rarity Checker - PHANTOMS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: "#0B0F1A",
+            neonBlue: "#5B8CFF",
+            neonPurple: "#8A5CFF",
+            neonGreen: "#3CFF8F",
+            neonRed: "#FF4D4D",
+            neonGold: "#FFD36A",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Gradient blob animation */
+    .blob {
+      filter: blur(120px);
+      opacity: 0.5;
+      animation: float 12s infinite alternate;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-80px); }
+    }
+
+    /* Rarity rank badge */
+    .rank-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .rank-legendary {
+      background: linear-gradient(135deg, #FFD36A, #FFA500);
+      color: #000;
+      box-shadow: 0 0 20px rgba(255, 211, 106, 0.6);
+    }
+
+    .rank-epic {
+      background: linear-gradient(135deg, #8A5CFF, #5B8CFF);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(138, 92, 255, 0.6);
+    }
+
+    .rank-rare {
+      background: linear-gradient(135deg, #3CFF8F, #00FF9F);
+      color: #000;
+      box-shadow: 0 0 20px rgba(60, 255, 143, 0.6);
+    }
+
+    .rank-uncommon {
+      background: linear-gradient(135deg, #5B8CFF, #7afcff);
+      color: #000;
+      box-shadow: 0 0 20px rgba(122, 252, 255, 0.6);
+    }
+
+    .rank-common {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    /* Trait display */
+    .trait-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(91, 140, 255, 0.3);
+      padding: 10px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .trait-item:hover {
+      background: rgba(91, 140, 255, 0.1);
+      box-shadow: 0 0 12px rgba(91, 140, 255, 0.3);
+    }
+
+    .trait-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .trait-value {
+      font-size: 14px;
+      color: #5B8CFF;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    .rarity-score {
+      background: linear-gradient(135deg, #5B8CFF, #8A5CFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .loading-spinner {
+      border: 3px solid rgba(91, 140, 255, 0.2);
+      border-top: 3px solid #5B8CFF;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .search-input {
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      box-shadow: 0 0 20px rgba(91, 140, 255, 0.3);
+    }
+  </style>
+</head>
+
+<body class="bg-bg text-white min-h-screen overflow-hidden">
+
+  <!-- Background Blobs -->
+  <div class="absolute top-0 left-0 w-96 h-96 bg-neonBlue blob"></div>
+  <div class="absolute bottom-0 right-0 w-96 h-96 bg-neonPurple blob"></div>
+
+  <!-- Page Wrapper -->
+  <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-10">
+
+    <!-- Back Button -->
+    <div class="absolute top-4 left-4">
+      <a href="index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition border border-white/10">
+        <span>←</span>
+        <span>Back</span>
+      </a>
+    </div>
+
+    <!-- Hero -->
+    <h1 class="text-4xl md:text-6xl font-bold text-center mb-2">
+      Rarity Checker
+    </h1>
+    <p class="text-gray-400 text-center mb-10 max-w-md">
+      Enter your NFT ID to check its rarity score and trait breakdown
+    </p>
+
+    <!-- Checker Card -->
+    <div class="w-full max-w-md p-6 rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-xl">
+
+      <input
+        id="nftInput"
+        type="number"
+        placeholder="Paste wallet address (0x...)"
+        class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/20 focus:outline-none focus:border-neonBlue focus:ring-2 focus:ring-neonBlue/40 transition"
+        min="1"
+        max="2229"
+      />
+
+      <button
+        onclick="checkRarity()"
+        class="w-full mt-4 py-3 rounded-xl font-semibold bg-gradient-to-r from-neonBlue to-neonPurple hover:scale-[1.02] transition transform shadow-lg"
+      >
+        Check Rarity
+      </button>
+
+      <!-- Result -->
+      <div id="result" class="hidden mt-6 p-4 rounded-xl text-center font-semibold"></div>
+
+      <!-- Results Section -->
+      <div id="resultsContainer" class="hidden">
+        
+        <!-- NFT Name and Rank -->
+        <div class="mb-6 text-center mt-6">
+          <h2 id="nftName" class="text-2xl font-bold mb-2">PTM #1</h2>
+          <div class="rarity-score text-3xl font-bold mb-2" id="rarityScore">8,456</div>
+          <p class="text-gray-400 text-sm">Rarity Score</p>
+        </div>
+
+        <!-- Rank Badge -->
+        <div class="text-center mb-6 relative py-4">
+          <div id="rankBadge" class="inline-block rank-badge rank-legendary">
+            Legendary
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="grid grid-cols-3 gap-3 mb-6 text-center">
+          <div class="backdrop-blur-md bg-white/5 rounded-xl p-3 border border-white/20 hover:border-white/40 transition">
+            <p class="text-gray-500 text-xs uppercase font-semibold">Rank</p>
+            <p id="rankValue" class="text-lg font-bold text-neonBlue mt-1">#1</p>
+          </div>
+          <div class="backdrop-blur-md bg-white/5 rounded-xl p-3 border border-white/20 hover:border-white/40 transition">
+            <p class="text-gray-500 text-xs uppercase font-semibold">Traits</p>
+            <p id="traitCount" class="text-lg font-bold text-neonGreen mt-1">5</p>
+          </div>
+          <div class="backdrop-blur-md bg-white/5 rounded-xl p-3 border border-white/20 hover:border-white/40 transition">
+            <p class="text-gray-500 text-xs uppercase font-semibold">Percentile</p>
+            <p id="percentile" class="text-lg font-bold text-neonPurple mt-1">99.9%</p>
+          </div>
+        </div>
+
+        <!-- Traits List -->
+        <div class="mb-6">
+          <h3 class="text-xs uppercase font-semibold text-gray-500 mb-3">Attributes</h3>
+          <div id="traitsList" class="max-h-48 overflow-y-auto space-y-2"></div>
+        </div>
+
+        <!-- Image Preview -->
+        <div class="mb-4">
+          <img
+            id="nftImage"
+            src="art.phant0msart.xyz/image/1.png"
+            alt="NFT Preview"
+            class="w-full rounded-xl border border-white/20 shadow-xl object-cover max-h-64 hover:border-white/40 transition"
+            onerror="this.style.display='none'"
+          />
+        </div>
+
+      </div>
+
+      <!-- Loading State -->
+      <div id="loadingContainer" class="hidden text-center">
+        <div class="loading-spinner"></div>
+        <p class="text-gray-400 mt-4 text-sm">Loading NFT data...</p>
+      </div>
+
+      <!-- Error State -->
+      <div id="errorContainer" class="hidden text-center">
+        <p id="errorMessage" class="text-neonRed font-semibold bg-neonRed/10 p-4 rounded-xl border border-neonRed/30">Please enter a valid NFT ID</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Logic -->
+  <script>
+    let metadata = {};
+    let rarityScores = {};
+    let allNFTs = [];
+
+    // Load metadata on page load
+    window.addEventListener("load", async () => {
+      await loadMetadata();
+    });
+
+    async function loadMetadata() {
+      try {
+        for (let i = 1; i <= 2229; i++) {
+          try {
+            const response = await fetch(`ptms metadata/${i}`);
+            if (response.ok) {
+              const data = await response.json();
+              metadata[i] = data;
+              allNFTs.push(i);
+            }
+          } catch (e) {
+            console.warn(`Failed to load NFT ${i}`);
+          }
+
+          if (i % 100 === 0) {
+            console.log(`Loaded ${i} NFTs...`);
+          }
+        }
+
+        console.log(`Successfully loaded ${allNFTs.length} NFTs`);
+        calculateRarityScores();
+      } catch (error) {
+        console.error("Error loading metadata:", error);
+      }
+    }
+
+    function calculateRarityScores() {
+      const traitFrequency = {};
+
+      allNFTs.forEach(id => {
+        const nft = metadata[id];
+        if (nft && nft.attributes) {
+          nft.attributes.forEach(attr => {
+            const key = `${attr.trait_type}:${attr.value}`;
+            traitFrequency[key] = (traitFrequency[key] || 0) + 1;
+          });
+        }
+      });
+
+      allNFTs.forEach(id => {
+        const nft = metadata[id];
+        let score = 0;
+
+        if (nft && nft.attributes) {
+          nft.attributes.forEach(attr => {
+            const key = `${attr.trait_type}:${attr.value}`;
+            const frequency = traitFrequency[key] || 1;
+            const rarity = (allNFTs.length / frequency) * 100;
+            score += rarity;
+          });
+        }
+
+        rarityScores[id] = score;
+      });
+
+      const sorted = Object.entries(rarityScores)
+        .sort((a, b) => b[1] - a[1])
+        .map(([id, score], index) => ({ id: parseInt(id), score, rank: index + 1 }));
+
+      sorted.forEach(item => {
+        if (!rarityScores[item.id]) rarityScores[item.id] = {};
+        if (typeof rarityScores[item.id] === 'number') {
+          rarityScores[item.id] = { score: rarityScores[item.id], rank: item.rank };
+        } else {
+          rarityScores[item.id].rank = item.rank;
+        }
+      });
+
+      console.log("Rarity scores calculated");
+    }
+
+    function getRarityRank(score) {
+      if (score >= 8000) return "Legendary";
+      if (score >= 6000) return "Epic";
+      if (score >= 4000) return "Rare";
+      if (score >= 2000) return "Uncommon";
+      return "Common";
+    }
+
+    function getRarityClass(rank) {
+      if (rank.includes("Legendary")) return "rank-legendary";
+      if (rank.includes("Epic")) return "rank-epic";
+      if (rank.includes("Rare")) return "rank-rare";
+      if (rank.includes("Uncommon")) return "rank-uncommon";
+      return "rank-common";
+    }
+
+    async function checkRarity() {
+      const input = document.getElementById("nftInput");
+      const nftId = parseInt(input.value.trim());
+
+      document.getElementById("resultsContainer").classList.add("hidden");
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById("errorContainer").classList.add("hidden");
+      document.getElementById("loadingContainer").classList.remove("hidden");
+
+      if (!nftId || nftId < 1 || nftId > 2229) {
+        document.getElementById("loadingContainer").classList.add("hidden");
+        document.getElementById("errorContainer").classList.remove("hidden");
+        return;
+      }
+
+      await new Promise(r => setTimeout(r, 800));
+
+      const nft = metadata[nftId];
+      if (!nft) {
+        document.getElementById("loadingContainer").classList.add("hidden");
+        document.getElementById("errorContainer").classList.remove("hidden");
+        document.getElementById("errorMessage").textContent = `NFT #${nftId} not found`;
+        return;
+      }
+
+      const scoreData = rarityScores[nftId];
+      const score = typeof scoreData === 'object' ? scoreData.score : scoreData;
+      const rank = typeof scoreData === 'object' ? scoreData.rank : null;
+      const rankName = getRarityRank(score);
+      const percentile = rank ? ((allNFTs.length - rank) / allNFTs.length * 100).toFixed(1) : "N/A";
+
+      document.getElementById("nftName").textContent = nft.name || `PTM #${nftId}`;
+      document.getElementById("rarityScore").textContent = score.toFixed(0);
+      document.getElementById("rankValue").textContent = rank ? `#${rank}` : "N/A";
+      document.getElementById("traitCount").textContent = nft.attributes.length;
+      document.getElementById("percentile").textContent = `${percentile}%`;
+
+      const badge = document.getElementById("rankBadge");
+      badge.textContent = rankName;
+      badge.className = `inline-block rank-badge ${getRarityClass(rankName)}`;
+
+      if (nft.image) {
+        const img = document.getElementById("nftImage");
+        img.src = nft.image;
+        img.style.display = "block";
+      }
+
+      const traitsList = document.getElementById("traitsList");
+      traitsList.innerHTML = "";
+
+      nft.attributes.forEach(attr => {
+        const traitDiv = document.createElement("div");
+        traitDiv.className = "trait-item";
+        traitDiv.innerHTML = `
+          <div class="trait-label">${attr.trait_type}</div>
+          <div class="trait-value">${attr.value}</div>
+        `;
+        traitsList.appendChild(traitDiv);
+      });
+
+      document.getElementById("loadingContainer").classList.add("hidden");
+      document.getElementById("resultsContainer").classList.remove("hidden");
+    }
+
+    document.getElementById("nftInput").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") checkRarity();
+    });
+  </script>
+
+</body>
+</html>

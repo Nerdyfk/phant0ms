@@ -1,0 +1,39 @@
+{
+  "name": "PTM869",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/869.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Steel Blue"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Stormbound Wraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Deep Warden"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Glare"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Macdonald Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/869.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM1418",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1418.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Light Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Venom Specter"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Wraith"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Brown Fedora Headwrap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1418.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

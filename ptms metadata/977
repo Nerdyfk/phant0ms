@@ -1,0 +1,39 @@
+{
+  "name": "PTM977",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/977.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Cool Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Soulbound"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Void"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Fade Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "R Chirstmas Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/977.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

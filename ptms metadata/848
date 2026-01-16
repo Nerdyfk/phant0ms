@@ -1,0 +1,39 @@
+{
+  "name": "PTM848",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/848.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pink Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Voidshade"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Mirage"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Fade Veil"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Cyan Flat Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/848.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

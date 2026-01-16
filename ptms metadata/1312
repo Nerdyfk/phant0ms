@@ -1,0 +1,39 @@
+{
+  "name": "PTM1312",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1312.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Wraith Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Deep Warden"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "R Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "R Chirstmas Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1312.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

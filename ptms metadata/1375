@@ -1,0 +1,39 @@
+{
+  "name": "PTM1375",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1375.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Soft Sage Green Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Skeleton Solid"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Deep Warden"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Watcher"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Pale Green Beanie"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1375.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM1146",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1146.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Rose Red Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Frostwraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Skeleton"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Skull Myth Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Spiked Shadow Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1146.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM1187",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1187.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Nether Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Oblivion max"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Enjoy Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Black Top Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1187.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

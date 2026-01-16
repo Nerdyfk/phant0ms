@@ -1,0 +1,39 @@
+{
+  "name": "PTM1579",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1579.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Light Teal"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Spectral Shell"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Neon Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "R Flare Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Constarction light Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1579.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

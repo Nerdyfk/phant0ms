@@ -1,0 +1,39 @@
+{
+  "name": "PTM1580",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1580.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Lavender Blue"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Luminous Haunt"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Echo"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Constraction Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Constarction light Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1580.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

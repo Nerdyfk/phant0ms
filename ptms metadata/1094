@@ -1,0 +1,39 @@
+{
+  "name": "PTM1094",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1094.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Cream Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Ashen Spirit"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Echo"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Blink"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Yellow Headwrap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1094.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

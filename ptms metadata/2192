@@ -1,0 +1,39 @@
+{
+  "name": "PTM2192",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2192.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Soft Sage Green Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Soulbound Torso"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Rift"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Constraction Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Constraction Day  Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2192.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

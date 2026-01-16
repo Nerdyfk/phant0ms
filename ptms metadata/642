@@ -1,0 +1,39 @@
+{
+  "name": "PTM642",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/642.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Golden Yellow Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Carapace"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Azure"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Skull Myth Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Jed Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/642.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

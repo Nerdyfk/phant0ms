@@ -1,0 +1,39 @@
+{
+  "name": "PTM1782",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1782.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Warm Taupe"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Wraith Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Oblivion"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Rage"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Orange Helmet"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1782.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

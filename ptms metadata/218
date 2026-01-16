@@ -1,0 +1,39 @@
+{
+  "name": "PTM218",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/218.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Emerald Green Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Royal Phantom"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Blink"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Skeleton Over Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/218.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

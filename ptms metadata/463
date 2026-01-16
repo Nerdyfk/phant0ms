@@ -1,0 +1,39 @@
+{
+  "name": "PTM463",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/463.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Sand Beige"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Vamp Cheif"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Peer Black"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wiz hat x"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/463.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

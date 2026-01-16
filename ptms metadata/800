@@ -1,0 +1,39 @@
+{
+  "name": "PTM800",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/800.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Deep Teal Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Venom Specter"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Echo"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Skeleton Deep R Laser"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wiz hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/800.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM472",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/472.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Cool Gray"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Spider Cloak"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Rift"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Ruin Laser"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Chef Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/472.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

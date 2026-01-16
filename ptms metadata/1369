@@ -1,0 +1,39 @@
+{
+  "name": "PTM1369",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1369.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Dark Forest Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Vamp Cheif"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Oblivion max"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Gaze Fram"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Jed Y Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1369.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM967",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/967.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pure White Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "King Cheif"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Neon Frost"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Constraction Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Poet Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/967.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

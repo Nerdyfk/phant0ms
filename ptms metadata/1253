@@ -1,0 +1,39 @@
+{
+  "name": "PTM1253",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1253.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Rose Red Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "White Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Wraith"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Skull Myth Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Christmas hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1253.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM1964",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1964.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Golden Yellow Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Frostwraith"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Spectral"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Mist Wisp Drop"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Blue Baseball Cap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1964.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

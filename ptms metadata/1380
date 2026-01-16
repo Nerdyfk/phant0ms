@@ -1,0 +1,39 @@
+{
+  "name": "PTM1380",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1380.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Light Lime Green"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Wraith Husk"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Oblivion max"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Peer Black"
+    },
+    {
+      "trait_type": "Head",
+      "value": "VR Skull Goggles"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1380.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

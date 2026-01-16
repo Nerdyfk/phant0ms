@@ -1,0 +1,39 @@
+{
+  "name": "PTM860",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/860.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Peach Orange"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Royal Phantom"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Phantom Prime"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Peer Black"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Brown Cowboy Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/860.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PTM167",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/167.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pink Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Runebound"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Void"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Stare"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Skeleton Over Hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/167.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

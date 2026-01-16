@@ -1,0 +1,39 @@
+{
+  "name": "PTM2044",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/2044.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Golden Yellow Glow"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Cursed Relic"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Deep Warden"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Enjoy Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "VR Skull Goggles"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/2044.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

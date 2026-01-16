@@ -1,0 +1,39 @@
+{
+  "name": "PTM1065",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/1065.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Dusty Rose"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Soulbound"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Oblivion"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Stare"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Brown Fedora Headwrap"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/1065.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

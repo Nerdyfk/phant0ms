@@ -1,0 +1,35 @@
+{
+  "name": "PTM525",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/525.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Phantom white shadow"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Nether"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Apes Core Glass"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Phantom Soul"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/525.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

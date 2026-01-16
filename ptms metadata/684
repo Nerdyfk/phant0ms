@@ -1,0 +1,39 @@
+{
+  "name": "PTM684",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/684.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Soft Aqua Light"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Skeleton Yeam"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Umbral"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Skull Myth Eye"
+    },
+    {
+      "trait_type": "Head",
+      "value": "VR Skull Goggles"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/684.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}

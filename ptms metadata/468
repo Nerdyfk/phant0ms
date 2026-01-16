@@ -1,0 +1,39 @@
+{
+  "name": "PTM468",
+  "description": "These aren’t avatars,They’re Phantoms👻",
+  "external_url": "",
+  "image": "art.phant0msart.xyz/image/468.png",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pale Olive Beige"
+    },
+    {
+      "trait_type": "Cloak",
+      "value": "Spider Cloak"
+    },
+    {
+      "trait_type": "Skin",
+      "value": "Voidborn"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Ruin Laser"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Skull bon hat"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "art.phant0msart.xyz/image/468.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": []
+  },
+  "compiler": "NFTexport.io"
+}
