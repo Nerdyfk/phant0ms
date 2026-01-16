@@ -312,28 +312,45 @@ a:hover{
 </div>
 
 <script>
-// Admin credentials - hardcoded for static site
-// For production security, implement backend authentication
-const ADMIN_CREDENTIALS = {
-  emails: ["admin@phant0ms.com","arafakabir34@gmail.com"],
-  password: "Phant0ms2026!"
-};
-
 let giveawayData = JSON.parse(localStorage.getItem('giveawayData') || '{"entries":[],"tasks":[],"active":false}');
 
-// Login
-function login() {
-  const email = document.getElementById('adminEmail').value.trim().toLowerCase();
+// Login with Vercel API
+async function login() {
+  const email = document.getElementById('adminEmail').value.trim();
   const password = document.getElementById('adminPassword').value.trim();
   const errorBox = document.getElementById('loginError');
+  const loginBtn = document.querySelector('.btn');
 
-  if (ADMIN_CREDENTIALS.emails.includes(email) && password === ADMIN_CREDENTIALS.password) {
-    document.getElementById('loginBox').style.display = 'none';
-    document.getElementById('adminContent').style.display = 'block';
-    loadDashboard();
-  } else {
-    errorBox.textContent = '❌ Invalid credentials';
+  // Disable button during login
+  loginBtn.disabled = true;
+  loginBtn.textContent = 'Logging in...';
+  errorBox.style.display = 'none';
+
+  try {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('adminContent').style.display = 'block';
+      loadDashboard();
+    } else {
+      errorBox.textContent = '❌ ' + (data.message || 'Invalid credentials');
+      errorBox.style.display = 'block';
+    }
+  } catch (error) {
+    errorBox.textContent = '❌ Connection error. Please try again.';
     errorBox.style.display = 'block';
+  } finally {
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Login';
   }
 }
 
