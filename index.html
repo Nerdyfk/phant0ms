@@ -429,24 +429,27 @@ function openModal(){document.getElementById("modal").classList.add("show")}
 function closeModal(){document.getElementById("modal").classList.remove("show")}
 
 /* ===== GIVEAWAY ===== */
-// Sync with admin panel via localStorage
-function loadGiveawayData(){
-  const data=JSON.parse(localStorage.getItem('giveawayData')||'{"entries":[],"tasks":[],"active":false}');
-  return data;
+// Fetch tasks from API
+async function loadGiveawayTasks(){
+  try{
+    const response=await fetch('/api/giveaway/tasks');
+    const data=await response.json();
+    if(data.success){
+      giveawayTasks=data.tasks;
+      renderGiveawayTasks();
+    }
+  }catch(e){
+    console.error('Failed to load tasks',e);
+  }
 }
 
-function saveGiveawayData(){
-  const data={entries:giveawayEntries,tasks:giveawayTasks,active:giveawayActive};
-  localStorage.setItem('giveawayData',JSON.stringify(data));
-  // Notify other tabs/windows of changes
-  window.dispatchEvent(new Event('storage'));
-}
-
-const giveawayData=loadGiveawayData();
-let giveawayEntries=giveawayData.entries;
-let giveawayTasks=giveawayData.tasks;
+let giveawayEntries=[];
+let giveawayTasks=[];
 let adminLoggedIn=false;
-let giveawayActive=giveawayData.active;
+let giveawayActive=true; // Always active now
+
+// Load tasks on page load
+loadGiveawayTasks();
 
 // Admin credentials (set ADMIN_EMAILS and ADMIN_PASSWORD in Vercel environment variables)
 // ADMIN_EMAILS should be comma-separated (e.g., "admin@phant0ms.com,owner@phant0ms.com")
@@ -501,17 +504,12 @@ function updateVisitorDisplay(){
 
 initVisitorTracking();
 
-function submitGiveaway(){
+async function submitGiveaway(){
   const twitter=document.getElementById("giveawayTwitter").value.trim();
   const email=document.getElementById("giveawayEmail").value.trim();
   const wallet=document.getElementById("giveawayWallet").value.trim();
   const status=document.getElementById("giveawayStatus");
-
-  if(!giveawayActive){
-    status.textContent="⏸️ Giveaway is not live yet";
-    status.style.color="#ff9b9b";
-    return;
-  }
+  const submitBtn=document.querySelector('#giveaway .btn');
 
   if(!twitter||!email||!wallet){
     status.textContent="❌ Please fill all fields";
@@ -527,16 +525,45 @@ function submitGiveaway(){
     return;
   }
 
-  giveawayEntries.push({twitter,email,wallet,timestamp:new Date().toLocaleString()});
-  document.getElementById("giveawayTwitter").value="";
-  document.getElementById("giveawayEmail").value="";
-  document.getElementById("giveawayWallet").value="";
-  checks.forEach(c=>c.checked=false);
+  // Disable button during submission
+  submitBtn.disabled=true;
+  submitBtn.textContent='Submitting...';
+  status.textContent="⏳ Submitting...";
+  status.style.color="#7afcff";
 
-  status.textContent="✅ Entry submitted!";
-  status.style.color="#3CFF8F";
-  document.getElementById("entryCount").textContent=giveawayEntries.length;  saveGiveawayData();
-  setTimeout(()=>{status.textContent=""},3000);
+  try{
+    const response=await fetch('/api/giveaway/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        twitter_handle:twitter,
+        email:email,
+        wallet_address:wallet,
+        tasks_completed:giveawayTasks.map(t=>t.label)
+      })
+    });
+
+    const data=await response.json();
+
+    if(data.success){
+      document.getElementById("giveawayTwitter").value="";
+      document.getElementById("giveawayEmail").value="";
+      document.getElementById("giveawayWallet").value="";
+      checks.forEach(c=>c.checked=false);
+      status.textContent="✅ Entry submitted!";
+      status.style.color="#3CFF8F";
+      setTimeout(()=>{status.textContent=""},3000);
+    }else{
+      status.textContent="❌ "+(data.message||'Submission failed');
+      status.style.color="#ff9b9b";
+    }
+  }catch(e){
+    status.textContent="❌ Connection error. Try again.";
+    status.style.color="#ff9b9b";
+  }finally{
+    submitBtn.disabled=false;
+    submitBtn.textContent='Submit Entry';
+  }
 }
 
 function renderPartnerships(){

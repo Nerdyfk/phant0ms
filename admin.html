@@ -310,7 +310,6 @@ a:hover{
     <!-- Actions -->
     <div class="section">
       <h3>🎲 Actions</h3>
-      <button class="btn btn-secondary" id="toggleBtn" onclick="toggleGiveaway()">Toggle Giveaway</button>
       <button class="btn" onclick="drawWinner()" style="margin-top:8px">Draw Winner</button>
       <button class="btn btn-danger" onclick="resetGiveaway()" style="margin-top:8px">Reset Giveaway</button>
       <div id="winnerDisplay" class="winner-display">
@@ -322,7 +321,7 @@ a:hover{
 </div>
 
 <script>
-let giveawayData = JSON.parse(localStorage.getItem('giveawayData') || '{"entries":[],"tasks":[],"active":false}');
+let authToken = ''; // Store auth token after login
 let partnershipData = JSON.parse(localStorage.getItem('partnershipData') || '{"partnerships":[]}');
 
 // Load Dashboard
@@ -349,6 +348,8 @@ async function login() {
     const data = await response.json();
 
     if (data.success) {
+      // Store auth token as base64(email:password)
+      authToken = btoa(email + ':' + password);
       document.getElementById('loginBox').style.display = 'none';
       document.getElementById('adminContent').style.display = 'block';
       loadDashboard();
@@ -367,6 +368,7 @@ async function login() {
 
 // Logout
 function logout() {
+  authToken = '';
   document.getElementById('loginBox').style.display = 'block';
   document.getElementById('adminContent').style.display = 'none';
   document.getElementById('adminEmail').value = '';
@@ -383,7 +385,7 @@ function loadDashboard() {
 }
 
 // Tasks
-function addTask() {
+async function addTask() {
   const name = document.getElementById('newTaskInput').value.trim();
   const link = document.getElementById('newTaskLink').value.trim();
   
@@ -392,66 +394,122 @@ function addTask() {
     return;
   }
   
-  giveawayData.tasks.push({ label: name, url: link });
-  saveData();
-  refreshTasks();
-  
-  document.getElementById('newTaskInput').value = '';
-  document.getElementById('newTaskLink').value = '';
-}
-
-function removeTask(idx) {
-  giveawayData.tasks.splice(idx, 1);
-  saveData();
-  refreshTasks();
-}
-
-function refreshTasks() {
-  const list = document.getElementById('tasksList');
-  list.innerHTML = '';
-  
-  giveawayData.tasks.forEach((task, idx) => {
-    const div = document.createElement('div');
-    div.className = 'list-item';
-    const linkHtml = task.url ? ` <a href="${task.url}" target="_blank">link</a>` : '';
-    div.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span>${task.label}${linkHtml}</span>
-        <button class="btn-small" onclick="removeTask(${idx})">Remove</button>
-      </div>
-    `;
-    list.appendChild(div);
-  });
-}
-
-// Submissions
-function refreshSubmissions() {
-  const list = document.getElementById('submissionsList');
-  list.innerHTML = '';
-  
-  document.getElementById('entryCount').textContent = giveawayData.entries.length;
-  
-  giveawayData.entries.forEach((entry, idx) => {
-    const div = document.createElement('div');
-    div.className = 'list-item';
-    div.innerHTML = `
-      <p><strong>${entry.twitter}</strong></p>
-      <p>${entry.email}</p>
-      <p style="color:#7afcff">${entry.wallet}</p>
-      <button class="btn-small" onclick="removeEntry(${idx})" style="margin-top:6px">Delete</button>
-    `;
-    list.appendChild(div);
-  });
-  
-  if (giveawayData.entries.length === 0) {
-    list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#9fb2ff">No entries yet</p></div>';
+  try {
+    const response = await fetch('/api/giveaway/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authToken
+      },
+      body: JSON.stringify({ label: name, url: link })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      refreshTasks();
+      document.getElementById('newTaskInput').value = '';
+      document.getElementById('newTaskLink').value = '';
+    } else {
+      alert('Failed to add task: ' + (data.message || 'Unknown error'));
+    }
+  } catch (e) {
+    alert('Error adding task');
   }
 }
 
-function removeEntry(idx) {
-  giveawayData.entries.splice(idx, 1);
-  saveData();
-  refreshSubmissions();
+async function removeTask(taskId) {
+  if (!confirm('Delete this task?')) return;
+  
+  try {
+    const response = await fetch('/api/giveaway/tasks', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authToken
+      },
+      body: JSON.stringify({ id: taskId })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      refreshTasks();
+    } else {
+      alert('Failed to delete task');
+    }
+  } catch (e) {
+    alert('Error deleting task');
+  }
+}
+
+async function refreshTasks() {
+  const list = document.getElementById('tasksList');
+  list.innerHTML = '<p style="text-align:center;opacity:0.5">Loading...</p>';
+  
+  try {
+    const response = await fetch('/api/giveaway/tasks');
+    const data = await response.json();
+    
+    list.innerHTML = '';
+    
+    if (data.success && data.tasks.length > 0) {
+      data.tasks.forEach(task => {
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        const linkHtml = task.url ? ` <a href="${task.url}" target="_blank">link</a>` : '';
+        div.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span>${task.label}${linkHtml}</span>
+            <button class="btn-small" onclick="removeTask(${task.id})">Remove</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    } else {
+      list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#9fb2ff">No tasks yet</p></div>';
+    }
+  } catch (e) {
+    list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#ff9b9b">Error loading tasks</p></div>';
+  }
+}
+
+// Submissions
+async function refreshSubmissions() {
+  const list = document.getElementById('submissionsList');
+  const countEl = document.getElementById('entryCount');
+  list.innerHTML = '<p style="text-align:center;opacity:0.5">Loading...</p>';
+  
+  try {
+    const response = await fetch('/api/giveaway/entries', {
+      headers: {
+        'Authorization': 'Bearer ' + authToken
+      }
+    });
+    const data = await response.json();
+    
+    list.innerHTML = '';
+    
+    if (data.success && data.entries.length > 0) {
+      countEl.textContent = data.entries.length;
+      
+      data.entries.forEach(entry => {
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        const winnerBadge = entry.is_winner ? '<span style="color:#3CFF8F;font-weight:bold"> 🏆 WINNER</span>' : '';
+        div.innerHTML = `
+          <p><strong>${entry.twitter_handle}</strong>${winnerBadge}</p>
+          <p>${entry.email}</p>
+          <p style="color:#7afcff">${entry.wallet_address}</p>
+          <p style="font-size:11px;opacity:0.6">${new Date(entry.created_at).toLocaleString()}</p>
+        `;
+        list.appendChild(div);
+      });
+    } else {
+      countEl.textContent = '0';
+      list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#9fb2ff">No entries yet</p></div>';
+    }
+  } catch (e) {
+    list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#ff9b9b">Error loading entries</p></div>';
+  }
 }
 
 // Visitor Stats
@@ -484,13 +542,13 @@ function addPartnership() {
   document.getElementById('partnerDesc').value = '';
   document.getElementById('partnerTasks').value = '';
   
-  saveData();
+  localStorage.setItem('partnershipData', JSON.stringify(partnershipData));
   refreshPartnerships();
 }
 
 function removePartnership(idx) {
   partnershipData.partnerships.splice(idx, 1);
-  saveData();
+  localStorage.setItem('partnershipData', JSON.stringify(partnershipData));
   refreshPartnerships();
 }
 
@@ -515,46 +573,32 @@ function refreshPartnerships() {
   }
 }
 
-// Giveaway Controls
-function toggleGiveaway() {
-  giveawayData.active = !giveawayData.active;
-  saveData();
-  updateToggleButton();
-  alert(giveawayData.active ? '✅ Giveaway is now LIVE!' : '⏸️ Giveaway paused');
-}
-
-function updateToggleButton() {
-  const btn = document.getElementById('toggleBtn');
-  btn.textContent = giveawayData.active ? 'Pause Giveaway' : 'Start Giveaway';
-}
-
-function drawWinner() {
-  if (giveawayData.entries.length === 0) {
-    alert('No entries yet!');
-    return;
+async function drawWinner() {
+  try {
+    const response = await fetch('/api/giveaway/winner', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + authToken
+      }
+    });
+    
+    const data = await response.json();
+    
+    if (data.success && data.winner) {
+      const display = document.getElementById('winnerDisplay');
+      document.getElementById('winnerName').textContent = `${data.winner.twitter_handle} — ${data.winner.email}`;
+      display.style.display = 'block';
+      refreshSubmissions();
+    } else {
+      alert(data.message || 'No entries yet!');
+    }
+  } catch (e) {
+    alert('Error drawing winner');
   }
-  
-  const winner = giveawayData.entries[Math.floor(Math.random() * giveawayData.entries.length)];
-  const display = document.getElementById('winnerDisplay');
-  
-  document.getElementById('winnerName').textContent = `${winner.twitter} — ${winner.email}`;
-  display.style.display = 'block';
 }
 
 function resetGiveaway() {
-  if (confirm('⚠️ Reset giveaway? This will clear all entries.')) {
-    giveawayData.entries = [];
-    saveData();
-    refreshSubmissions();
-    document.getElementById('winnerDisplay').style.display = 'none';
-    alert('✅ Giveaway reset!');
-  }
-}
-
-// Save to localStorage
-function saveData() {
-  localStorage.setItem('giveawayData', JSON.stringify(giveawayData));
-  localStorage.setItem('partnershipData', JSON.stringify(partnershipData));
+  alert('⚠️ Contact developer to reset giveaway database');
 }
 
 // Load Dashboard
@@ -563,7 +607,6 @@ function loadDashboard() {
   refreshSubmissions();
   refreshVisitorStats();
   refreshPartnerships();
-  updateToggleButton();
 }
 
 // Auto-refresh visitor stats every 15 minutes
