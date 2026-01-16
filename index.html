@@ -433,10 +433,22 @@ function openModal(){document.getElementById("modal").classList.add("show")}
 function closeModal(){document.getElementById("modal").classList.remove("show")}
 
 /* ===== GIVEAWAY ===== */
-let giveawayEntries=[];
-let giveawayTasks=[];
+// Sync with admin panel via localStorage
+function loadGiveawayData(){
+  const data=JSON.parse(localStorage.getItem('giveawayData')||'{"entries":[],"tasks":[],"active":false}');
+  return data;
+}
+
+function saveGiveawayData(){
+  const data={entries:giveawayEntries,tasks:giveawayTasks,active:giveawayActive};
+  localStorage.setItem('giveawayData',JSON.stringify(data));
+}
+
+const giveawayData=loadGiveawayData();
+let giveawayEntries=giveawayData.entries;
+let giveawayTasks=giveawayData.tasks;
 let adminLoggedIn=false;
-let giveawayActive=false;
+let giveawayActive=giveawayData.active;
 
 // Admin credentials (set ADMIN_EMAILS and ADMIN_PASSWORD in Vercel environment variables)
 // ADMIN_EMAILS should be comma-separated (e.g., "admin@phant0ms.com,owner@phant0ms.com")
@@ -526,8 +538,7 @@ function submitGiveaway(){
 
   status.textContent="✅ Entry submitted!";
   status.style.color="#3CFF8F";
-  document.getElementById("entryCount").textContent=giveawayEntries.length;
-
+  document.getElementById("entryCount").textContent=giveawayEntries.length;  saveGiveawayData();
   setTimeout(()=>{status.textContent=""},3000);
 }
 
@@ -572,6 +583,7 @@ function addTask(){
   giveawayTasks.push({label:name,url});
   input.value='';
   linkInput.value='';
+  saveGiveawayData();
   refreshAdminPanel();
   renderGiveawayTasks();
   updateGiveawayUI();
@@ -579,6 +591,7 @@ function addTask(){
 
 function removeTask(idx){
   giveawayTasks.splice(idx,1);
+  saveGiveawayData();
   refreshAdminPanel();
   renderGiveawayTasks();
   updateGiveawayUI();
@@ -610,13 +623,13 @@ function refreshAdminPanel(){
 
 function removeSubmission(idx){
   giveawayEntries.splice(idx,1);
+  saveGiveawayData();
   refreshAdminPanel();
   document.getElementById('entryCount').textContent=giveawayEntries.length;
 }
 
 function toggleGiveawayState(){
-  giveawayActive=!giveawayActive;
-  updateGiveawayUI();
+  giveawayActive=!giveawayActive;  saveGiveawayData();  updateGiveawayUI();
   alert(giveawayActive?'✅ Giveaway is now LIVE!':'⏸️ Giveaway paused');
 }
 
@@ -630,8 +643,7 @@ function adminDrawWinner(){
 
 function resetGiveaway(){
   if(confirm('⚠️ Reset giveaway? This will clear all entries.')){
-    giveawayEntries=[];
-    document.getElementById('entryCount').textContent='0';
+    giveawayEntries=[];    saveGiveawayData();    document.getElementById('entryCount').textContent='0';
     document.getElementById('winnerDisplay').style.display='none';
     document.getElementById('adminWinnerDisplay').style.display='none';
     refreshAdminPanel();
