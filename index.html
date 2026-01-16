@@ -885,7 +885,8 @@ async function loadRarityMetadata(){
   try{
     for(let i=1;i<=2229;i++){
       try{
-        const res=await fetch(`/ptms metadata/${i}`);
+        let folder = i <= 740 ? 'metadata-part1' : i <= 1481 ? 'metadata-part2' : 'metadata-part3';
+        const res=await fetch(`/${folder}/${i}`);
         if(res.ok){
           const data=await res.json();
           rarityMeta[i]=data;
