@@ -441,7 +441,7 @@ footer{padding:28px;opacity:.6;text-align:center}
   </div>
 </div>
 
-<footer>© 2026 PHANTOMS — Built on Base | <a href="#" onclick="openAdmin();return false" style="color:#7afcff;text-decoration:none;font-size:12px">Admin</a></footer>
+<footer>© 2026 PHANTOMS — Built on Base | <a href="https://www.phant0ms.com/admin" target="_blank" rel="noopener" style="color:#7afcff;text-decoration:none;font-size:12px">Admin Panel</a></footer>
 
 <script>
 /* INTRO */
@@ -883,18 +883,31 @@ async function loadRarityMetadata(){
   errorBox.style.display="none";
 
   try{
-    for(let i=1;i<=2229;i++){
-      try{
-        let folder = i <= 740 ? 'metadata-part1' : i <= 1481 ? 'metadata-part2' : 'metadata-part3';
-        const res=await fetch(`/${folder}/${i}`);
-        if(res.ok){
-          const data=await res.json();
-          rarityMeta[i]=data;
-          rarityIds.push(i);
+    const fetchWithLimit=async(ids,folder,limit=24)=>{
+      let idx=0;
+      const worker=async()=>{
+        while(idx<ids.length){
+          const id=ids[idx++];
+          try{
+            const res=await fetch(`/${folder}/${id}`);
+            if(res.ok){
+              const data=await res.json();
+              rarityMeta[id]=data;
+              rarityIds.push(id);
+            }
+          }catch(e){/* ignore missing */}
         }
-      }catch(e){/* ignore missing */}
-      if(i%300===0) console.log(`Loaded ${i}`);
-    }
+      };
+      await Promise.all(Array.from({length:limit},worker));
+    };
+
+    await fetchWithLimit([...Array(740).keys()].map(i=>i+1),'metadata-part1');
+    console.log('Loaded metadata-part1 (1-740)');
+    await fetchWithLimit([...Array(741).keys()].map(i=>i+741),'metadata-part2');
+    console.log('Loaded metadata-part2 (741-1481)');
+    await fetchWithLimit([...Array(741).keys()].map(i=>i+1482),'metadata-part3');
+    console.log('Loaded metadata-part3 (1482-2222)');
+
     calculateRarityScores();
     rarityMetadataLoaded=true;
   }catch(err){
