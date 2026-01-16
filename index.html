@@ -386,7 +386,7 @@ footer{padding:28px;opacity:.6;text-align:center}
   </div>
 </div>
 
-<footer>© 2026 PHANTOMS — Built on Base | <span id="visitorStats" style="color:#7afcff;font-size:12px;margin-left:12px"></span></footer>
+<footer>© 2026 PHANTOMS — Built on Base</footer>
 
 <script>
 /* INTRO */
@@ -438,9 +438,12 @@ let giveawayTasks=[];
 let adminLoggedIn=false;
 let giveawayActive=false;
 
-// Admin credentials (set ADMIN_EMAIL and ADMIN_PASSWORD in Vercel environment variables)
+// Admin credentials (set ADMIN_EMAILS and ADMIN_PASSWORD in Vercel environment variables)
+// ADMIN_EMAILS should be comma-separated (e.g., "admin@phant0ms.com,owner@phant0ms.com")
 const ADMIN_CREDENTIALS={
-  email: (typeof process !== 'undefined' && process.env?.ADMIN_EMAIL) || "admin@phant0ms.com",
+  emails: (typeof process !== 'undefined' && process.env?.ADMIN_EMAILS) 
+    ? process.env.ADMIN_EMAILS.split(',').map(e=>e.trim().toLowerCase()) 
+    : ["admin@phant0ms.com"],
   password: (typeof process !== 'undefined' && process.env?.ADMIN_PASSWORD) || "Phant0ms2026!"
 };
 
@@ -477,10 +480,6 @@ function initVisitorTracking(){
 
 function updateVisitorDisplay(){
   const data=JSON.parse(localStorage.getItem('visitorData')||'{}');
-  const stats=document.getElementById('visitorStats');
-  if(stats){
-    stats.textContent=`🌐 Today: ${data.dailyVisitors||0} visitors`;
-  }
   const adminStats=document.getElementById('adminVisitorStats');
   if(adminStats && adminLoggedIn){
     adminStats.innerHTML=`
@@ -544,11 +543,11 @@ function closeAdminLogin(){
 }
 
 function validateAdminLogin(){
-  const email=document.getElementById('adminEmail').value.trim();
+  const email=document.getElementById('adminEmail').value.trim().toLowerCase();
   const password=document.getElementById('adminPassword').value.trim();
   const errorBox=document.getElementById('adminLoginError');
 
-  if(email===ADMIN_CREDENTIALS.email && password===ADMIN_CREDENTIALS.password){
+  if(ADMIN_CREDENTIALS.emails.includes(email) && password===ADMIN_CREDENTIALS.password){
     adminLoggedIn=true;
     document.getElementById('adminLoginModal').style.display='none';
     document.getElementById('adminPanel').style.display='block';
