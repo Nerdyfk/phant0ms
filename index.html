@@ -137,6 +137,71 @@ footer{padding:28px;opacity:.6;text-align:center}
   margin-top:18px;
 }
 
+/* ===== RARITY (premium card) ===== */
+.glass-card{
+  width:100%;
+  max-width:520px;
+  margin:0 auto;
+  padding:24px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow:0 20px 60px rgba(0,0,0,0.45);
+  backdrop-filter:blur(16px);
+}
+.glass-card h3{margin:0 0 8px;font-size:22px;letter-spacing:0.4px}
+.glass-card p.helper{margin:0 0 18px;color:#b7c5ff;font-size:14px}
+.rarity-input{
+  width:100%;
+  padding:14px 16px;
+  border-radius:14px;
+  background:rgba(0,0,0,0.45);
+  border:1px solid rgba(122,252,255,0.25);
+  color:#fff;
+  font-size:15px;
+  outline:none;
+  transition:all .25s ease;
+}
+.rarity-input:focus{border-color:#7afcff;box-shadow:0 0 18px rgba(122,252,255,.35)}
+.rarity-btn{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  color:#0a0a0a;
+  background:linear-gradient(120deg,#5B8CFF,#8A5CFF);
+  box-shadow:0 12px 30px rgba(91,140,255,0.35);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.rarity-btn:hover{transform:scale(1.02);box-shadow:0 14px 34px rgba(91,140,255,0.45)}
+.rarity-meta{margin-top:18px;text-align:center}
+.rarity-score{font-size:32px;font-weight:800;background:linear-gradient(120deg,#5B8CFF,#8A5CFF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.rarity-rank{display:inline-block;margin-top:10px;padding:8px 14px;border-radius:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px}
+.legendary{background:linear-gradient(120deg,#FFD36A,#FFA500);color:#000}
+.epic{background:linear-gradient(120deg,#8A5CFF,#5B8CFF);color:#fff}
+.rare{background:linear-gradient(120deg,#3CFF8F,#00FF9F);color:#000}
+.uncommon{background:linear-gradient(120deg,#5B8CFF,#7afcff);color:#000}
+.common{background:rgba(255,255,255,0.18);color:#fff}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.stat-box{padding:12px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18)}
+.stat-box p{margin:2px 0}
+.traits-list{max-height:210px;overflow-y:auto;text-align:left;display:flex;flex-direction:column;gap:10px}
+.trait-item{padding:10px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(91,140,255,0.28)}
+.trait-label{font-size:12px;text-transform:uppercase;color:#b7c5ff;letter-spacing:0.5px}
+.trait-value{font-size:14px;color:#7afcff;font-weight:600;margin-top:4px}
+.rarity-img{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,0.18);object-fit:cover;max-height:260px}
+.pill-note{display:inline-block;padding:6px 12px;border-radius:12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);font-size:12px;color:#dfe8ff}
+.error-box{margin-top:14px;padding:12px;border-radius:12px;background:rgba(255,77,77,0.12);border:1px solid rgba(255,77,77,0.35);color:#ff9b9b;font-weight:700}
+.loading-box-r{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:12px;color:#b7c5ff;font-size:14px}
+.spinner{width:40px;height:40px;border-radius:50%;border:3px solid rgba(122,252,255,0.25);border-top:3px solid #7afcff;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:600px){
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+}
+
 </style>
 </head>
 
@@ -166,7 +231,7 @@ footer{padding:28px;opacity:.6;text-align:center}
   <p>A pixel-born culture on Base</p>
   <div class="social">
     <a href="https://x.com/Phanto0ms" target="_blank"><img src="assets/x.png"></a>
-    <a onclick="openModal()"><img src="assets/opensea.png"></a>
+    <a href="https://opensea.io/collection/phant0ms/overview" target="_blank"><img src="assets/opensea.png"></a>
     <a onclick="openModal()"><img src="assets/magiceden.png"></a>
     <a onclick="openModal()"><img src="assets/store.png"></a>
   </div>
@@ -176,7 +241,9 @@ footer{padding:28px;opacity:.6;text-align:center}
 <div class="action-buttons">
  <button class="btn" onclick="toggleExplore()">Explore Collection</button>
   <button class="btn" onclick="toggle('wallet')">Check Wallet</button>
-  <button class="btn" onclick="openModal()">Check Rarity</button>
+  <button class="btn" onclick="showRarity()">Check Rarity</button>
+  <button class="btn" onclick="toggle('giveaway')">Giveaway</button>
+  <button class="btn" onclick="toggle('partnership')">Partnership</button>
 </div>
 
 
@@ -203,6 +270,116 @@ footer{padding:28px;opacity:.6;text-align:center}
   <div id="walletStatus" style="margin-top:16px;font-weight:600;"></div>
 </section>
 
+<section id="rarity" style="display:none">
+  <div class="glass-card">
+    <h3>Rarity Checker</h3>
+    <p class="helper">Enter NFT ID (1-2229) to view rarity, rank, and traits.</p>
+
+    <input id="rarityInput" class="rarity-input" type="number" min="1" max="2229" placeholder="Enter NFT ID" />
+    <button class="rarity-btn" style="margin-top:12px" onclick="checkRarity()">Check Rarity</button>
+
+    <div id="rarityLoading" class="loading-box-r" style="display:none">
+      <div class="spinner"></div>
+      <div>Loading metadata…</div>
+    </div>
+
+    <div id="rarityError" class="error-box" style="display:none"></div>
+
+    <div id="rarityResult" style="display:none">
+      <div class="rarity-meta">
+        <div id="rarityName" class="rarity-score" style="font-size:24px">PTM #1</div>
+        <div id="rarityScore" class="rarity-score" style="margin-top:6px">8,456</div>
+        <div id="rarityRankTag" class="rarity-rank legendary" style="margin-top:10px">Legendary</div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-box">
+          <p style="color:#9fb2ff;font-size:12px;letter-spacing:0.5px">Rank</p>
+          <p id="rarityRank" style="font-weight:700;font-size:18px;color:#7afcff">#1</p>
+        </div>
+        <div class="stat-box">
+          <p style="color:#9fb2ff;font-size:12px;letter-spacing:0.5px">Traits</p>
+          <p id="rarityTraits" style="font-weight:700;font-size:18px;color:#3CFF8F">5</p>
+        </div>
+        <div class="stat-box">
+          <p style="color:#9fb2ff;font-size:12px;letter-spacing:0.5px">Percentile</p>
+          <p id="rarityPercentile" style="font-weight:700;font-size:18px;color:#ff7adf">99.9%</p>
+        </div>
+      </div>
+
+      <div class="traits-list" id="rarityTraitsList"></div>
+
+      <div style="margin-top:18px">
+        <img id="rarityImg" class="rarity-img" src="" alt="NFT preview" onerror="this.style.display='none'">
+      </div>
+
+      <div style="margin-top:14px;text-align:center">
+        <span class="pill-note">All calculations are client-side; no wallet needed.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="giveaway" style="display:none">
+  <h2>Giveaway</h2>
+  <div id="giveawayStatusBanner" class="pill-note" style="display:inline-block;margin-bottom:10px;background:rgba(91,140,255,0.18);border:1px solid rgba(91,140,255,0.4);color:#b7c5ff">Giveaway Live</div>
+  <div class="glass-card">
+    <p style="font-size:16px;line-height:1.6;margin:20px 0">
+      Complete tasks to enter our random draw and win Phantoms NFTs.
+    </p>
+
+    <div style="margin-top:20px">
+      <div style="margin-bottom:16px">
+        <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Twitter Handle</label>
+        <input id="giveawayTwitter" placeholder="@yourhandle" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box">
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Email</label>
+        <input id="giveawayEmail" placeholder="your@email.com" type="email" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box">
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Wallet Address</label>
+        <input id="giveawayWallet" placeholder="0x..." style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box">
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Tasks Completed</label>
+        <div id="giveawayTasksBox" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      </div>
+
+      <button class="btn" onclick="submitGiveaway()" style="width:100%;margin-bottom:16px">Submit Entry</button>
+
+      <div id="giveawayStatus" style="text-align:center;margin:12px 0;font-weight:600"></div>
+
+      <div style="margin-top:24px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.18)">
+        <p style="color:#9fb2ff;font-size:12px;margin-bottom:12px">📊 Total Entries: <span id="entryCount" style="color:#7afcff;font-weight:700">0</span></p>
+        <button id="drawButton" class="btn" onclick="drawWinner()" style="width:100%;background:linear-gradient(120deg,#FFD36A,#FFA500);color:#000;display:none">Draw Winner (Admin)</button>
+        <div id="winnerDisplay" style="margin-top:12px;padding:12px;border-radius:8px;background:rgba(255,211,106,0.15);border:1px solid rgba(255,211,106,0.35);display:none;text-align:center">
+          <p style="font-size:12px;color:#b7c5ff;margin-bottom:4px">🎉 Winner</p>
+          <p id="winnerName" style="font-size:18px;font-weight:700;color:#FFD36A"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="partnership" style="display:none">
+  <h2>Partnership</h2>
+  <div id="partnershipContent">
+    <div class="glass-card">
+      <p style="font-size:16px;line-height:1.6;margin:20px 0">
+        Interested in partnering with Phantoms? We're open to collaborations, brand partnerships, and community initiatives. Let's build together.
+      </p>
+      <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn" onclick="openModal()">Contact Us</button>
+        <button class="btn" onclick="openModal()">Sponsorship Info</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div id="modal">
   <div class="modal-box">
     <h3>Coming Soon</h3>
@@ -210,7 +387,61 @@ footer{padding:28px;opacity:.6;text-align:center}
   </div>
 </div>
 
-<footer>© 2026 PHANTOMS — Built on Base</footer>
+<div id="adminLoginModal" class="modal-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10001;width:90%;max-width:400px">
+  <h3>Admin Login</h3>
+  <div style="margin-top:20px;display:flex;gap:10px;flex-direction:column">
+    <input id="adminEmail" type="email" placeholder="Admin Email" style="padding:10px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
+    <input id="adminPassword" type="password" placeholder="Admin Password" style="padding:10px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
+    <button class="btn" onclick="validateAdminLogin()" style="background:linear-gradient(120deg,#5B8CFF,#8A5CFF);color:#fff">Login</button>
+    <div id="adminLoginError" style="text-align:center;margin-top:12px;color:#ff9b9b;display:none;font-weight:600"></div>
+  </div>
+</div>
+
+<div id="adminPanel" class="modal-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10000;width:90%;max-width:600px;max-height:90vh;overflow-y:auto">
+  <button onclick="closeAdmin()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:#fff;font-size:20px;cursor:pointer">✕</button>
+  <h3>Admin Panel</h3>
+
+  <div style="margin-top:16px;border-bottom:1px solid rgba(255,255,255,0.18);padding-bottom:16px">
+    <h4 style="margin-bottom:12px">🎯 Manage Tasks</h4>
+    <div style="display:flex;gap:8px;flex-direction:column;margin-bottom:12px">
+      <input id="newTaskInput" placeholder="Task name (e.g., Follow on X)" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
+      <input id="newTaskLink" placeholder="Task link (optional, e.g., https://x.com/Phanto0ms)" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
+      <button class="btn" onclick="addTask()" style="background:linear-gradient(120deg,#3CFF8F,#00FF9F);color:#000;font-weight:700">Add Task</button>
+    </div>
+    <div id="tasksList" style="display:flex;flex-direction:column;gap:8px"></div>
+  </div>
+
+  <div style="margin-top:16px;border-bottom:1px solid rgba(255,255,255,0.18);padding-bottom:16px">
+    <h4 style="margin-bottom:12px">📋 View Submissions (<span id="adminEntryCount">0</span>)</h4>
+    <div id="submissionsList" style="max-height:250px;overflow-y:auto;display:flex;flex-direction:column;gap:8px"></div>
+  </div>
+
+  <div style="margin-top:16px;border-bottom:1px solid rgba(255,255,255,0.18);padding-bottom:16px">
+    <h4 style="margin-bottom:12px">🤝 Manage Partnerships</h4>
+    <div style="display:flex;gap:8px;flex-direction:column;margin-bottom:12px">
+      <input id="partnerTitle" placeholder="Partnership Title (e.g., Brand X)" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
+      <textarea id="partnerDesc" placeholder="Partnership Description" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;min-height:60px;font-family:inherit"></textarea>
+      <input id="partnerTasks" placeholder="Tasks (comma-separated, e.g., Like Post, Share, Follow)" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff">
+      <button class="btn" onclick="publishPartnership()" style="background:linear-gradient(120deg,#8A5CFF,#5B8CFF);color:#fff;font-weight:700">Publish Partnership</button>
+    </div>
+    <div id="partnershipsList" style="display:flex;flex-direction:column;gap:8px"></div>
+  </div>
+
+  <div style="margin-top:16px">
+    <h4 style="margin-bottom:12px">🎲 Actions</h4>
+    <div style="display:flex;gap:8px;flex-direction:column">
+      <button class="btn" id="toggleGiveawayBtn" onclick="toggleGiveawayState()" style="background:linear-gradient(120deg,#5B8CFF,#8A5CFF);color:#fff;font-weight:700">Pause Giveaway</button>
+      <button class="btn" onclick="adminDrawWinner()" style="background:linear-gradient(120deg,#FFD36A,#FFA500);color:#000;font-weight:700">Draw Winner</button>
+      <button class="btn" onclick="resetGiveaway()" style="background:linear-gradient(120deg,#FF6B6B,#FF4444);color:#fff">Reset Giveaway</button>
+    </div>
+    <div id="adminWinnerDisplay" style="margin-top:12px;padding:12px;border-radius:8px;background:rgba(255,211,106,0.15);border:1px solid rgba(255,211,106,0.35);display:none;text-align:center">
+      <p style="font-size:12px;color:#b7c5ff;margin-bottom:4px">🎉 Winner</p>
+      <p id="adminWinnerName" style="font-size:16px;font-weight:700;color:#FFD36A"></p>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 PHANTOMS — Built on Base | <a href="#" onclick="openAdmin();return false" style="color:#7afcff;text-decoration:none;font-size:12px">Admin</a></footer>
 
 <script>
 /* INTRO */
@@ -255,6 +486,306 @@ function toggle(id){
 }
 function openModal(){document.getElementById("modal").classList.add("show")}
 function closeModal(){document.getElementById("modal").classList.remove("show")}
+
+/* ===== GIVEAWAY ===== */
+let giveawayEntries=[];
+let giveawayTasks=[
+  {label:"Follow on X",url:"https://x.com/Phanto0ms"},
+  {label:"Retweet/Like Post",url:""},
+  {label:"Join Discord",url:""}
+];
+let adminLoggedIn=false;
+let partnerships=[];
+let giveawayActive=true;
+
+// Admin credentials (use environment variables in Vercel; safe for browser)
+const ADMIN_CREDENTIALS={
+  email:(typeof process!="undefined" && process.env?.REACT_APP_ADMIN_EMAIL) || "admin@phantoms.com",
+  password:(typeof process!="undefined" && process.env?.REACT_APP_ADMIN_PASSWORD) || "admin123"
+};
+
+function submitGiveaway(){
+  const twitter=document.getElementById("giveawayTwitter").value.trim();
+  const email=document.getElementById("giveawayEmail").value.trim();
+  const wallet=document.getElementById("giveawayWallet").value.trim();
+  const status=document.getElementById("giveawayStatus");
+
+  if(!giveawayActive){
+    status.textContent="⏸️ Giveaway is not live yet";
+    status.style.color="#ff9b9b";
+    return;
+  }
+
+  if(!twitter||!email||!wallet){
+    status.textContent="❌ Please fill all fields";
+    status.style.color="#ff9b9b";
+    return;
+  }
+
+  const checks=[...document.querySelectorAll('.task-check')];
+  const allDone=checks.every(c=>c.checked);
+  if(!allDone){
+    status.textContent="❌ Please complete all tasks";
+    status.style.color="#ff9b9b";
+    return;
+  }
+
+  giveawayEntries.push({twitter,email,wallet,timestamp:new Date().toLocaleString()});
+  document.getElementById("giveawayTwitter").value="";
+  document.getElementById("giveawayEmail").value="";
+  document.getElementById("giveawayWallet").value="";
+  checks.forEach(c=>c.checked=false);
+
+  status.textContent="✅ Entry submitted!";
+  status.style.color="#3CFF8F";
+  document.getElementById("entryCount").textContent=giveawayEntries.length;
+
+  setTimeout(()=>{status.textContent=""},3000);
+}
+
+function drawWinner(){
+  if(!adminLoggedIn){
+    alert("Admins only: please log in to draw a winner.");
+    return;
+  }
+  if(!giveawayActive){
+    alert("Giveaway is not live.");
+    return;
+  }
+  if(giveawayEntries.length===0){
+    alert("No entries yet!");
+    return;
+  }
+
+  const winner=giveawayEntries[Math.floor(Math.random()*giveawayEntries.length)];
+  const display=document.getElementById("winnerDisplay");
+  document.getElementById("winnerName").textContent=`${winner.twitter} — ${winner.email}`;
+  display.style.display="block";
+}
+
+function openAdmin(){
+  document.getElementById("adminLoginModal").style.display="block";
+  document.getElementById("adminEmail").value="";
+  document.getElementById("adminPassword").value="";
+  document.getElementById("adminLoginError").style.display="none";
+}
+
+function validateAdminLogin(){
+  const email=document.getElementById("adminEmail").value.trim();
+  const password=document.getElementById("adminPassword").value.trim();
+  const errorBox=document.getElementById("adminLoginError");
+
+  if(email===ADMIN_CREDENTIALS.email && password===ADMIN_CREDENTIALS.password){
+    adminLoggedIn=true;
+    document.getElementById("adminLoginModal").style.display="none";
+    document.getElementById("adminPanel").style.display="block";
+    document.getElementById("drawButton").style.display="block";
+    refreshAdminPanel();
+  }else{
+    errorBox.textContent="❌ Invalid email or password";
+    errorBox.style.display="block";
+  }
+}
+
+function closeAdmin(){
+  document.getElementById("adminPanel").style.display="none";
+  document.getElementById("adminLoginModal").style.display="none";
+  document.getElementById("drawButton").style.display="none";
+  adminLoggedIn=false;
+}
+
+function addTask(){
+  const input=document.getElementById("newTaskInput");
+  const linkInput=document.getElementById("newTaskLink");
+  const name=input.value.trim();
+  const url=linkInput.value.trim();
+  if(!name){
+    alert("Enter task name");
+    return;
+  }
+  giveawayTasks.push({label:name,url});
+  input.value="";
+  linkInput.value="";
+  refreshAdminPanel();
+  renderGiveawayTasks();
+}
+
+function removeTask(idx){
+  giveawayTasks.splice(idx,1);
+  refreshAdminPanel();
+  renderGiveawayTasks();
+}
+
+function refreshAdminPanel(){
+  const tasksList=document.getElementById("tasksList");
+  tasksList.innerHTML="";
+  giveawayTasks.forEach((task,idx)=>{
+    const div=document.createElement("div");
+    div.style.cssText="display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.18)";
+    const linkHtml = task.url ? `<a href=\"${task.url}\" target=\"_blank\" style=\"color:#7afcff;font-size:12px;margin-left:6px\">link</a>` : '';
+    div.innerHTML=`<span>${task.label}${linkHtml}</span><button class="btn" onclick="removeTask(${idx})" style="padding:4px 8px;font-size:12px;background:rgba(255,77,77,0.3)">Remove</button>`;
+    tasksList.appendChild(div);
+  });
+
+  const subList=document.getElementById("submissionsList");
+  subList.innerHTML="";
+  giveawayEntries.forEach((entry,idx)=>{
+    const div=document.createElement("div");
+    div.style.cssText="padding:8px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.18);font-size:12px";
+    div.innerHTML=`<p style="margin:0"><strong>${entry.twitter}</strong></p><p style="margin:2px 0;color:#9fb2ff">${entry.email}</p><p style="margin:2px 0;color:#7afcff">${entry.wallet}</p><button class="btn" onclick="removeSubmission(${idx})" style="margin-top:4px;padding:4px 8px;font-size:10px;background:rgba(255,77,77,0.3)">Delete</button>`;
+    subList.appendChild(div);
+  });
+
+  document.getElementById("adminEntryCount").textContent=giveawayEntries.length;
+
+  const partList=document.getElementById("partnershipsList");
+  partList.innerHTML="";
+  partnerships.forEach((part,idx)=>{
+    const div=document.createElement("div");
+    div.style.cssText="padding:8px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.18);font-size:12px";
+    div.innerHTML=`<p style="margin:0"><strong>${part.title}</strong></p><p style="margin:2px 0;color:#7afcff">${part.tasks.join(", ")}</p><button class="btn" onclick="removePartnership(${idx})" style="margin-top:4px;padding:4px 8px;font-size:10px;background:rgba(255,77,77,0.3)">Delete</button>`;
+    partList.appendChild(div);
+  });
+}
+
+function removeSubmission(idx){
+  giveawayEntries.splice(idx,1);
+  refreshAdminPanel();
+}
+
+function renderGiveawayTasks(){
+  const box=document.getElementById("giveawayTasksBox");
+  if(!box) return;
+  box.innerHTML="";
+  giveawayTasks.forEach((task,idx)=>{
+    const label=document.createElement("label");
+    label.style.cssText="display:flex;align-items:center;gap:6px;cursor:pointer;background:rgba(255,255,255,0.05);padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12)";
+    const input=document.createElement("input");
+    input.type="checkbox";
+    input.className="task-check";
+    input.dataset.idx=idx;
+    input.style.cursor="pointer";
+    const text=document.createElement("span");
+    text.innerHTML=task.url ? `${task.label} <a href="${task.url}" target="_blank" style="color:#7afcff;text-decoration:none;font-size:12px">(link)</a>` : task.label;
+    label.appendChild(input);
+    label.appendChild(text);
+    box.appendChild(label);
+  });
+}
+
+function publishPartnership(){
+  const title=document.getElementById("partnerTitle").value.trim();
+  const desc=document.getElementById("partnerDesc").value.trim();
+  const taskStr=document.getElementById("partnerTasks").value.trim();
+
+  if(!title||!desc||!taskStr){
+    alert("Fill all partnership fields");
+    return;
+  }
+
+  const tasks=taskStr.split(",").map(t=>t.trim()).filter(Boolean);
+  partnerships.push({title,desc,tasks,date:new Date().toLocaleString()});
+
+  document.getElementById("partnerTitle").value="";
+  document.getElementById("partnerDesc").value="";
+  document.getElementById("partnerTasks").value="";
+
+  refreshAdminPanel();
+  renderPartnerships();
+  alert("✅ Partnership published!");
+}
+
+function removePartnership(idx){
+  partnerships.splice(idx,1);
+  refreshAdminPanel();
+  renderPartnerships();
+}
+
+function renderPartnerships(){
+  const content=document.getElementById("partnershipContent");
+  content.innerHTML="";
+
+  if(partnerships.length===0){
+    content.innerHTML=`<div class="glass-card"><p style="font-size:16px;line-height:1.6;margin:20px 0">Interested in partnering with Phantoms? We're open to collaborations, brand partnerships, and community initiatives. Let's build together.</p><div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn" onclick="openModal()">Contact Us</button><button class="btn" onclick="openModal()">Sponsorship Info</button></div></div>`;
+    return;
+  }
+
+  partnerships.forEach(part=>{
+    const div=document.createElement("div");
+    div.className="glass-card";
+    div.style.marginBottom="16px";
+    div.innerHTML=`<h3 style="margin-bottom:8px">${part.title}</h3><p style="margin:8px 0;color:#b7c5ff">${part.desc}</p><p style="margin:12px 0;font-size:12px;color:#7afcff;font-weight:700">Tasks Required:</p><div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${part.tasks.map(t=>`<span style="padding:4px 10px;border-radius:6px;background:rgba(122,252,255,0.2);border:1px solid rgba(122,252,255,0.4);font-size:12px;color:#7afcff">${t}</span>`).join("")}</div><button class="btn" onclick="openModal()" style="width:100%">Join Partnership</button>`;
+    content.appendChild(div);
+  });
+}
+
+function updateGiveawayUI(){
+  const banner=document.getElementById("giveawayStatusBanner");
+  const submitBtn=document.querySelector('#giveaway button.btn');
+  const inputs=document.querySelectorAll('#giveaway input');
+  const toggleBtn=document.getElementById("toggleGiveawayBtn");
+
+  if(giveawayActive){
+    if(banner){
+      banner.textContent="Giveaway Live";
+      banner.style.background="rgba(92,255,154,0.12)";
+      banner.style.border="1px solid rgba(92,255,154,0.4)";
+      banner.style.color="#3CFF8F";
+    }
+    inputs.forEach(i=>i.disabled=false);
+    if(submitBtn) submitBtn.disabled=false;
+    if(toggleBtn) toggleBtn.textContent="Pause Giveaway";
+  }else{
+    if(banner){
+      banner.textContent="Giveaway is not live yet";
+      banner.style.background="rgba(255,183,77,0.12)";
+      banner.style.border="1px solid rgba(255,183,77,0.4)";
+      banner.style.color="#ffb74d";
+    }
+    inputs.forEach(i=>i.disabled=true);
+    if(submitBtn) submitBtn.disabled=true;
+    if(toggleBtn) toggleBtn.textContent="Start Giveaway";
+  }
+}
+
+function toggleGiveawayState(){
+  giveawayActive=!giveawayActive;
+  updateGiveawayUI();
+}
+
+function adminDrawWinner(){
+  if(giveawayEntries.length===0){
+    alert("No entries!");
+    return;
+  }
+  const winner=giveawayEntries[Math.floor(Math.random()*giveawayEntries.length)];
+  const display=document.getElementById("adminWinnerDisplay");
+  document.getElementById("adminWinnerName").textContent=`${winner.twitter} — ${winner.email} — ${winner.wallet}`;
+  display.style.display="block";
+}
+
+function resetGiveaway(){
+  if(confirm("⚠️ Reset giveaway? This will clear all entries and re-launch.")){
+    giveawayEntries=[];
+    giveawayTasks=[
+      {label:"Follow on X",url:"https://x.com/Phanto0ms"},
+      {label:"Retweet/Like Post",url:""},
+      {label:"Join Discord",url:""}
+    ];
+    giveawayActive=true;
+    document.getElementById("entryCount").textContent="0";
+    document.getElementById("winnerDisplay").style.display="none";
+    document.getElementById("adminWinnerDisplay").style.display="none";
+    refreshAdminPanel();
+    renderGiveawayTasks();
+    updateGiveawayUI();
+    alert("✅ Giveaway reset and re-launched!");
+  }
+}
+
+// initial render for giveaway tasks
+renderGiveawayTasks();
+updateGiveawayUI();
 
   /* ===== FIXED INFINITE GALLERY (NO SHUFFLE) ===== */
 
@@ -320,6 +851,160 @@ function checkWallet(){
   explore.classList.add("reveal");
   about.classList.add("reveal");
 }
+
+/* ===== RARITY CHECKER ===== */
+let rarityMetadataLoaded=false, rarityLoading=false;
+let rarityMeta={}, rarityScores={}, rarityIds=[];
+
+function showRarity(){
+  const raritySection=document.getElementById("rarity");
+  const isOpen=raritySection.style.display==="block";
+
+  if(isOpen){
+    raritySection.style.display="none";
+    return;
+  }
+
+  document.getElementById("wallet").style.display="none";
+  document.getElementById("explore").style.display="none";
+  document.getElementById("about").style.display="none";
+  raritySection.style.display="block";
+  raritySection.classList.add("reveal");
+  if(!rarityMetadataLoaded && !rarityLoading){
+    loadRarityMetadata();
+  }
+}
+
+async function loadRarityMetadata(){
+  rarityLoading=true;
+  const loadBox=document.getElementById("rarityLoading");
+  loadBox.style.display="flex";
+  const errorBox=document.getElementById("rarityError");
+  errorBox.style.display="none";
+
+  try{
+    for(let i=1;i<=2229;i++){
+      try{
+        const res=await fetch(`ptms metadata/${i}`);
+        if(res.ok){
+          const data=await res.json();
+          rarityMeta[i]=data;
+          rarityIds.push(i);
+        }
+      }catch(e){/* ignore missing */}
+      if(i%300===0) console.log(`Loaded ${i}`);
+    }
+    calculateRarityScores();
+    rarityMetadataLoaded=true;
+  }catch(err){
+    errorBox.textContent="Failed to load metadata.";
+    errorBox.style.display="block";
+  }finally{
+    loadBox.style.display="none";
+    rarityLoading=false;
+  }
+}
+
+function calculateRarityScores(){
+  const freq={};
+  rarityIds.forEach(id=>{
+    const nft=rarityMeta[id];
+    (nft?.attributes||[]).forEach(attr=>{
+      const key=`${attr.trait_type}:${attr.value}`;
+      freq[key]=(freq[key]||0)+1;
+    });
+  });
+
+  rarityIds.forEach(id=>{
+    const nft=rarityMeta[id];
+    let score=0;
+    (nft?.attributes||[]).forEach(attr=>{
+      const key=`${attr.trait_type}:${attr.value}`;
+      const f=freq[key]||1;
+      score += (rarityIds.length / f) * 100;
+    });
+    rarityScores[id]=score;
+  });
+
+  const sorted=Object.entries(rarityScores)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([id,score],idx)=>({id:Number(id),score,rank:idx+1}));
+
+  sorted.forEach(item=>{
+    rarityScores[item.id]={score:item.score,rank:item.rank};
+  });
+}
+
+function rankLabel(rank,total){
+  if(!rank||!total) return {label:"Common",cls:"common"};
+  const pct=(rank/total)*100;
+  if(pct<=1) return {label:"Legendary",cls:"legendary"};
+  if(pct<=5) return {label:"Epic",cls:"epic"};
+  if(pct<=15) return {label:"Rare",cls:"rare"};
+  if(pct<=35) return {label:"Uncommon",cls:"uncommon"};
+  return {label:"Common",cls:"common"};
+}
+
+async function checkRarity(){
+  const id=parseInt(document.getElementById("rarityInput").value.trim());
+  const resBox=document.getElementById("rarityResult");
+  const errBox=document.getElementById("rarityError");
+  const loadBox=document.getElementById("rarityLoading");
+  resBox.style.display="none";
+  errBox.style.display="none";
+
+  if(!id || id<1 || id>2229){
+    errBox.textContent="Enter a valid ID between 1 and 2229.";
+    errBox.style.display="block";
+    return;
+  }
+
+  if(!rarityMetadataLoaded){
+    if(!rarityLoading) loadRarityMetadata();
+    loadBox.style.display="flex";
+    return;
+  }
+
+  const nft=rarityMeta[id];
+  if(!nft){
+    errBox.textContent=`NFT #${id} not found.`;
+    errBox.style.display="block";
+    return;
+  }
+
+  const scoreData=rarityScores[id];
+  const score=scoreData?.score||0;
+  const rank=scoreData?.rank||"N/A";
+  const total=rarityIds.length||1;
+  const pct=rank!=="N/A" ? (100-(((rank-1)/total)*100)).toFixed(1) : "N/A";
+  const {label,cls}=rankLabel(rank, total);
+
+  document.getElementById("rarityName").textContent=nft.name||`PTM #${id}`;
+  document.getElementById("rarityScore").textContent=score.toFixed(0);
+  document.getElementById("rarityRank").textContent=rank!="N/A"?`#${rank}`:"N/A";
+  document.getElementById("rarityTraits").textContent=nft.attributes?.length||0;
+  document.getElementById("rarityPercentile").textContent=pct+"%";
+
+  const badge=document.getElementById("rarityRankTag");
+  badge.textContent=label;
+  badge.className=`rarity-rank ${cls}`;
+
+  const traits=document.getElementById("rarityTraitsList");
+  traits.innerHTML="";
+  (nft.attributes||[]).forEach(attr=>{
+    const div=document.createElement("div");
+    div.className="trait-item";
+    div.innerHTML=`<div class="trait-label">${attr.trait_type}</div><div class="trait-value">${attr.value}</div>`;
+    traits.appendChild(div);
+  });
+
+  const img=document.getElementById("rarityImg");
+  if(nft.image){img.src=nft.image;img.style.display="block";} else {img.style.display="none";}
+
+  resBox.style.display="block";
+}
+
+document.getElementById("rarityInput").addEventListener("keypress",e=>{if(e.key==="Enter")checkRarity();});
 
 </script>
 
