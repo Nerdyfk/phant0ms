@@ -311,6 +311,7 @@ a:hover{
     <div class="section">
       <h3>🎲 Actions</h3>
       <button class="btn" onclick="drawWinner()" style="margin-top:8px">Draw Winner</button>
+      <button class="btn btn-success" onclick="exportWinners()" style="margin-top:8px">📥 Export Winners CSV</button>
       <button class="btn btn-danger" onclick="resetGiveaway()" style="margin-top:8px">Reset Giveaway</button>
       <div id="winnerDisplay" class="winner-display">
         <p>🎉 Winner</p>
@@ -599,6 +600,33 @@ async function drawWinner() {
 
 function resetGiveaway() {
   alert('⚠️ Contact developer to reset giveaway database');
+}
+
+async function exportWinners() {
+  try {
+    const response = await fetch('/api/giveaway/export-winners', {
+      headers: {
+        'Authorization': 'Bearer ' + authToken
+      }
+    });
+    
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `giveaway_winners_${Date.now()}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } else {
+      const data = await response.json();
+      alert('Export failed: ' + (data.message || 'Unknown error'));
+    }
+  } catch (e) {
+    alert('Error exporting winners');
+  }
 }
 
 // Load Dashboard
