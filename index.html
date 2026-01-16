@@ -448,11 +448,10 @@ let giveawayActive=giveawayData.active;
 
 // Admin credentials (set ADMIN_EMAILS and ADMIN_PASSWORD in Vercel environment variables)
 // ADMIN_EMAILS should be comma-separated (e.g., "admin@phant0ms.com,owner@phant0ms.com")
+// Note: For static sites, these are hardcoded. Use backend API for true security.
 const ADMIN_CREDENTIALS={
-  emails: (typeof process !== 'undefined' && process.env?.ADMIN_EMAILS) 
-    ? process.env.ADMIN_EMAILS.split(',').map(e=>e.trim().toLowerCase()) 
-    : ["admin@phant0ms.com","arafakabir34@gmail.com"],
-  password: (typeof process !== 'undefined' && process.env?.ADMIN_PASSWORD) || "Phant0ms2026!"
+  emails: ["admin@phant0ms.com","arafakabir34@gmail.com"],
+  password: "Phant0ms2026!"
 };
 
 /* ===== VISITOR TRACKING ===== */
@@ -754,7 +753,6 @@ function showRarity(){
   }
 
   document.getElementById("wallet").style.display="none";
-  document.getElementById("explore").style.display="none";
   document.getElementById("about").style.display="none";
   raritySection.style.display="block";
   raritySection.classList.add("reveal");

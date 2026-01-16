@@ -312,12 +312,11 @@ a:hover{
 </div>
 
 <script>
-// Admin credentials from env or defaults
+// Admin credentials - hardcoded for static site
+// For production security, implement backend authentication
 const ADMIN_CREDENTIALS = {
-  emails: (typeof process !== 'undefined' && process.env?.ADMIN_EMAILS) 
-    ? process.env.ADMIN_EMAILS.split(',').map(e=>e.trim().toLowerCase()) 
-    : ["admin@phant0ms.com","arafakabir34@gmail.com"],
-  password: (typeof process !== 'undefined' && process.env?.ADMIN_PASSWORD) || "Phant0ms2026!"
+  emails: ["admin@phant0ms.com","arafakabir34@gmail.com"],
+  password: "Phant0ms2026!"
 };
 
 let giveawayData = JSON.parse(localStorage.getItem('giveawayData') || '{"entries":[],"tasks":[],"active":false}');
