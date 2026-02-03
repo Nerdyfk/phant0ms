@@ -7,22 +7,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { twitter, email, wallet, tasks } = req.body;
+    const { twitter_handle, reply_link, wallet_address, tasks_completed, giveaway_id } = req.body;
 
     // Validate input
-    if (!twitter || !email || !wallet || !tasks || tasks.length === 0) {
+    if (!reply_link || !wallet_address) {
       return res.status(400).json({ 
         success: false,
-        message: 'All fields are required' 
+        message: 'Reply link and wallet address are required' 
       });
     }
 
     const sql = getDb();
 
-    // Check if email or wallet already submitted
+    // Check if reply link or wallet already submitted for this giveaway
     const existing = await sql`
       SELECT id FROM giveaway_entries 
-      WHERE email = ${email} OR wallet_address = ${wallet}
+      WHERE (reply_link = ${reply_link} OR wallet_address = ${wallet_address})
+      ${giveaway_id ? `AND giveaway_id = ${giveaway_id}` : ''}
       LIMIT 1
     `;
 
@@ -35,8 +36,8 @@ export default async function handler(req, res) {
 
     // Insert new entry
     const result = await sql`
-      INSERT INTO giveaway_entries (twitter_handle, email, wallet_address, tasks_completed)
-      VALUES (${twitter}, ${email}, ${wallet}, ${tasks})
+      INSERT INTO giveaway_entries (giveaway_id, twitter_handle, reply_link, wallet_address, tasks_completed)
+      VALUES (${giveaway_id || null}, ${twitter_handle || null}, ${reply_link}, ${wallet_address}, ${tasks_completed ? JSON.stringify(tasks_completed) : null})
       RETURNING id
     `;
 

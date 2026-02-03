@@ -1,42 +1,47 @@
-// API endpoint to manage giveaway tasks
+// API endpoint to manage giveaways
 import { getDb } from '../db.js';
 
 export default async function handler(req, res) {
   const sql = getDb();
 
-  // GET - Retrieve tasks (optionally filtered by giveaway_id)
+  // GET - Retrieve all giveaways (admin only)
   if (req.method === 'GET') {
     try {
-      const { giveaway_id } = req.query;
-      
-      let tasks;
-      if (giveaway_id) {
-        tasks = await sql`
-          SELECT id, giveaway_id, label, url, is_required, sort_order, created_at
-          FROM giveaway_tasks
-          WHERE is_active = true AND giveaway_id = ${parseInt(giveaway_id)}
-          ORDER BY sort_order ASC, created_at ASC
-        `;
-      } else {
-        tasks = await sql`
-          SELECT id, giveaway_id, label, url, is_required, sort_order, created_at
-          FROM giveaway_tasks
-          WHERE is_active = true
-          ORDER BY giveaway_id ASC, sort_order ASC, created_at ASC
-        `;
+      // Check admin authentication
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'Unauthorized' });
       }
+
+      const token = authHeader.substring(7);
+      const decoded = Buffer.from(token, 'base64').toString('utf-8');
+      const [email, password] = decoded.split(':');
+
+      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase());
+      const adminPassword = process.env.ADMIN_PASSWORD || '';
+
+      if (!adminEmails.includes(email.toLowerCase()) || password !== adminPassword) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+      }
+
+      const giveaways = await sql`
+        SELECT id, title, description, status, start_time, end_time, created_at, is_active
+        FROM giveaways
+        WHERE is_active = true
+        ORDER BY created_at DESC
+      `;
 
       return res.status(200).json({
         success: true,
-        tasks: tasks
+        giveaways: giveaways
       });
     } catch (error) {
-      console.error('Get tasks error:', error);
+      console.error('Get giveaways error:', error);
       return res.status(500).json({ success: false, message: 'Server error' });
     }
   }
 
-  // POST - Add new task (admin only)
+  // POST - Create new giveaway (admin only)
   if (req.method === 'POST') {
     try {
       // Check admin authentication
@@ -56,30 +61,30 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const { giveaway_id, label, url, is_required } = req.body;
+      const { title, description, start_time, end_time, status } = req.body;
 
-      if (!label) {
-        return res.status(400).json({ success: false, message: 'Label is required' });
+      if (!title || !start_time || !end_time) {
+        return res.status(400).json({ success: false, message: 'Title, start_time, and end_time are required' });
       }
 
       const result = await sql`
-        INSERT INTO giveaway_tasks (giveaway_id, label, url, is_required)
-        VALUES (${giveaway_id || null}, ${label}, ${url || null}, ${is_required || false})
-        RETURNING id, giveaway_id, label, url, is_required, created_at
+        INSERT INTO giveaways (title, description, start_time, end_time, status)
+        VALUES (${title}, ${description || null}, ${start_time}, ${end_time}, ${status || 'draft'})
+        RETURNING id, title, description, status, start_time, end_time, created_at
       `;
 
       return res.status(200).json({
         success: true,
-        task: result[0]
+        giveaway: result[0]
       });
 
     } catch (error) {
-      console.error('Add task error:', error);
+      console.error('Create giveaway error:', error);
       return res.status(500).json({ success: false, message: 'Server error' });
     }
   }
 
-  // DELETE - Remove task (admin only)
+  // DELETE - Remove giveaway (admin only)
   if (req.method === 'DELETE') {
     try {
       // Check admin authentication
@@ -102,27 +107,17 @@ export default async function handler(req, res) {
       const { id } = req.body;
 
       await sql`
-        UPDATE giveaway_tasks 
+        UPDATE giveaways 
         SET is_active = false 
         WHERE id = ${id}
       `;
 
       return res.status(200).json({
         success: true,
-        message: 'Task removed'
+        message: 'Giveaway removed'
       });
     } catch (error) {
-      console.error('Delete task error:', error);
-      return res.status(500).json({ success: false, message: 'Server error' });
-    }
-  }
-
-  return res.status(405).json({ error: 'Method not allowed' });
-}
-      });
-
-    } catch (error) {
-      console.error('Delete task error:', error);
+      console.error('Delete giveaway error:', error);
       return res.status(500).json({ success: false, message: 'Server error' });
     }
   }

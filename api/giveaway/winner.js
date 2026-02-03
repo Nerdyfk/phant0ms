@@ -24,15 +24,26 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
+    const { giveaway_id } = req.body;
     const sql = getDb();
 
-    // Get all non-winner entries
-    const entries = await sql`
-      SELECT id, twitter_handle, email, wallet_address
-      FROM giveaway_entries
-      WHERE is_winner = false
-      ORDER BY created_at
-    `;
+    // Get all non-winner entries for the giveaway
+    let entries;
+    if (giveaway_id) {
+      entries = await sql`
+        SELECT id, twitter_handle, reply_link, wallet_address
+        FROM giveaway_entries
+        WHERE is_winner = false AND giveaway_id = ${giveaway_id}
+        ORDER BY created_at
+      `;
+    } else {
+      entries = await sql`
+        SELECT id, twitter_handle, reply_link, wallet_address
+        FROM giveaway_entries
+        WHERE is_winner = false
+        ORDER BY created_at
+      `;
+    }
 
     if (entries.length === 0) {
       return res.status(400).json({
@@ -56,9 +67,9 @@ export default async function handler(req, res) {
       success: true,
       winner: {
         id: winner.id,
-        twitter: winner.twitter_handle,
-        email: winner.email,
-        wallet: winner.wallet_address
+        twitter_handle: winner.twitter_handle,
+        reply_link: winner.reply_link,
+        wallet_address: winner.wallet_address
       }
     });
 

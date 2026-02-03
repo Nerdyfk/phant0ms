@@ -29,7 +29,7 @@ export default async function handler(req, res) {
 
     // Get all entries
     const entries = await sql`
-      SELECT id, twitter_handle, email, wallet_address, tasks_completed, 
+      SELECT id, giveaway_id, twitter_handle, reply_link, wallet_address, tasks_completed, 
              created_at, is_winner, winner_drawn_at
       FROM giveaway_entries
       ORDER BY created_at DESC

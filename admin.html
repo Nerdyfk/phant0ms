@@ -276,11 +276,37 @@ a:hover{
   <div id="adminContent" class="admin-content">
     <button class="logout-btn" onclick="logout()">Logout</button>
 
+    <!-- Manage Giveaways -->
+    <div class="section">
+      <h3>🎁 Manage Giveaways</h3>
+      <input id="giveawayTitle" placeholder="Giveaway Title" style="margin-bottom:12px">
+      <textarea id="giveawayDesc" placeholder="Giveaway Description" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(105,130,255,0.4);background:rgba(13,18,36,0.7);color:#e0e7ff;margin-bottom:12px;font-family:inherit;min-height:80px;box-sizing:border-box"></textarea>
+      <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Start Time</label>
+      <input id="giveawayStart" type="datetime-local" style="margin-bottom:12px">
+      <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">End Time</label>
+      <input id="giveawayEnd" type="datetime-local" style="margin-bottom:12px">
+      <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Status</label>
+      <select id="giveawayStatus" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(105,130,255,0.4);background:rgba(13,18,36,0.7);color:#e0e7ff;margin-bottom:12px;box-sizing:border-box">
+        <option value="draft">Draft</option>
+        <option value="live">Live</option>
+        <option value="ended">Ended</option>
+      </select>
+      <button class="btn btn-success" onclick="createGiveaway()">Create Giveaway</button>
+      <div id="giveawaysList" class="list" style="margin-top:12px"></div>
+    </div>
+
     <!-- Manage Tasks -->
     <div class="section">
       <h3>🎯 Manage Giveaway Tasks</h3>
+      <select id="giveawayTaskSelect" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(105,130,255,0.4);background:rgba(13,18,36,0.7);color:#e0e7ff;margin-bottom:12px;box-sizing:border-box">
+        <option value="">-- Select Giveaway --</option>
+      </select>
       <input id="newTaskInput" placeholder="Task name (e.g., Follow on X)">
       <input id="newTaskLink" placeholder="Task link (optional)">
+      <label style="display:flex;align-items:center;margin:12px 0;cursor:pointer">
+        <input id="newTaskRequired" type="checkbox" style="width:auto;margin-right:8px">
+        <span style="color:#b7c5ff">Mark as Required Task</span>
+      </label>
       <button class="btn btn-success" onclick="addTask()">Add Task</button>
       <div id="tasksList" class="list" style="margin-top:12px"></div>
     </div>
@@ -301,7 +327,7 @@ a:hover{
     <div class="section">
       <h3>🤝 Manage Partnerships</h3>
       <input id="partnerTitle" placeholder="Partnership Title (e.g., Brand X)">
-      <textarea id="partnerDesc" placeholder="Partnership Description" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(105,130,255,0.4);background:rgba(13,18,36,0.7);color:#e0e7ff;margin-bottom:12px;font-family:inherit;min-height:80px"></textarea>
+      <textarea id="partnerDesc" placeholder="Partnership Description" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(105,130,255,0.4);background:rgba(13,18,36,0.7);color:#e0e7ff;margin-bottom:12px;font-family:inherit;min-height:80px;box-sizing:border-box"></textarea>
       <input id="partnerTasks" placeholder="Tasks (comma-separated, e.g., Like Post, Share, Follow)">
       <button class="btn btn-success" onclick="addPartnership()" style="margin-top:8px">Add Partnership</button>
       <div id="partnershipsList" class="list" style="margin-top:12px"></div>
@@ -324,6 +350,8 @@ a:hover{
 <script>
 let authToken = ''; // Store auth token after login
 let partnershipData = JSON.parse(localStorage.getItem('partnershipData') || '{"partnerships":[]}');
+let giveaways = [];
+let currentGiveawayId = null;
 
 // Load Dashboard
 async function login() {
@@ -379,22 +407,146 @@ function logout() {
 
 // Load Dashboard
 function loadDashboard() {
+  refreshGiveaways();
   refreshTasks();
   refreshSubmissions();
   refreshVisitorStats();
-  updateToggleButton();
+  refreshPartnerships();
 }
 
-// Tasks
+// ===== GIVEAWAY MANAGEMENT =====
+async function createGiveaway() {
+  const title = document.getElementById('giveawayTitle').value.trim();
+  const desc = document.getElementById('giveawayDesc').value.trim();
+  const startTime = document.getElementById('giveawayStart').value;
+  const endTime = document.getElementById('giveawayEnd').value;
+  const status = document.getElementById('giveawayStatus').value;
+
+  if (!title || !startTime || !endTime) {
+    alert('Fill all required fields');
+    return;
+  }
+
+  try {
+    const response = await fetch('/api/giveaway/giveaways', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authToken
+      },
+      body: JSON.stringify({
+        title,
+        description: desc,
+        start_time: new Date(startTime).toISOString(),
+        end_time: new Date(endTime).toISOString(),
+        status
+      })
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      alert('Giveaway created successfully!');
+      refreshGiveaways();
+      document.getElementById('giveawayTitle').value = '';
+      document.getElementById('giveawayDesc').value = '';
+      document.getElementById('giveawayStart').value = '';
+      document.getElementById('giveawayEnd').value = '';
+    } else {
+      alert('Failed: ' + (data.message || 'Unknown error'));
+    }
+  } catch (e) {
+    alert('Error creating giveaway');
+    console.error(e);
+  }
+}
+
+async function refreshGiveaways() {
+  const list = document.getElementById('giveawaysList');
+  const select = document.getElementById('giveawayTaskSelect');
+  list.innerHTML = '<p style="text-align:center;opacity:0.5">Loading...</p>';
+  
+  try {
+    const response = await fetch('/api/giveaway/giveaways', {
+      headers: {
+        'Authorization': 'Bearer ' + authToken
+      }
+    });
+    const data = await response.json();
+    
+    list.innerHTML = '';
+    select.innerHTML = '<option value="">-- Select Giveaway --</option>';
+
+    if (data.success && data.giveaways.length > 0) {
+      giveaways = data.giveaways;
+      data.giveaways.forEach(g => {
+        const option = document.createElement('option');
+        option.value = g.id;
+        option.textContent = `${g.title} (${g.status})`;
+        select.appendChild(option);
+
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        const statusColor = g.status === 'live' ? '#7afcff' : g.status === 'ended' ? '#ff8a8a' : '#b7c5ff';
+        div.innerHTML = `
+          <p><strong>${g.title}</strong> <span style="color:${statusColor};">[${g.status.toUpperCase()}]</span></p>
+          <p style="color:#9fb2ff;font-size:13px">${g.description || 'No description'}</p>
+          <p style="font-size:11px;opacity:0.6">Start: ${new Date(g.start_time).toLocaleString()}</p>
+          <p style="font-size:11px;opacity:0.6">End: ${new Date(g.end_time).toLocaleString()}</p>
+          <button class="btn-small" onclick="deleteGiveaway(${g.id})" style="margin-top:6px">Delete</button>
+        `;
+        list.appendChild(div);
+      });
+    } else {
+      list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#9fb2ff">No giveaways yet</p></div>';
+    }
+  } catch (e) {
+    list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#ff9b9b">Error loading giveaways</p></div>';
+    console.error(e);
+  }
+}
+
+async function deleteGiveaway(giveawayId) {
+  if (!confirm('Delete this giveaway?')) return;
+  
+  try {
+    const response = await fetch('/api/giveaway/giveaways', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authToken
+      },
+      body: JSON.stringify({ id: giveawayId })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      refreshGiveaways();
+      refreshTasks();
+    } else {
+      alert('Failed to delete giveaway');
+    }
+  } catch (e) {
+    alert('Error deleting giveaway');
+  }
+}
+
+// ===== TASKS MANAGEMENT =====
 async function addTask() {
   const name = document.getElementById('newTaskInput').value.trim();
   const link = document.getElementById('newTaskLink').value.trim();
-  
+  const isRequired = document.getElementById('newTaskRequired').checked;
+  const giveawayId = document.getElementById('giveawayTaskSelect').value;
+
   if (!name) {
     alert('Enter task name');
     return;
   }
-  
+
+  if (!giveawayId) {
+    alert('Select a giveaway first');
+    return;
+  }
+
   try {
     const response = await fetch('/api/giveaway/tasks', {
       method: 'POST',
@@ -402,7 +554,12 @@ async function addTask() {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + authToken
       },
-      body: JSON.stringify({ label: name, url: link })
+      body: JSON.stringify({
+        giveaway_id: parseInt(giveawayId),
+        label: name,
+        url: link || null,
+        is_required: isRequired
+      })
     });
     
     const data = await response.json();
@@ -410,11 +567,13 @@ async function addTask() {
       refreshTasks();
       document.getElementById('newTaskInput').value = '';
       document.getElementById('newTaskLink').value = '';
+      document.getElementById('newTaskRequired').checked = false;
     } else {
       alert('Failed to add task: ' + (data.message || 'Unknown error'));
     }
   } catch (e) {
     alert('Error adding task');
+    console.error(e);
   }
 }
 
@@ -444,10 +603,21 @@ async function removeTask(taskId) {
 
 async function refreshTasks() {
   const list = document.getElementById('tasksList');
+  const giveawayId = document.getElementById('giveawayTaskSelect').value;
+  
+  if (!giveawayId) {
+    list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#9fb2ff">Select a giveaway to view tasks</p></div>';
+    return;
+  }
+
   list.innerHTML = '<p style="text-align:center;opacity:0.5">Loading...</p>';
   
   try {
-    const response = await fetch('/api/giveaway/tasks');
+    const response = await fetch(`/api/giveaway/tasks?giveaway_id=${giveawayId}`, {
+      headers: {
+        'Authorization': 'Bearer ' + authToken
+      }
+    });
     const data = await response.json();
     
     list.innerHTML = '';
@@ -457,19 +627,21 @@ async function refreshTasks() {
         const div = document.createElement('div');
         div.className = 'list-item';
         const linkHtml = task.url ? ` <a href="${task.url}" target="_blank">link</a>` : '';
+        const requiredBadge = task.is_required ? '<span style="color:#FFD36A;margin-left:8px">⭐ Required</span>' : '<span style="color:#9fb2ff;margin-left:8px">Optional</span>';
         div.innerHTML = `
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span>${task.label}${linkHtml}</span>
+            <span>${task.label}${linkHtml}${requiredBadge}</span>
             <button class="btn-small" onclick="removeTask(${task.id})">Remove</button>
           </div>
         `;
         list.appendChild(div);
       });
     } else {
-      list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#9fb2ff">No tasks yet</p></div>';
+      list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#9fb2ff">No tasks for this giveaway</p></div>';
     }
   } catch (e) {
     list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#ff9b9b">Error loading tasks</p></div>';
+    console.error(e);
   }
 }
 
@@ -497,8 +669,8 @@ async function refreshSubmissions() {
         div.className = 'list-item';
         const winnerBadge = entry.is_winner ? '<span style="color:#3CFF8F;font-weight:bold"> 🏆 WINNER</span>' : '';
         div.innerHTML = `
-          <p><strong>${entry.twitter_handle}</strong>${winnerBadge}</p>
-          <p>${entry.email}</p>
+          <p><strong>${entry.twitter_handle || 'N/A'}</strong>${winnerBadge}</p>
+          <p style="color:#7afcff">Reply: <a href="${entry.reply_link}" target="_blank">${entry.reply_link}</a></p>
           <p style="color:#7afcff">${entry.wallet_address}</p>
           <p style="font-size:11px;opacity:0.6">${new Date(entry.created_at).toLocaleString()}</p>
         `;
@@ -510,6 +682,7 @@ async function refreshSubmissions() {
     }
   } catch (e) {
     list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#ff9b9b">Error loading entries</p></div>';
+    console.error(e);
   }
 }
 
@@ -587,7 +760,7 @@ async function drawWinner() {
     
     if (data.success && data.winner) {
       const display = document.getElementById('winnerDisplay');
-      document.getElementById('winnerName').textContent = `${data.winner.twitter_handle} — ${data.winner.email}`;
+      document.getElementById('winnerName').textContent = `${data.winner.twitter_handle || 'N/A'} — ${data.winner.wallet_address}`;
       display.style.display = 'block';
       refreshSubmissions();
     } else {
@@ -595,6 +768,7 @@ async function drawWinner() {
     }
   } catch (e) {
     alert('Error drawing winner');
+    console.error(e);
   }
 }
 
@@ -626,16 +800,12 @@ async function exportWinners() {
     }
   } catch (e) {
     alert('Error exporting winners');
+    console.error(e);
   }
 }
 
-// Load Dashboard
-function loadDashboard() {
-  refreshTasks();
-  refreshSubmissions();
-  refreshVisitorStats();
-  refreshPartnerships();
-}
+// Event listeners for giveaway task select
+document.getElementById('giveawayTaskSelect')?.addEventListener('change', refreshTasks);
 
 // Auto-refresh visitor stats every 15 minutes
 setInterval(refreshVisitorStats, 900000);
