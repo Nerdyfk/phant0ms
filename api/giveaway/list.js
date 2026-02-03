@@ -10,12 +10,24 @@ export default async function handler(req, res) {
     const sql = getDb();
 
     // Get live, scheduled, and ended giveaways for public view
-    const giveaways = await sql`
-      SELECT id, title, description, status, start_time, end_time, winner_count, prizes, created_at
-      FROM giveaways
-      WHERE is_active = true AND (status = 'live' OR status = 'scheduled' OR status = 'ended')
-      ORDER BY created_at DESC
-    `;
+    let giveaways;
+    try {
+      giveaways = await sql`
+        SELECT id, title, description, status, start_time, end_time, winner_count, prizes, created_at
+        FROM giveaways
+        WHERE is_active = true AND (status = 'live' OR status = 'scheduled' OR status = 'ended')
+        ORDER BY created_at DESC
+      `;
+    } catch (selectError) {
+      console.log('Full select failed, trying basic select:', selectError.message);
+      // Fallback: Try without winner_count and prizes
+      giveaways = await sql`
+        SELECT id, title, description, status, start_time, end_time, created_at
+        FROM giveaways
+        WHERE is_active = true AND (status = 'live' OR status = 'scheduled' OR status = 'ended')
+        ORDER BY created_at DESC
+      `;
+    }
 
     return res.status(200).json({
       success: true,
@@ -26,7 +38,7 @@ export default async function handler(req, res) {
     console.error('Get public giveaways error:', error);
     return res.status(500).json({
       success: false,
-      message: 'Server error'
+      message: error.message || 'Server error'
     });
   }
 }

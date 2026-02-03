@@ -603,10 +603,11 @@ async function createGiveaway() {
       document.getElementById('giveawayWinnerCount').value = '1';
       document.getElementById('giveawayPrizes').value = '';
     } else {
-      alert('Failed: ' + (data.message || 'Unknown error'));
+      alert('Failed: ' + (data.message || data.error || 'Unknown error'));
+      console.error('Server response:', data);
     }
   } catch (e) {
-    alert('Error creating giveaway');
+    alert('Error creating giveaway: ' + e.message);
     console.error(e);
   }
 }
