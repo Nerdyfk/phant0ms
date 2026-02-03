@@ -674,14 +674,18 @@ async function deleteGiveaway(giveawayId) {
     });
     
     const data = await response.json();
-    if (data.success) {
+    if (response.ok && data.success) {
+      alert('Giveaway deleted successfully');
       refreshGiveaways();
       refreshTasks();
+    } else if (response.status === 401) {
+      alert('Authentication failed. Please log in again.');
     } else {
-      alert('Failed to delete giveaway');
+      alert('Failed to delete giveaway: ' + (data.message || data.error || 'Unknown error'));
     }
   } catch (e) {
-    alert('Error deleting giveaway');
+    console.error('Delete error:', e);
+    alert('Error deleting giveaway: ' + e.message);
   }
 }
 
@@ -769,11 +773,16 @@ async function refreshTasks() {
   
   try {
     const response = await fetch(`/api/giveaway/tasks?giveaway_id=${giveawayId}`);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     const data = await response.json();
     
     list.innerHTML = '';
     
-    if (data.success && data.tasks.length > 0) {
+    if (data.success && data.tasks && data.tasks.length > 0) {
       data.tasks.forEach(task => {
         const div = document.createElement('div');
         div.className = 'list-item';
@@ -787,12 +796,14 @@ async function refreshTasks() {
         `;
         list.appendChild(div);
       });
-    } else {
+    } else if (data.success) {
       list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#9fb2ff">No tasks for this giveaway</p></div>';
+    } else {
+      list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#ff9b9b">Failed to load tasks: ' + (data.message || 'Unknown error') + '</p></div>';
     }
   } catch (e) {
-    list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#ff9b9b">Error loading tasks</p></div>';
-    console.error(e);
+    console.error('Task loading error:', e);
+    list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#ff9b9b">Error loading tasks: ' + e.message + '</p></div>';
   }
 }
 
