@@ -5,9 +5,11 @@ CREATE TABLE IF NOT EXISTS giveaways (
   id SERIAL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   description TEXT,
-  status VARCHAR(50) DEFAULT 'draft', -- 'draft', 'live', 'ended'
+  status VARCHAR(50) DEFAULT 'draft', -- 'draft', 'scheduled', 'live', 'ended'
   start_time TIMESTAMP,
   end_time TIMESTAMP,
+  winner_count INT DEFAULT 1, -- Number of winners to draw
+  prizes JSONB, -- Array of prize objects [{name: '', description: ''}]
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW(),
   is_active BOOLEAN DEFAULT TRUE
@@ -18,12 +20,15 @@ CREATE TABLE IF NOT EXISTS giveaway_entries (
   id SERIAL PRIMARY KEY,
   giveaway_id INT REFERENCES giveaways(id),
   twitter_handle VARCHAR(255),
-  reply_link VARCHAR(500) NOT NULL, -- Changed from email to reply link
+  reply_link VARCHAR(500) NOT NULL, -- Twitter/X reply link
   wallet_address VARCHAR(255) NOT NULL,
   tasks_completed INT[], -- Array of completed task IDs
+  ip_address VARCHAR(45), -- For bot prevention
+  user_agent TEXT, -- For bot prevention
   created_at TIMESTAMP DEFAULT NOW(),
   is_winner BOOLEAN DEFAULT FALSE,
-  winner_drawn_at TIMESTAMP
+  winner_drawn_at TIMESTAMP,
+  prize_won TEXT -- Prize description if winner
 );
 
 -- Giveaway Tasks Table
@@ -57,10 +62,11 @@ CREATE TABLE IF NOT EXISTS visitor_stats (
 );
 
 -- Create indexes for better performance
-CREATE INDEX IF NOT EXISTS idx_entries_email ON giveaway_entries(reply_link);
+CREATE INDEX IF NOT EXISTS idx_entries_reply_link ON giveaway_entries(reply_link);
 CREATE INDEX IF NOT EXISTS idx_entries_wallet ON giveaway_entries(wallet_address);
 CREATE INDEX IF NOT EXISTS idx_entries_created ON giveaway_entries(created_at);
 CREATE INDEX IF NOT EXISTS idx_entries_giveaway ON giveaway_entries(giveaway_id);
+CREATE INDEX IF NOT EXISTS idx_entries_ip ON giveaway_entries(ip_address);
 CREATE INDEX IF NOT EXISTS idx_tasks_active ON giveaway_tasks(is_active);
 CREATE INDEX IF NOT EXISTS idx_tasks_giveaway ON giveaway_tasks(giveaway_id);
 CREATE INDEX IF NOT EXISTS idx_giveaway_status ON giveaways(status);

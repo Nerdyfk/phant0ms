@@ -9,6 +9,10 @@ export default async function handler(req, res) {
   try {
     const { twitter_handle, reply_link, wallet_address, tasks_completed, giveaway_id } = req.body;
 
+    // Get IP address and user agent for bot prevention
+    const ipAddress = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.connection?.remoteAddress || 'unknown';
+    const userAgent = req.headers['user-agent'] || 'unknown';
+
     // Validate input
     if (!reply_link || !wallet_address) {
       return res.status(400).json({ 
@@ -17,27 +21,80 @@ export default async function handler(req, res) {
       });
     }
 
+    // Basic bot detection - check if user agent looks legitimate
+    if (userAgent === 'unknown' || userAgent.length < 10) {
+      return res.status(403).json({
+        success: false,
+        message: 'Invalid request'
+      });
+    }
+
     const sql = getDb();
+
+    // Check giveaway status
+    if (giveaway_id) {
+      const giveaway = await sql`
+        SELECT status, end_time FROM giveaways 
+        WHERE id = ${giveaway_id} AND is_active = true 
+        LIMIT 1
+      `;
+
+      if (giveaway.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'Giveaway not found'
+        });
+      }
+
+      if (giveaway[0].status !== 'live') {
+        return res.status(400).json({
+          success: false,
+          message: 'Giveaway is not currently active'
+        });
+      }
+
+      // Check if giveaway has ended
+      if (new Date(giveaway[0].end_time) < new Date()) {
+        return res.status(400).json({
+          success: false,
+          message: 'Giveaway has ended'
+        });
+      }
+    }
 
     // Check if reply link or wallet already submitted for this giveaway
     const existing = await sql`
       SELECT id FROM giveaway_entries 
       WHERE (reply_link = ${reply_link} OR wallet_address = ${wallet_address})
-      ${giveaway_id ? `AND giveaway_id = ${giveaway_id}` : ''}
+      ${giveaway_id ? sql`AND giveaway_id = ${giveaway_id}` : sql``}
       LIMIT 1
     `;
 
     if (existing.length > 0) {
       return res.status(400).json({
         success: false,
-        message: 'You have already submitted an entry'
+        message: 'You have already submitted an entry with this reply link or wallet address'
+      });
+    }
+
+    // Rate limiting: Check submissions from same IP in last hour
+    const recentFromIP = await sql`
+      SELECT COUNT(*) as count FROM giveaway_entries
+      WHERE ip_address = ${ipAddress}
+      AND created_at > NOW() - INTERVAL '1 hour'
+    `;
+
+    if (recentFromIP[0].count >= 5) {
+      return res.status(429).json({
+        success: false,
+        message: 'Too many submissions. Please try again later.'
       });
     }
 
     // Insert new entry
     const result = await sql`
-      INSERT INTO giveaway_entries (giveaway_id, twitter_handle, reply_link, wallet_address, tasks_completed)
-      VALUES (${giveaway_id || null}, ${twitter_handle || null}, ${reply_link}, ${wallet_address}, ${tasks_completed ? JSON.stringify(tasks_completed) : null})
+      INSERT INTO giveaway_entries (giveaway_id, twitter_handle, reply_link, wallet_address, tasks_completed, ip_address, user_agent)
+      VALUES (${giveaway_id || null}, ${twitter_handle || null}, ${reply_link}, ${wallet_address}, ${tasks_completed ? JSON.stringify(tasks_completed) : null}, ${ipAddress}, ${userAgent})
       RETURNING id
     `;
 

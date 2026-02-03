@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       }
 
       const giveaways = await sql`
-        SELECT id, title, description, status, start_time, end_time, created_at, is_active
+        SELECT id, title, description, status, start_time, end_time, winner_count, prizes, created_at, is_active
         FROM giveaways
         WHERE is_active = true
         ORDER BY created_at DESC
@@ -61,16 +61,16 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const { title, description, start_time, end_time, status } = req.body;
+      const { title, description, start_time, end_time, status, winner_count, prizes } = req.body;
 
       if (!title || !start_time || !end_time) {
         return res.status(400).json({ success: false, message: 'Title, start_time, and end_time are required' });
       }
 
       const result = await sql`
-        INSERT INTO giveaways (title, description, start_time, end_time, status)
-        VALUES (${title}, ${description || null}, ${start_time}, ${end_time}, ${status || 'draft'})
-        RETURNING id, title, description, status, start_time, end_time, created_at
+        INSERT INTO giveaways (title, description, start_time, end_time, status, winner_count, prizes)
+        VALUES (${title}, ${description || null}, ${start_time}, ${end_time}, ${status || 'draft'}, ${winner_count || 1}, ${prizes ? JSON.stringify(prizes) : null})
+        RETURNING id, title, description, status, start_time, end_time, winner_count, prizes, created_at
       `;
 
       return res.status(200).json({
@@ -80,6 +80,44 @@ export default async function handler(req, res) {
 
     } catch (error) {
       console.error('Create giveaway error:', error);
+      return res.status(500).json({ success: false, message: 'Server error' });
+    }
+  }
+
+  // PUT - Update giveaway (admin only)
+  if (req.method === 'PUT') {
+    try {
+      // Check admin authentication
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+
+      const token = authHeader.substring(7);
+      const decoded = Buffer.from(token, 'base64').toString('utf-8');
+      const [email, password] = decoded.split(':');
+
+      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase());
+      const adminPassword = process.env.ADMIN_PASSWORD || '';
+
+      if (!adminEmails.includes(email.toLowerCase()) || password !== adminPassword) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+      }
+
+      const { id, description } = req.body;
+
+      await sql`
+        UPDATE giveaways 
+        SET description = ${description}, updated_at = NOW()
+        WHERE id = ${id}
+      `;
+
+      return res.status(200).json({
+        success: true,
+        message: 'Giveaway updated'
+      });
+    } catch (error) {
+      console.error('Update giveaway error:', error);
       return res.status(500).json({ success: false, message: 'Server error' });
     }
   }

@@ -49,6 +49,7 @@ section{padding:56px 16px;text-align:center}
 .hero h1{
   font-size:46px;
   background:linear-gradient(90deg,var(--c1),var(--c2));
+  background-clip:text;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
@@ -131,6 +132,7 @@ footer{padding:28px;opacity:.6;text-align:center}
   font-size:15px;
   line-height:1.7;
   opacity:.85;
+  background-clip:text;
 }
 
 @keyframes aboutFade{
@@ -489,7 +491,7 @@ let currentGiveawayFilter = 'live';
 // Load giveaways on page load
 async function loadGiveaways() {
   try {
-    const response = await fetch('/api/giveaway/giveaways');
+    const response = await fetch('/api/giveaway/list');
     const data = await response.json();
     if (data.success && data.giveaways) {
       currentGiveaways = data.giveaways;
@@ -526,12 +528,23 @@ function renderGiveaways() {
   }
   
   filtered.forEach(giveaway => {
-    const isEnded = new Date(giveaway.end_time) < new Date();
+    const now = new Date().getTime();
+    const endTime = new Date(giveaway.end_time).getTime();
+    const startTime = new Date(giveaway.start_time).getTime();
+    const isEnded = giveaway.status === 'ended' || now > endTime;
+    const isLive = giveaway.status === 'live';
     const card = document.createElement('div');
     card.className = 'glass-card';
     card.style.marginBottom = '16px';
     
-    const statusBadge = giveaway.status === 'live' ? '<span style="color:#3CFF8F">🔴 LIVE</span>' : '<span style="color:#ff8a8a">✅ ENDED</span>';
+    const statusBadge = isLive ? '<span style="color:#3CFF8F">🔴 LIVE</span>' : '<span style="color:#ff8a8a">✅ ENDED</span>';
+    const prizesHtml = giveaway.prizes && giveaway.prizes.length > 0 ? 
+      `<div style="margin:12px 0;padding:10px;background:rgba(60,255,143,0.1);border:1px solid rgba(60,255,143,0.3);border-radius:8px">
+        <p style="font-size:13px;font-weight:600;color:#3CFF8F;margin:0 0 6px 0">🏆 Prizes:</p>
+        ${giveaway.prizes.map((p, i) => `<p style="font-size:12px;color:#b7c5ff;margin:4px 0">${i + 1}. ${p.name}: ${p.description}</p>`).join('')}
+      </div>` : '';
+    
+    const timerId = `timer-${giveaway.id}`;
     
     card.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
@@ -539,12 +552,67 @@ function renderGiveaways() {
         ${statusBadge}
       </div>
       <p style="color:#9fb2ff;font-size:14px;margin:8px 0">${giveaway.description || 'No description'}</p>
-      <p style="font-size:12px;opacity:0.7">Start: ${new Date(giveaway.start_time).toLocaleString()}</p>
-      <p style="font-size:12px;opacity:0.7">End: ${new Date(giveaway.end_time).toLocaleString()}</p>
-      ${!isEnded ? `<button class="btn" onclick="openGiveawayForm(${giveaway.id})" style="margin-top:12px;width:100%">Enter Giveaway</button>` : '<p style="color:#ff8a8a;margin-top:12px">This giveaway has ended</p>'}
+      ${prizesHtml}
+      <div style="margin:12px 0;padding:10px;background:rgba(122,252,255,0.1);border:1px solid rgba(122,252,255,0.3);border-radius:8px">
+        <p id="${timerId}" style="font-size:14px;font-weight:600;color:#7afcff;margin:0">⏱️ Loading...</p>
+      </div>
+      <p style="font-size:12px;opacity:0.7">Start: ${new Date(startTime).toLocaleString()}</p>
+      <p style="font-size:12px;opacity:0.7">End: ${new Date(endTime).toLocaleString()}</p>
+      <p style="font-size:12px;color:#FFD36A;font-weight:600">🎯 ${giveaway.winner_count || 1} Winner(s)</p>
+      ${isLive && !isEnded ? `<button class="btn" onclick="openGiveawayForm(${giveaway.id})" style="margin-top:12px;width:100%">Enter Giveaway</button>` : '<p style="color:#ff8a8a;margin-top:12px;font-weight:600">This giveaway has ended</p>'}
     `;
     container.appendChild(card);
+    
+    if (!isEnded) {
+      startGiveawayTimer(giveaway.id, startTime, endTime);
+    } else {
+      const timerEl = document.getElementById(timerId);
+      if (timerEl) timerEl.innerHTML = '⏱️ <span style="color:#ff9b9b">Giveaway Ended</span>';
+    }
   });
+}
+
+const giveawayTimers = {};
+
+function startGiveawayTimer(giveawayId, startTime, endTime) {
+  const timerId = `timer-${giveawayId}`;
+  
+  if (giveawayTimers[giveawayId]) {
+    clearInterval(giveawayTimers[giveawayId]);
+  }
+  
+  const updateTimer = () => {
+    const now = new Date().getTime();
+    const timerEl = document.getElementById(timerId);
+    if (!timerEl) {
+      clearInterval(giveawayTimers[giveawayId]);
+      return;
+    }
+    
+    if (now < startTime) {
+      const distance = startTime - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      timerEl.innerHTML = `⏱️ Starts in: <span style="color:#FFD36A">${days}d ${hours}h ${minutes}m ${seconds}s</span>`;
+    } else if (now < endTime) {
+      const distance = endTime - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      timerEl.innerHTML = `⏱️ Ends in: <span style="color:#3CFF8F">${days}d ${hours}h ${minutes}m ${seconds}s</span>`;
+    } else {
+      timerEl.innerHTML = '⏱️ <span style="color:#ff9b9b">Giveaway Ended</span>';
+      clearInterval(giveawayTimers[giveawayId]);
+    }
+  };
+  
+  updateTimer();
+  giveawayTimers[giveawayId] = setInterval(updateTimer, 1000);
 }
 
 function openGiveawayForm(giveawayId) {
@@ -563,7 +631,7 @@ function openGiveawayForm(giveawayId) {
     .then(data => {
       if (data.success && data.tasks) {
         data.tasks.forEach(task => {
-          const required = task.is_required ? ' <span style="color:#FFD36A">⭐ Required</span>' : '';
+          const required = task.is_required ? ' <span style="color:#ff4d4d">★ Required</span>' : ' <span style="color:#9fb2ff;font-size:11px">(Optional)</span>';
           tasksHtml += `
             <label style="display:flex;align-items:center;margin:8px 0;cursor:pointer">
               <input type="checkbox" class="task-check-${giveawayId}" value="${task.id}" style="width:auto;margin-right:8px">
