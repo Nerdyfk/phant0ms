@@ -9,11 +9,11 @@ export default async function handler(req, res) {
   try {
     const sql = getDb();
 
-    // Get only live and ended giveaways for public view
+    // Get live, scheduled, and ended giveaways for public view
     const giveaways = await sql`
       SELECT id, title, description, status, start_time, end_time, winner_count, prizes, created_at
       FROM giveaways
-      WHERE is_active = true AND (status = 'live' OR status = 'ended')
+      WHERE is_active = true AND (status = 'live' OR status = 'scheduled' OR status = 'ended')
       ORDER BY created_at DESC
     `;
 
