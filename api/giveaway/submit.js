@@ -7,6 +7,44 @@ export default async function handler(req, res) {
   }
 
   try {
+    const sql = getDb();
+    
+    // Ensure entries table exists with correct schema
+    try {
+      // Check if giveaway_entries table exists and has correct giveaway_id type
+      const checkTable = await sql`
+        SELECT column_name, data_type 
+        FROM information_schema.columns 
+        WHERE table_name = 'giveaway_entries' AND column_name = 'giveaway_id'
+      `;
+      
+      // If table exists but giveaway_id is INT, migrate it
+      if (checkTable.length > 0 && checkTable[0].data_type === 'integer') {
+        console.log('Migrating giveaway_entries table to support TEXT giveaway_id...');
+        try {
+          // Drop the foreign key constraint first
+          await sql`
+            ALTER TABLE giveaway_entries 
+            DROP CONSTRAINT IF EXISTS giveaway_entries_giveaway_id_fkey
+          `;
+        } catch (e) {
+          console.log('Could not drop FK:', e.message);
+        }
+        
+        try {
+          // Change the column type
+          await sql`
+            ALTER TABLE giveaway_entries 
+            ALTER COLUMN giveaway_id TYPE TEXT USING giveaway_id::TEXT
+          `;
+        } catch (e) {
+          console.log('Could not alter column:', e.message);
+        }
+      }
+    } catch (e) {
+      console.log('Schema check info:', e.message);
+    }
+
     const { twitter_handle, reply_link, wallet_address, tasks_completed, giveaway_id } = req.body;
 
     // Get IP address and user agent for bot prevention

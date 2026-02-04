@@ -37,7 +37,7 @@ export default async function handler(req, res) {
                g.title as giveaway_title
         FROM giveaway_entries e
         LEFT JOIN giveaways g ON e.giveaway_id = g.id
-        WHERE e.giveaway_id = ${parseInt(giveaway_id)}
+        WHERE e.giveaway_id = ${giveaway_id}
         ORDER BY e.created_at DESC
       `;
     } else {
