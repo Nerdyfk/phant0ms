@@ -67,8 +67,6 @@ export default async function handler(req, res) {
       });
     }
 
-    const sql = getDb();
-
     // Check giveaway status
     if (giveaway_id) {
       const giveaway = await sql`

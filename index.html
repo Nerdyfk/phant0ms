@@ -769,7 +769,17 @@ async function submitGiveawayEntry(giveawayId) {
       })
     });
     
-    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status} ${response.statusText}`);
+    }
+    
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      console.error('Response text:', await response.text());
+      throw new Error('Server returned invalid response');
+    }
     
     if (data.success) {
       if (errorBox) {
