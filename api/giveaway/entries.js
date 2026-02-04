@@ -88,7 +88,8 @@ export default async function handler(req, res) {
     console.error('Get entries error:', error);
     return res.status(500).json({
       success: false,
-      message: 'Server error'
+      message: error.message || 'Server error',
+      error: error.toString()
     });
   }
 }
