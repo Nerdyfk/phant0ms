@@ -1260,7 +1260,7 @@ async function endGiveaway() {
 }
 
 async function drawWinners() {
-  const giveawayId = document.getElementById('giveawayTaskSelect').value;
+  const giveawayId = document.getElementById('actionsGiveawaySelect')?.value || document.getElementById('giveawayTaskSelect').value;
   
   if (!giveawayId) {
     alert('Please select a giveaway first');
@@ -1273,7 +1273,10 @@ async function drawWinners() {
     return;
   }
   
-  if (giveaway.status !== 'ended') {
+  const now = Date.now();
+  const endTime = new Date(giveaway.end_time).getTime();
+  const isTimeEnded = !Number.isNaN(endTime) && now > endTime;
+  if (giveaway.status !== 'ended' && !isTimeEnded) {
     alert('Giveaway must be ended before drawing winners!');
     return;
   }
@@ -1310,9 +1313,69 @@ async function drawWinners() {
       alert(`${data.winners.length} winner(s) selected!`);
     } else {
       alert(data.message || 'No entries available!');
+      console.error('Draw winners response:', data);
     }
   } catch (e) {
     alert('Error drawing winners');
+    console.error(e);
+  }
+}
+
+function clearSubmissionSelection() {
+  document.querySelectorAll('.entry-select:checked').forEach(el => {
+    el.checked = false;
+  });
+}
+
+async function setManualWinners() {
+  const selected = Array.from(document.querySelectorAll('.entry-select:checked')).map(el => parseInt(el.value));
+  if (selected.length === 0) {
+    alert('Select at least one entry to mark as winner');
+    return;
+  }
+
+  const giveawayId = document.getElementById('actionsGiveawaySelect')?.value || document.getElementById('giveawayTaskSelect')?.value;
+  if (!giveawayId) {
+    alert('Select a giveaway first');
+    return;
+  }
+
+  if (!confirm(`Set ${selected.length} manual winner(s) for this giveaway?`)) return;
+
+  try {
+    const response = await fetch('/api/giveaway/winner', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authToken
+      },
+      body: JSON.stringify({
+        giveaway_id: giveawayId,
+        mode: 'manual',
+        entry_ids: selected
+      })
+    });
+
+    const data = await response.json();
+    if (data.success && data.winners) {
+      const display = document.getElementById('winnersDisplay');
+      const winnersList = document.getElementById('winnersList');
+      winnersList.innerHTML = data.winners.map((w, i) => `
+        <p style="margin:8px 0;padding:8px;background:rgba(60,255,143,0.1);border-radius:6px">
+          <strong>${i + 1}.</strong> ${w.twitter_handle || 'N/A'}<br>
+          <span style="font-size:12px;opacity:0.8">${w.wallet_address}</span>
+          ${w.prize_won ? `<br><span style=\"color:#FFD36A\">🏆 ${w.prize_won}</span>` : ''}
+        </p>
+      `).join('');
+      display.style.display = 'block';
+      refreshSubmissions();
+      alert(`${data.winners.length} winner(s) set!`);
+    } else {
+      alert(data.message || 'Failed to set winners');
+      console.error('Set winners response:', data);
+    }
+  } catch (e) {
+    alert('Error setting winners');
     console.error(e);
   }
 }
