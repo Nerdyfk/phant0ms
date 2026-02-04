@@ -24,14 +24,14 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const { giveaway_id, count } = req.body;
+    const { giveaway_id, count, mode, entry_ids } = req.body;
     const sql = getDb();
 
     // Get giveaway details
     const giveaway = await sql`
       SELECT winner_count, prizes, status
       FROM giveaways
-      WHERE id = ${giveaway_id}
+      WHERE id::text = ${giveaway_id}
       LIMIT 1
     `;
 
@@ -45,6 +45,65 @@ export default async function handler(req, res) {
 
     const winnerCount = count || giveaway[0].winner_count || 1;
     const prizes = giveaway[0].prizes || [];
+
+    // Manual winner selection
+    if (mode === 'manual' && Array.isArray(entry_ids) && entry_ids.length > 0) {
+      if (entry_ids.length > winnerCount) {
+        return res.status(400).json({
+          success: false,
+          message: `Selected ${entry_ids.length} winners but limit is ${winnerCount}`
+        });
+      }
+
+      const winners = [];
+      for (let i = 0; i < entry_ids.length; i++) {
+        const entryId = entry_ids[i];
+        const rows = await sql`
+          SELECT id, twitter_handle, reply_link, wallet_address, is_winner
+          FROM giveaway_entries
+          WHERE id = ${entryId} AND giveaway_id = ${giveaway_id}
+          LIMIT 1
+        `;
+
+        if (!rows || rows.length === 0) {
+          continue;
+        }
+
+        if (rows[0].is_winner) {
+          continue;
+        }
+
+        const prizeWon = prizes[i]
+          ? `${prizes[i].name}: ${prizes[i].description}`
+          : (prizes.length > 0 ? `${prizes[0].name}: ${prizes[0].description}` : null);
+
+        await sql`
+          UPDATE giveaway_entries
+          SET is_winner = true, winner_drawn_at = NOW(), prize_won = ${prizeWon}
+          WHERE id = ${rows[0].id}
+        `;
+
+        winners.push({
+          id: rows[0].id,
+          twitter_handle: rows[0].twitter_handle,
+          reply_link: rows[0].reply_link,
+          wallet_address: rows[0].wallet_address,
+          prize_won: prizeWon
+        });
+      }
+
+      if (winners.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'No valid entries selected'
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        winners
+      });
+    }
 
     // Get all non-winner entries for the giveaway
     let entries;
