@@ -606,7 +606,7 @@ function renderGiveaways() {
       <p style="font-size:12px;opacity:0.7">Start: ${new Date(startTime).toLocaleString()}</p>
       <p style="font-size:12px;opacity:0.7">End: ${new Date(endTime).toLocaleString()}</p>
       <p style="font-size:12px;color:#FFD36A;font-weight:600">🎯 ${giveaway.winner_count || 1} Winner(s)</p>
-      ${isLive && !isEnded ? `<button class="btn" onclick="openGiveawayForm(${giveaway.id})" style="margin-top:12px;width:100%">Enter Giveaway</button>` : isScheduled ? '<p style="color:#FFD36A;margin-top:12px;font-weight:600">Giveaway starts soon</p>' : '<p style="color:#ff8a8a;margin-top:12px;font-weight:600">This giveaway has ended</p>'}
+      ${isLive && !isEnded ? `<button class="btn" onclick="openGiveawayForm('${giveaway.id}')" style="margin-top:12px;width:100%">Enter Giveaway</button>` : isScheduled ? '<p style="color:#FFD36A;margin-top:12px;font-weight:600">Giveaway starts soon</p>' : '<p style="color:#ff8a8a;margin-top:12px;font-weight:600">This giveaway has ended</p>'}
     `;
     container.appendChild(card);
     
@@ -663,20 +663,31 @@ function startGiveawayTimer(giveawayId, startTime, endTime) {
 }
 
 function openGiveawayForm(giveawayId) {
-  const giveaway = currentGiveaways.find(g => g.id === giveawayId);
-  if (!giveaway) return;
+  const giveaway = currentGiveaways.find(g => g.id == giveawayId);
+  if (!giveaway) {
+    alert('Giveaway not found');
+    return;
+  }
   
   // Create modal for submission
   const modal = document.getElementById('modal');
   const modalBox = modal.querySelector('.modal-box');
   
-  let tasksHtml = '<div style="margin:12px 0"><label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Complete Tasks</label>';
+  // Show loading state
+  modalBox.innerHTML = `
+    <h3 style="margin-top:0;color:#7afcff">${giveaway.title}</h3>
+    <p style="color:#9fb2ff;text-align:center">Loading tasks...</p>
+  `;
+  
+  modal.classList.add('show');
   
   // Fetch tasks for this giveaway
   fetch(`/api/giveaway/tasks?giveaway_id=${giveawayId}`)
     .then(r => r.json())
     .then(data => {
-      if (data.success && data.tasks) {
+      let tasksHtml = '<div style="margin:12px 0"><label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Complete Tasks</label>';
+      
+      if (data.success && data.tasks && data.tasks.length > 0) {
         data.tasks.forEach(task => {
           const required = task.is_required ? ' <span style="color:#ff4d4d">★ Required</span>' : ' <span style="color:#9fb2ff;font-size:11px">(Optional)</span>';
           tasksHtml += `
@@ -686,48 +697,59 @@ function openGiveawayForm(giveawayId) {
             </label>
           `;
         });
-        tasksHtml += '</div>';
-        
-        modalBox.innerHTML = `
-          <h3 style="margin-top:0;color:#7afcff">${giveaway.title}</h3>
-          <p style="color:#9fb2ff">${giveaway.description || ''}</p>
-          
-          <div style="margin-bottom:16px">
-            <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Twitter Handle (Optional)</label>
-            <input id="modal-twitter" placeholder="@yourhandle" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box">
-          </div>
-          
-          <div style="margin-bottom:16px">
-            <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Twitter/X Reply Link</label>
-            <input id="modal-reply" placeholder="https://x.com/..." style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box" required>
-          </div>
-          
-          <div style="margin-bottom:16px">
-            <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Wallet Address</label>
-            <input id="modal-wallet" placeholder="0x..." style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box" required>
-          </div>
-          
-          ${tasksHtml}
-          
-          <div id="modal-error" style="color:#ff9b9b;margin-bottom:12px;display:none"></div>
-          
-          <button class="btn" onclick="submitGiveawayEntry(${giveawayId})" style="width:100%;margin-bottom:8px">Submit Entry</button>
-          <button class="btn btn-secondary" onclick="closeModal()" style="width:100%">Cancel</button>
-        `;
-        modal.classList.add('show');
+      } else {
+        tasksHtml += '<p style="color:#9fb2ff;font-size:13px">No tasks for this giveaway</p>';
       }
+      tasksHtml += '</div>';
+      
+      modalBox.innerHTML = `
+        <h3 style="margin-top:0;color:#7afcff">${giveaway.title}</h3>
+        <p style="color:#9fb2ff">${giveaway.description || ''}</p>
+        
+        <div style="margin-bottom:16px">
+          <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Twitter Handle (Optional)</label>
+          <input id="modal-twitter" placeholder="@yourhandle" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box">
+        </div>
+        
+        <div style="margin-bottom:16px">
+          <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Twitter/X Reply Link</label>
+          <input id="modal-reply" placeholder="https://x.com/..." style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box" required>
+        </div>
+        
+        <div style="margin-bottom:16px">
+          <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Wallet Address</label>
+          <input id="modal-wallet" placeholder="0x..." style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box" required>
+        </div>
+        
+        ${tasksHtml}
+        
+        <div id="modal-error" style="color:#ff9b9b;margin-bottom:12px;display:none"></div>
+        
+        <button class="btn" onclick="submitGiveawayEntry('${giveawayId}')" style="width:100%;margin-bottom:8px">Submit Entry</button>
+        <button class="btn btn-secondary" onclick="closeModal()" style="width:100%">Cancel</button>
+      `;
+    })
+    .catch(err => {
+      console.error('Error loading tasks:', err);
+      modalBox.innerHTML = `
+        <h3 style="margin-top:0;color:#ff9b9b">Error</h3>
+        <p style="color:#ff9b9b">Failed to load tasks. Please try again.</p>
+        <button class="btn btn-secondary" onclick="closeModal()" style="width:100%">Close</button>
+      `;
     });
 }
 
 async function submitGiveawayEntry(giveawayId) {
-  const twitter = document.getElementById('modal-twitter').value.trim();
-  const replyLink = document.getElementById('modal-reply').value.trim();
-  const wallet = document.getElementById('modal-wallet').value.trim();
+  const twitter = document.getElementById('modal-twitter')?.value.trim() || '';
+  const replyLink = document.getElementById('modal-reply')?.value.trim() || '';
+  const wallet = document.getElementById('modal-wallet')?.value.trim() || '';
   const errorBox = document.getElementById('modal-error');
   
   if (!replyLink || !wallet) {
-    errorBox.textContent = '❌ Reply link and wallet are required';
-    errorBox.style.display = 'block';
+    if (errorBox) {
+      errorBox.textContent = '❌ Reply link and wallet are required';
+      errorBox.style.display = 'block';
+    }
     return;
   }
   
@@ -740,7 +762,7 @@ async function submitGiveawayEntry(giveawayId) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         giveaway_id: giveawayId,
-        twitter_handle: twitter,
+        twitter_handle: twitter || null,
         reply_link: replyLink,
         wallet_address: wallet,
         tasks_completed: completedTasks
@@ -750,18 +772,27 @@ async function submitGiveawayEntry(giveawayId) {
     const data = await response.json();
     
     if (data.success) {
-      errorBox.textContent = '';
-      errorBox.style.display = 'none';
+      if (errorBox) {
+        errorBox.textContent = '';
+        errorBox.style.display = 'none';
+      }
       alert('✅ Entry submitted successfully!');
       closeModal();
+      // Reload giveaways to refresh data
+      loadGiveaways();
     } else {
-      errorBox.textContent = '❌ ' + (data.message || 'Submission failed');
-      errorBox.style.display = 'block';
+      if (errorBox) {
+        errorBox.textContent = '❌ ' + (data.message || 'Submission failed');
+        errorBox.style.display = 'block';
+      }
+      console.error('Submission error:', data);
     }
   } catch (e) {
-    errorBox.textContent = '❌ Connection error';
-    errorBox.style.display = 'block';
-    console.error(e);
+    if (errorBox) {
+      errorBox.textContent = '❌ Connection error: ' + e.message;
+      errorBox.style.display = 'block';
+    }
+    console.error('Error submitting entry:', e);
   }
 }
 
