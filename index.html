@@ -764,16 +764,17 @@ async function submitGiveawayEntry(giveawayId) {
       })
     });
     
-    if (!response.ok) {
-      throw new Error(`Server error: ${response.status} ${response.statusText}`);
-    }
-    
     let data;
     try {
       data = await response.json();
     } catch (parseError) {
       console.error('Response text:', await response.text());
       throw new Error('Server returned invalid response');
+    }
+    
+    if (!response.ok) {
+      const message = data?.message || `Server error: ${response.status} ${response.statusText}`;
+      throw new Error(message);
     }
     
     if (data.success) {
