@@ -684,22 +684,35 @@ async function refreshGiveaways() {
 }
 
 async function deleteGiveaway(giveawayId) {
-  console.log('deleteGiveaway called with ID:', giveawayId);
-  if (!confirm('Delete this giveaway?')) return;
+  console.log('deleteGiveaway called with ID:', giveawayId, 'Type:', typeof giveawayId);
+  console.log('authToken exists:', !!authToken);
+  
+  if (!confirm('Delete this giveaway?')) {
+    console.log('Delete canceled by user');
+    return;
+  }
+  
+  console.log('Starting delete request...');
   
   try {
+    const requestBody = { id: giveawayId };
+    console.log('Request body:', requestBody);
+    
     const response = await fetch(`/api/giveaway/giveaways`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + authToken
       },
-      body: JSON.stringify({ id: giveawayId })
+      body: JSON.stringify(requestBody)
     });
+    
+    console.log('Delete response status:', response.status);
     
     let data;
     try {
       data = await response.json();
+      console.log('Delete response data:', data);
     } catch (parseError) {
       console.error('Failed to parse response:', parseError);
       const text = await response.text();
