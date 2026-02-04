@@ -86,15 +86,36 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const { giveaway_id, label, url, is_required } = parsedBody || {};
+      let { giveaway_id, label, url, is_required } = parsedBody || {};
 
       if (!label) {
         return res.status(400).json({ success: false, message: 'Label is required' });
       }
 
+      // Validate giveaway_id if provided
+      if (giveaway_id) {
+        const giveaway_id_num = parseInt(giveaway_id);
+        if (isNaN(giveaway_id_num)) {
+          return res.status(400).json({ success: false, message: 'Invalid giveaway_id' });
+        }
+        
+        // Check if giveaway exists
+        const giveawayExists = await sql`
+          SELECT id FROM giveaways WHERE id = ${giveaway_id_num} AND is_active = true
+        `;
+        
+        if (!giveawayExists || giveawayExists.length === 0) {
+          return res.status(400).json({ success: false, message: 'Giveaway not found' });
+        }
+        
+        giveaway_id = giveaway_id_num;
+      } else {
+        giveaway_id = null;
+      }
+
       const result = await sql`
         INSERT INTO giveaway_tasks (giveaway_id, label, url, is_required)
-        VALUES (${giveaway_id || null}, ${label}, ${url || null}, ${is_required || false})
+        VALUES (${giveaway_id}, ${label}, ${url || null}, ${is_required || false})
         RETURNING id, giveaway_id, label, url, is_required, created_at
       `;
 
