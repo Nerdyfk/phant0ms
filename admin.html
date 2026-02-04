@@ -1028,13 +1028,17 @@ async function refreshSubmissions() {
   const filterSelect = document.getElementById('submissionsGiveawayFilter');
   const selectedGiveaway = filterSelect?.value || '';
   
-  // Populate filter dropdown with giveaways if not already done
+  // Populate filter dropdown with giveaways if not already done (only add missing options)
   if (filterSelect && giveaways.length > 0 && filterSelect.options.length === 1) {
     giveaways.forEach(g => {
-      const option = document.createElement('option');
-      option.value = g.id;
-      option.textContent = `${g.title} (${g.status})`;
-      filterSelect.appendChild(option);
+      // Check if option already exists
+      const exists = Array.from(filterSelect.options).some(opt => opt.value === g.id);
+      if (!exists) {
+        const option = document.createElement('option');
+        option.value = g.id;
+        option.textContent = `${g.title} (${g.status})`;
+        filterSelect.appendChild(option);
+      }
     });
   }
   
