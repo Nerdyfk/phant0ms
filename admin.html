@@ -440,6 +440,11 @@ a:hover{
       <select id="submissionsGiveawayFilter" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(105,130,255,0.4);background:rgba(13,18,36,0.7);color:#e0e7ff;margin-bottom:12px;box-sizing:border-box" onchange="refreshSubmissions()">
         <option value="">All Submissions</option>
       </select>
+      <div style="margin-bottom:12px;padding:12px;background:rgba(122,252,255,0.1);border:1px solid rgba(122,252,255,0.3);border-radius:8px;display:none" id="winnerSelectionInfo">
+        <p style="color:#7afcff;margin:0;font-weight:600">🎯 Winner Selection Mode</p>
+        <p style="color:#b7c5ff;margin:4px 0 0 0;font-size:13px">Giveaway: <strong id="selectionGiveawayName">-</strong></p>
+        <p style="color:#b7c5ff;margin:4px 0 0 0;font-size:13px">Required Winners: <strong id="selectionWinnerCount">-</strong> | Selected: <strong id="selectionSelected">0</strong></p>
+      </div>
       <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
         <button class="btn btn-success" onclick="setManualWinners()">✅ Set Selected Winners</button>
         <button class="btn btn-secondary" onclick="clearSubmissionSelection()">🧹 Clear Selection</button>
@@ -1097,6 +1102,30 @@ async function refreshSubmissions() {
   } catch (e) {
     list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#ff9b9b">Error loading entries</p></div>';
     console.error(e);
+  }
+  
+  // Update winner selection info if viewing giveaway-specific submissions
+  const infoBox = document.getElementById('winnerSelectionInfo');
+  const selectedGiveaway = document.getElementById('submissionsGiveawayFilter')?.value;
+  
+  if (selectedGiveaway) {
+    const giveaway = giveaways.find(g => g.id == selectedGiveaway);
+    if (giveaway) {
+      document.getElementById('selectionGiveawayName').textContent = giveaway.title;
+      document.getElementById('selectionWinnerCount').textContent = giveaway.winner_count || 1;
+      infoBox.style.display = 'block';
+      
+      // Add listener to update selected count
+      const checkboxes = document.querySelectorAll('.entry-select');
+      checkboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          const selected = document.querySelectorAll('.entry-select:checked').length;
+          document.getElementById('selectionSelected').textContent = selected;
+        });
+      });
+    }
+  } else {
+    infoBox.style.display = 'none';
   }
 }
 
