@@ -99,12 +99,21 @@ export default async function handler(req, res) {
     }
 
     // Check if reply link or wallet already submitted for this giveaway
-    const existing = await sql`
-      SELECT id FROM giveaway_entries 
-      WHERE (reply_link = ${reply_link} OR wallet_address = ${wallet_address})
-      ${giveaway_id ? sql`AND giveaway_id = ${giveaway_id}` : sql``}
-      LIMIT 1
-    `;
+    let existing;
+    if (giveaway_id) {
+      existing = await sql`
+        SELECT id FROM giveaway_entries 
+        WHERE (reply_link = ${reply_link} OR wallet_address = ${wallet_address})
+        AND giveaway_id = ${giveaway_id}
+        LIMIT 1
+      `;
+    } else {
+      existing = await sql`
+        SELECT id FROM giveaway_entries 
+        WHERE (reply_link = ${reply_link} OR wallet_address = ${wallet_address})
+        LIMIT 1
+      `;
+    }
 
     if (existing.length > 0) {
       return res.status(400).json({
@@ -142,9 +151,11 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Giveaway submission error:', error);
+    console.error('Error stack:', error.stack);
+    console.error('Error message:', error.message);
     return res.status(500).json({
       success: false,
-      message: 'Server error'
+      message: 'Server error: ' + error.message
     });
   }
 }
