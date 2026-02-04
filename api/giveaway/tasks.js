@@ -4,6 +4,15 @@ import { getDb } from '../db.js';
 export default async function handler(req, res) {
   const sql = getDb();
 
+  let parsedBody = req.body;
+  if (typeof req.body === 'string') {
+    try {
+      parsedBody = JSON.parse(req.body);
+    } catch {
+      parsedBody = {};
+    }
+  }
+
   // GET - Retrieve tasks (optionally filtered by giveaway_id)
   if (req.method === 'GET') {
     try {
@@ -56,7 +65,7 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const { giveaway_id, label, url, is_required } = req.body;
+      const { giveaway_id, label, url, is_required } = parsedBody || {};
 
       if (!label) {
         return res.status(400).json({ success: false, message: 'Label is required' });
@@ -99,7 +108,7 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const id = req.body?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
+      const id = parsedBody?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
 
       if (!id) {
         return res.status(400).json({ success: false, message: 'Task id is required' });

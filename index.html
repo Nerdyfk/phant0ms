@@ -528,9 +528,21 @@ async function loadGiveaways() {
 function filterGiveaway(status) {
   currentGiveawayFilter = status;
   // Update active button
-  document.getElementById('filterLive').style.background = status === 'live' ? 'rgba(122,252,255,0.25)' : 'rgba(122,252,255,0.18)';
-  document.getElementById('filterEnded').style.background = status === 'ended' ? 'rgba(255,77,77,0.25)' : 'rgba(255,77,77,0.18)';
-  renderGiveaways();
+  const liveBtn = document.getElementById('filterLive');
+  const endedBtn = document.getElementById('filterEnded');
+  if (liveBtn) {
+    liveBtn.style.background = status === 'live' ? 'rgba(122,252,255,0.25)' : 'rgba(122,252,255,0.18)';
+    liveBtn.setAttribute('aria-pressed', status === 'live');
+  }
+  if (endedBtn) {
+    endedBtn.style.background = status === 'ended' ? 'rgba(255,77,77,0.25)' : 'rgba(255,77,77,0.18)';
+    endedBtn.setAttribute('aria-pressed', status === 'ended');
+  }
+  try {
+    renderGiveaways();
+  } catch (e) {
+    console.error('Render giveaways error:', e);
+  }
 }
 
 function renderGiveaways() {

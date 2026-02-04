@@ -4,6 +4,15 @@ import { getDb } from '../db.js';
 export default async function handler(req, res) {
   const sql = getDb();
 
+  let parsedBody = req.body;
+  if (typeof req.body === 'string') {
+    try {
+      parsedBody = JSON.parse(req.body);
+    } catch {
+      parsedBody = {};
+    }
+  }
+
   // GET - Retrieve all giveaways (admin only)
   if (req.method === 'GET') {
     try {
@@ -74,7 +83,7 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const { title, description, start_time, end_time, status, winner_count, prizes } = req.body;
+      const { title, description, start_time, end_time, status, winner_count, prizes } = parsedBody || {};
 
       if (!title || !start_time || !end_time) {
         return res.status(400).json({ success: false, message: 'Title, start_time, and end_time are required' });
@@ -129,8 +138,8 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const id = req.body?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
-      const description = req.body?.description;
+      const id = parsedBody?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
+      const description = parsedBody?.description;
 
       if (!id) {
         return res.status(400).json({ success: false, message: 'Giveaway id is required' });
@@ -172,7 +181,7 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const id = req.body?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
+      const id = parsedBody?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
 
       if (!id) {
         return res.status(400).json({ success: false, message: 'Giveaway id is required' });
