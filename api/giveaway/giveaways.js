@@ -138,8 +138,8 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const id = parsedBody?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
-      const { title, description, start_time, end_time, status } = parsedBody || {};
+      const id = parsedBody?.id || (req.query?.id ? req.query.id : undefined);
+      const { title, description, start_time, end_time, status, winner_count, prizes } = parsedBody || {};
 
       if (!id) {
         return res.status(400).json({ success: false, message: 'Giveaway id is required' });
@@ -155,8 +155,10 @@ export default async function handler(req, res) {
             start_time = COALESCE(${start_time}, start_time),
             end_time = COALESCE(${end_time}, end_time),
             status = COALESCE(${status}, status),
+            winner_count = COALESCE(${winner_count}, winner_count),
+            prizes = COALESCE(${prizes ? JSON.stringify(prizes) : null}, prizes),
             updated_at = NOW()
-          WHERE id = ${id}
+          WHERE id::text = ${id}
         `;
       } catch (updateError) {
         if (updateError.message?.includes('updated_at')) {
@@ -168,8 +170,10 @@ export default async function handler(req, res) {
               description = COALESCE(${description}, description),
               start_time = COALESCE(${start_time}, start_time),
               end_time = COALESCE(${end_time}, end_time),
-              status = COALESCE(${status}, status)
-            WHERE id = ${id}
+              status = COALESCE(${status}, status),
+              winner_count = COALESCE(${winner_count}, winner_count),
+              prizes = COALESCE(${prizes ? JSON.stringify(prizes) : null}, prizes)
+            WHERE id::text = ${id}
           `;
         } else {
           throw updateError;

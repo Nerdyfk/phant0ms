@@ -765,6 +765,11 @@ function editGiveaway(giveawayId) {
   document.getElementById('giveawayStart').value = formatDateTimeLocal(startDate);
   document.getElementById('giveawayEnd').value = formatDateTimeLocal(endDate);
   document.getElementById('giveawayStatus').value = giveaway.status;
+  document.getElementById('giveawayWinnerCount').value = giveaway.winner_count || 1;
+  const prizesText = (giveaway.prizes && Array.isArray(giveaway.prizes))
+    ? giveaway.prizes.map(p => `${p.name || 'Prize'}: ${p.description || ''}`.trim()).join('\n')
+    : '';
+  document.getElementById('giveawayPrizes').value = prizesText;
   
   // Change button to update mode
   const btn = document.getElementById('createGiveawayBtn');
@@ -792,11 +797,22 @@ async function updateGiveaway(giveawayId) {
   const startTime = document.getElementById('giveawayStart').value;
   const endTime = document.getElementById('giveawayEnd').value;
   const status = document.getElementById('giveawayStatus').value;
+  const winnerCount = parseInt(document.getElementById('giveawayWinnerCount').value) || 1;
+  const prizesText = document.getElementById('giveawayPrizes').value.trim();
 
   if (!title || !startTime || !endTime) {
     alert('Fill all required fields');
     return;
   }
+
+  // Parse prizes from textarea
+  const prizes = prizesText ? prizesText.split('\n').filter(p => p.trim()).map(p => {
+    const parts = p.split(':');
+    return {
+      name: parts[0]?.trim() || 'Prize',
+      description: parts[1]?.trim() || parts[0]?.trim() || ''
+    };
+  }) : [];
 
   try {
     const response = await fetch('/api/giveaway/giveaways', {
@@ -811,7 +827,9 @@ async function updateGiveaway(giveawayId) {
         description: desc,
         start_time: new Date(startTime).toISOString(),
         end_time: new Date(endTime).toISOString(),
-        status
+        status,
+        winner_count: winnerCount,
+        prizes: prizes.length > 0 ? prizes : null
       })
     });
 
