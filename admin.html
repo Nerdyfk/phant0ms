@@ -1068,7 +1068,7 @@ async function refreshSubmissions() {
         const div = document.createElement('div');
         div.className = 'list-item';
         const winnerBadge = entry.is_winner ? '<span style="color:#3CFF8F;font-weight:bold"> 🏆 WINNER</span>' : '';
-        const giveawayInfo = entry.giveaway_title ? `<p style="color:#b7c5ff;font-size:12px">📦 ${entry.giveaway_title}</p>` : '';
+        const giveawayInfo = entry.giveaway_title ? `<p style="color:#FFD36A;font-size:13px;font-weight:600;margin:4px 0">🎁 ${entry.giveaway_title}</p>` : '<p style="color:#ff9b9b;font-size:12px;margin:4px 0">⚠️ Giveaway not found</p>';
         div.innerHTML = `
           <p style="display:flex;align-items:center;gap:8px">
             <input type="checkbox" class="entry-select" value="${entry.id}" style="width:16px;height:16px;cursor:pointer" />
