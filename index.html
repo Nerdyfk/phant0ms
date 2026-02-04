@@ -768,9 +768,22 @@ async function submitGiveawayEntry(giveawayId) {
 // Load giveaways when giveaway section is opened
 const origToggle = toggle;
 window.toggle = function(id) {
+  // Hide all sections first
+  ['wallet', 'rarity', 'giveaway', 'partnership', 'about'].forEach(sectionId => {
+    const section = document.getElementById(sectionId);
+    if (section && sectionId !== id) {
+      section.style.display = 'none';
+    }
+  });
+  
+  // Load data if needed and show the section
   if (id === 'giveaway' && currentGiveaways.length === 0) {
     loadGiveaways();
   }
+  if (id === 'partnership') {
+    renderPartnerships();
+  }
+  
   origToggle(id);
 };
 
