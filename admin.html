@@ -863,7 +863,11 @@ async function refreshTasks() {
   list.innerHTML = '<p style="text-align:center;opacity:0.5">Loading...</p>';
   
   try {
-    const response = await fetch(`/api/giveaway/tasks?giveaway_id=${giveawayId}`);
+    const response = await fetch(`/api/giveaway/tasks?giveaway_id=${giveawayId}`, {
+      headers: {
+        'Authorization': 'Bearer ' + authToken
+      }
+    });
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

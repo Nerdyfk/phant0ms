@@ -59,7 +59,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error('Get giveaways error:', error);
-      return res.status(500).json({ success: false, message: error.message || 'Server error' });
+      return res.status(500).json({ success: false, message: error.message || 'Server error', error: error.toString() });
     }
   }
 
@@ -114,7 +114,7 @@ export default async function handler(req, res) {
 
     } catch (error) {
       console.error('Create giveaway error:', error);
-      return res.status(500).json({ success: false, message: error.message || 'Server error' });
+      return res.status(500).json({ success: false, message: error.message || 'Server error', error: error.toString() });
     }
   }
 
@@ -169,7 +169,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error('Update giveaway error:', error);
-      return res.status(500).json({ success: false, message: error.message || 'Server error' });
+      return res.status(500).json({ success: false, message: error.message || 'Server error', error: error.toString() });
     }
   }
 
@@ -222,7 +222,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error('Delete giveaway error:', error);
-      return res.status(500).json({ success: false, message: error.message || 'Server error' });
+      return res.status(500).json({ success: false, message: error.message || 'Server error', error: error.toString() });
     }
   }
 

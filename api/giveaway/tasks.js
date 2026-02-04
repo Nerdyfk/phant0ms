@@ -55,11 +55,11 @@ export default async function handler(req, res) {
 
       return res.status(200).json({
         success: true,
-        tasks: tasks
+        tasks: tasks || []
       });
     } catch (error) {
       console.error('Get tasks error:', error);
-      return res.status(500).json({ success: false, message: error.message || 'Server error' });
+      return res.status(500).json({ success: false, message: error.message || 'Server error', error: error.toString() });
     }
   }
 
@@ -98,12 +98,12 @@ export default async function handler(req, res) {
 
       return res.status(200).json({
         success: true,
-        task: result[0]
+        task: result[0] || result
       });
 
     } catch (error) {
       console.error('Add task error:', error);
-      return res.status(500).json({ success: false, message: error.message || 'Server error' });
+      return res.status(500).json({ success: false, message: error.message || 'Server error', error: error.toString() });
     }
   }
 
@@ -146,7 +146,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error('Delete task error:', error);
-      return res.status(500).json({ success: false, message: error.message || 'Server error' });
+      return res.status(500).json({ success: false, message: error.message || 'Server error', error: error.toString() });
     }
   }
 
