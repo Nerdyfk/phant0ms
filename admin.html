@@ -447,10 +447,7 @@ async function createGiveaway() {
     if (data.success) {
       alert('Giveaway created successfully!');
       refreshGiveaways();
-      document.getElementById('giveawayTitle').value = '';
-      document.getElementById('giveawayDesc').value = '';
-      document.getElementById('giveawayStart').value = '';
-      document.getElementById('giveawayEnd').value = '';
+      resetGiveawayForm();
     } else {
       alert('Failed: ' + (data.message || 'Unknown error'));
     }
@@ -492,7 +489,10 @@ async function refreshGiveaways() {
           <p style="color:#9fb2ff;font-size:13px">${g.description || 'No description'}</p>
           <p style="font-size:11px;opacity:0.6">Start: ${new Date(g.start_time).toLocaleString()}</p>
           <p style="font-size:11px;opacity:0.6">End: ${new Date(g.end_time).toLocaleString()}</p>
-          <button class="btn-small" onclick="deleteGiveaway(${g.id})" style="margin-top:6px">Delete</button>
+          <div style="margin-top:6px;display:flex;gap:6px">
+            <button class="btn-small" onclick="editGiveaway(${g.id})" style="background:rgba(122,252,255,0.3);flex:1">Edit</button>
+            <button class="btn-small" onclick="deleteGiveaway(${g.id})" style="flex:1">Delete</button>
+          </div>
         `;
         list.appendChild(div);
       });
@@ -528,6 +528,92 @@ async function deleteGiveaway(giveawayId) {
   } catch (e) {
     alert('Error deleting giveaway');
   }
+}
+
+function editGiveaway(giveawayId) {
+  const giveaway = giveaways.find(g => g.id === giveawayId);
+  if (!giveaway) return;
+  
+  // Populate form fields
+  document.getElementById('giveawayTitle').value = giveaway.title;
+  document.getElementById('giveawayDesc').value = giveaway.description || '';
+  
+  // Convert ISO to datetime-local format
+  const startDate = new Date(giveaway.start_time);
+  const endDate = new Date(giveaway.end_time);
+  document.getElementById('giveawayStart').value = formatDateTimeLocal(startDate);
+  document.getElementById('giveawayEnd').value = formatDateTimeLocal(endDate);
+  document.getElementById('giveawayStatus').value = giveaway.status;
+  
+  // Change button to update mode
+  const btn = document.querySelector('.btn.btn-success');
+  btn.textContent = 'Update Giveaway';
+  btn.onclick = () => updateGiveaway(giveawayId);
+  
+  // Scroll to form
+  document.querySelector('.section').scrollIntoView({ behavior: 'smooth' });
+}
+
+function formatDateTimeLocal(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+async function updateGiveaway(giveawayId) {
+  const title = document.getElementById('giveawayTitle').value.trim();
+  const desc = document.getElementById('giveawayDesc').value.trim();
+  const startTime = document.getElementById('giveawayStart').value;
+  const endTime = document.getElementById('giveawayEnd').value;
+  const status = document.getElementById('giveawayStatus').value;
+
+  if (!title || !startTime || !endTime) {
+    alert('Fill all required fields');
+    return;
+  }
+
+  try {
+    const response = await fetch('/api/giveaway/giveaways', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authToken
+      },
+      body: JSON.stringify({
+        id: giveawayId,
+        title,
+        description: desc,
+        start_time: new Date(startTime).toISOString(),
+        end_time: new Date(endTime).toISOString(),
+        status
+      })
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      alert('Giveaway updated successfully!');
+      resetGiveawayForm();
+      refreshGiveaways();
+    } else {
+      alert('Failed: ' + (data.message || 'Unknown error'));
+    }
+  } catch (e) {
+    alert('Error updating giveaway');
+    console.error(e);
+  }
+}
+
+function resetGiveawayForm() {
+  document.getElementById('giveawayTitle').value = '';
+  document.getElementById('giveawayDesc').value = '';
+  document.getElementById('giveawayStart').value = '';
+  document.getElementById('giveawayEnd').value = '';
+  const btn = document.querySelector('.btn.btn-success');
+  btn.textContent = 'Create Giveaway';
+  btn.onclick = createGiveaway;
 }
 
 // ===== TASKS MANAGEMENT =====
@@ -804,9 +890,6 @@ async function exportWinners() {
   }
 }
 
-// Event listeners for giveaway task select
-document.getElementById('giveawayTaskSelect')?.addEventListener('change', refreshTasks);
-
 // Auto-refresh visitor stats every 15 minutes
 setInterval(refreshVisitorStats, 900000);
 
@@ -814,6 +897,21 @@ setInterval(refreshVisitorStats, 900000);
 document.getElementById('adminPassword')?.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') login();
 });
+
+// Add event listener after dashboard loads
+function initEventListeners() {
+  const taskSelect = document.getElementById('giveawayTaskSelect');
+  if (taskSelect) {
+    taskSelect.addEventListener('change', refreshTasks);
+  }
+}
+
+// Call this after loading dashboard
+const originalLoadDashboard = loadDashboard;
+window.loadDashboard = function() {
+  originalLoadDashboard();
+  setTimeout(initEventListeners, 100);
+};
 </script>
 
 </body>
