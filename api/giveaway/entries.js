@@ -26,6 +26,29 @@ export default async function handler(req, res) {
     }
 
     const sql = getDb();
+
+    // Ensure entries table exists (so admin can read even if schema missing)
+    try {
+      await sql`
+        CREATE TABLE IF NOT EXISTS giveaway_entries (
+          id SERIAL PRIMARY KEY,
+          giveaway_id TEXT,
+          twitter_handle VARCHAR(255),
+          email VARCHAR(255),
+          reply_link VARCHAR(500) NOT NULL,
+          wallet_address VARCHAR(255) NOT NULL,
+          tasks_completed INT[],
+          ip_address VARCHAR(45),
+          user_agent TEXT,
+          created_at TIMESTAMP DEFAULT NOW(),
+          is_winner BOOLEAN DEFAULT FALSE,
+          winner_drawn_at TIMESTAMP,
+          prize_won TEXT
+        )
+      `;
+    } catch (e) {
+      console.log('Entries table ensure error:', e.message);
+    }
     const { giveaway_id } = req.query;
 
     // Get entries with giveaway title, optionally filtered by giveaway_id
@@ -51,9 +74,14 @@ export default async function handler(req, res) {
       `;
     }
 
+    const total = await sql`SELECT COUNT(*)::int AS total FROM giveaway_entries`;
+    const dbInfo = await sql`SELECT current_database() AS db, current_schema() AS schema`;
+
     return res.status(200).json({
       success: true,
-      entries: entries
+      entries: entries,
+      totalEntries: total[0]?.total || 0,
+      db: dbInfo[0] || null
     });
 
   } catch (error) {

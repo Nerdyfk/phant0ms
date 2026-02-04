@@ -778,6 +778,7 @@ async function submitGiveawayEntry(giveawayId) {
     }
     
     if (data.success) {
+      console.log('Submit response:', data);
       if (errorBox) {
         errorBox.textContent = '';
         errorBox.style.display = 'none';
