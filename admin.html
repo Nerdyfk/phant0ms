@@ -1106,7 +1106,6 @@ async function refreshSubmissions() {
   
   // Update winner selection info if viewing giveaway-specific submissions
   const infoBox = document.getElementById('winnerSelectionInfo');
-  const selectedGiveaway = document.getElementById('submissionsGiveawayFilter')?.value;
   
   if (selectedGiveaway) {
     const giveaway = giveaways.find(g => g.id == selectedGiveaway);
