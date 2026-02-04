@@ -507,8 +507,12 @@ function getEffectiveStatus(giveaway) {
 }
 
 // Load giveaways on page load
-async function loadGiveaways() {
+async function loadGiveaways(force = false) {
   try {
+    if (!force && currentGiveaways && currentGiveaways.length > 0) {
+      renderGiveaways();
+      return;
+    }
     const response = await fetch('/api/giveaway/list');
     const data = await response.json();
     if (data.success && data.giveaways) {
@@ -545,11 +549,7 @@ function filterGiveaway(status) {
     endedBtn.setAttribute('aria-pressed', status === 'ended');
   }
   try {
-    if (!currentGiveaways || currentGiveaways.length === 0) {
-      loadGiveaways();
-    } else {
-      renderGiveaways();
-    }
+    loadGiveaways(true);
   } catch (e) {
     console.error('Render giveaways error:', e);
   }
