@@ -38,10 +38,12 @@ export default async function handler(req, res) {
       
       let tasks;
       if (giveaway_id) {
+        // giveaway_id could be a UUID string or integer
+        const id = isNaN(giveaway_id) ? giveaway_id : parseInt(giveaway_id);
         tasks = await sql`
           SELECT id, giveaway_id, label, url, is_required, sort_order, created_at
           FROM giveaway_tasks
-          WHERE is_active = true AND giveaway_id = ${parseInt(giveaway_id)}
+          WHERE is_active = true AND giveaway_id = ${id}
           ORDER BY sort_order ASC, created_at ASC
         `;
       } else {
