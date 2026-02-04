@@ -1070,12 +1070,20 @@ async function refreshSubmissions() {
         const winnerBadge = entry.is_winner ? '<span style="color:#3CFF8F;font-weight:bold"> 🏆 WINNER</span>' : '';
         const giveawayInfo = entry.giveaway_title ? `<p style="color:#b7c5ff;font-size:12px">📦 ${entry.giveaway_title}</p>` : '';
         div.innerHTML = `
-          <p><strong>${entry.twitter_handle || entry.email || 'N/A'}</strong>${winnerBadge}</p>
+          <p style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" class="entry-select" value="${entry.id}" style="width:16px;height:16px;cursor:pointer" />
+            <strong>${entry.twitter_handle || entry.email || 'N/A'}</strong>${winnerBadge}
+          </p>
           ${giveawayInfo}
           <p style="color:#7afcff">Reply: <a href="${entry.reply_link}" target="_blank">${entry.reply_link || 'N/A'}</a></p>
           <p style="color:#7afcff">${entry.wallet_address}</p>
           <p style="font-size:11px;opacity:0.6">${new Date(entry.created_at).toLocaleString()}</p>
         `;
+        div.addEventListener('click', (e) => {
+          if (e.target && (e.target.tagName === 'A' || e.target.type === 'checkbox')) return;
+          const cb = div.querySelector('.entry-select');
+          if (cb) cb.checked = !cb.checked;
+        });
         list.appendChild(div);
       });
     } else if (data.success) {
@@ -1342,6 +1350,13 @@ async function setManualWinners() {
     return;
   }
 
+  const giveaway = giveaways.find(g => g.id == giveawayId);
+  const winnerCount = giveaway?.winner_count || 1;
+  if (selected.length !== winnerCount) {
+    alert(`Select exactly ${winnerCount} winner(s) or use Draw Winners.`);
+    return;
+  }
+
   if (!confirm(`Set ${selected.length} manual winner(s) for this giveaway?`)) return;
 
   try {
@@ -1354,7 +1369,8 @@ async function setManualWinners() {
       body: JSON.stringify({
         giveaway_id: giveawayId,
         mode: 'manual',
-        entry_ids: selected
+        entry_ids: selected,
+        replace: true
       })
     });
 

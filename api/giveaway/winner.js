@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const { giveaway_id, count, mode, entry_ids } = req.body;
+    const { giveaway_id, count, mode, entry_ids, replace } = req.body;
     const sql = getDb();
 
     // Get giveaway details
@@ -50,12 +50,35 @@ export default async function handler(req, res) {
     const winnerCount = count || giveaway[0].winner_count || 1;
     const prizes = giveaway[0].prizes || [];
 
+    // Check existing winners
+    const existingWinners = await sql`
+      SELECT id, twitter_handle, reply_link, wallet_address, tasks_completed, prize_won
+      FROM giveaway_entries
+      WHERE is_winner = true AND giveaway_id = ${giveaway_id}
+      ORDER BY winner_drawn_at ASC
+    `;
+
+    if (existingWinners.length > 0 && !replace) {
+      return res.status(200).json({
+        success: true,
+        winners: existingWinners
+      });
+    }
+
+    if (replace) {
+      await sql`
+        UPDATE giveaway_entries
+        SET is_winner = false, winner_drawn_at = NULL, prize_won = NULL
+        WHERE giveaway_id = ${giveaway_id}
+      `;
+    }
+
     // Manual winner selection
     if (mode === 'manual' && Array.isArray(entry_ids) && entry_ids.length > 0) {
-      if (entry_ids.length > winnerCount) {
+      if (entry_ids.length !== winnerCount) {
         return res.status(400).json({
           success: false,
-          message: `Selected ${entry_ids.length} winners but limit is ${winnerCount}`
+          message: `Selected ${entry_ids.length} winners but required is ${winnerCount}`
         });
       }
 
