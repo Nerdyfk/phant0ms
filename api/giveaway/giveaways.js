@@ -139,23 +139,36 @@ export default async function handler(req, res) {
       }
 
       const id = parsedBody?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
-      const description = parsedBody?.description;
+      const { title, description, start_time, end_time, status } = parsedBody || {};
 
       if (!id) {
         return res.status(400).json({ success: false, message: 'Giveaway id is required' });
       }
 
       try {
+        // Update all fields provided
         await sql`
           UPDATE giveaways 
-          SET description = ${description}, updated_at = NOW()
+          SET 
+            title = COALESCE(${title}, title),
+            description = COALESCE(${description}, description),
+            start_time = COALESCE(${start_time}, start_time),
+            end_time = COALESCE(${end_time}, end_time),
+            status = COALESCE(${status}, status),
+            updated_at = NOW()
           WHERE id = ${id}
         `;
       } catch (updateError) {
         if (updateError.message?.includes('updated_at')) {
+          // Fallback: try without updated_at if column doesn't exist
           await sql`
             UPDATE giveaways 
-            SET description = ${description}
+            SET 
+              title = COALESCE(${title}, title),
+              description = COALESCE(${description}, description),
+              start_time = COALESCE(${start_time}, start_time),
+              end_time = COALESCE(${end_time}, end_time),
+              status = COALESCE(${status}, status)
             WHERE id = ${id}
           `;
         } else {

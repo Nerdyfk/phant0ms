@@ -781,9 +781,12 @@ async function updateGiveaway(giveawayId) {
     if (data.success) {
       alert('Giveaway updated successfully!');
       resetGiveawayForm();
-      refreshGiveaways();
+      await refreshGiveaways();
+    } else if (response.status === 401) {
+      alert('Authentication failed. Please log in again.');
     } else {
-      alert('Failed: ' + (data.message || 'Unknown error'));
+      console.error('Update failed with data:', data);
+      alert('Failed to update giveaway: ' + (data.message || data.error || 'Unknown error'));
     }
   } catch (e) {
     alert('Error updating giveaway');
