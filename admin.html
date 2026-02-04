@@ -653,8 +653,24 @@ async function refreshGiveaways() {
         // Add event listeners
         const editBtn = div.querySelector('.edit-giveaway-btn');
         const deleteBtn = div.querySelector('.delete-giveaway-btn');
-        editBtn.addEventListener('click', () => editGiveaway(g.id));
-        deleteBtn.addEventListener('click', () => deleteGiveaway(g.id));
+        
+        if (editBtn) {
+          editBtn.addEventListener('click', () => {
+            console.log('Edit button clicked for ID:', g.id);
+            editGiveaway(g.id);
+          });
+        } else {
+          console.error('Edit button not found for giveaway:', g.id);
+        }
+        
+        if (deleteBtn) {
+          deleteBtn.addEventListener('click', () => {
+            console.log('Delete button clicked for ID:', g.id);
+            deleteGiveaway(g.id);
+          });
+        } else {
+          console.error('Delete button not found for giveaway:', g.id);
+        }
         
         list.appendChild(div);
       });
