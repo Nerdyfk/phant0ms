@@ -1355,18 +1355,28 @@ function updateSelectedGiveawayDisplay() {
     if (selectedId) {
       const selectedGiveaway = giveaways.find(g => g.id == selectedId);
       if (selectedGiveaway) {
+        const now = Date.now();
+        const endTime = new Date(selectedGiveaway.end_time).getTime();
+        const startTime = new Date(selectedGiveaway.start_time).getTime();
+        let effectiveStatus = selectedGiveaway.status;
+        if (!Number.isNaN(endTime) && now > endTime) {
+          effectiveStatus = 'ended';
+        } else if (selectedGiveaway.status === 'scheduled' && !Number.isNaN(startTime) && now < startTime) {
+          effectiveStatus = 'scheduled';
+        }
+
         display.textContent = selectedGiveaway.title;
         display.style.color = '#3CFF8F';
-        statusDisplay.textContent = selectedGiveaway.status.toUpperCase();
-        statusDisplay.style.color = selectedGiveaway.status === 'live' ? '#7afcff' : selectedGiveaway.status === 'ended' ? '#ff9b9b' : '#FFD36A';
+        statusDisplay.textContent = effectiveStatus.toUpperCase();
+        statusDisplay.style.color = effectiveStatus === 'live' ? '#7afcff' : effectiveStatus === 'ended' ? '#ff9b9b' : '#FFD36A';
         
         // Update timer
         updateGiveawayTimer(selectedGiveaway);
         
         // Update button states
-        startBtn.disabled = selectedGiveaway.status === 'live' || selectedGiveaway.status === 'ended';
-        endBtn.disabled = selectedGiveaway.status !== 'live';
-        drawBtn.disabled = selectedGiveaway.status !== 'ended';
+        startBtn.disabled = effectiveStatus === 'live' || effectiveStatus === 'ended';
+        endBtn.disabled = effectiveStatus !== 'live';
+        drawBtn.disabled = effectiveStatus !== 'ended';
         
         return;
       }

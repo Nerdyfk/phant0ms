@@ -29,7 +29,7 @@ export default async function handler(req, res) {
 
     // Get giveaway details
     const giveaway = await sql`
-      SELECT winner_count, prizes, status
+      SELECT winner_count, prizes, status, end_time
       FROM giveaways
       WHERE id::text = ${giveaway_id}
       LIMIT 1
@@ -39,7 +39,11 @@ export default async function handler(req, res) {
       return res.status(404).json({ success: false, message: 'Giveaway not found' });
     }
 
-    if (giveaway[0].status !== 'ended') {
+    const now = Date.now();
+    const endTime = giveaway[0].end_time ? new Date(giveaway[0].end_time).getTime() : NaN;
+    const isTimeEnded = !Number.isNaN(endTime) && now > endTime;
+
+    if (giveaway[0].status !== 'ended' && !isTimeEnded) {
       return res.status(400).json({ success: false, message: 'Giveaway must be ended before drawing winners' });
     }
 
