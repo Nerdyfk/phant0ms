@@ -24,8 +24,27 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const { giveaway_id } = req.body;
+    const { giveaway_id, count } = req.body;
     const sql = getDb();
+
+    // Get giveaway details
+    const giveaway = await sql`
+      SELECT winner_count, prizes, status
+      FROM giveaways
+      WHERE id = ${giveaway_id}
+      LIMIT 1
+    `;
+
+    if (!giveaway || giveaway.length === 0) {
+      return res.status(404).json({ success: false, message: 'Giveaway not found' });
+    }
+
+    if (giveaway[0].status !== 'ended') {
+      return res.status(400).json({ success: false, message: 'Giveaway must be ended before drawing winners' });
+    }
+
+    const winnerCount = count || giveaway[0].winner_count || 1;
+    const prizes = giveaway[0].prizes || [];
 
     // Get all non-winner entries for the giveaway
     let entries;
@@ -52,25 +71,48 @@ export default async function handler(req, res) {
       });
     }
 
-    // Randomly select a winner
-    const randomIndex = Math.floor(Math.random() * entries.length);
-    const winner = entries[randomIndex];
+    if (entries.length < winnerCount) {
+      return res.status(400).json({
+        success: false,
+        message: `Not enough entries. Only ${entries.length} available, but ${winnerCount} winners requested.`
+      });
+    }
 
-    // Mark as winner
-    await sql`
-      UPDATE giveaway_entries
-      SET is_winner = true, winner_drawn_at = NOW()
-      WHERE id = ${winner.id}
-    `;
+    // Randomly select winners
+    const winners = [];
+    const selectedIndices = new Set();
+    
+    while (winners.length < winnerCount && selectedIndices.size < entries.length) {
+      const randomIndex = Math.floor(Math.random() * entries.length);
+      if (!selectedIndices.has(randomIndex)) {
+        selectedIndices.add(randomIndex);
+        const winner = entries[randomIndex];
+        
+        // Assign prize if available
+        const prizeWon = prizes[winners.length] ? 
+          `${prizes[winners.length].name}: ${prizes[winners.length].description}` : 
+          (prizes.length > 0 ? `${prizes[0].name}: ${prizes[0].description}` : null);
+        
+        // Mark as winner
+        await sql`
+          UPDATE giveaway_entries
+          SET is_winner = true, winner_drawn_at = NOW(), prize_won = ${prizeWon}
+          WHERE id = ${winner.id}
+        `;
+        
+        winners.push({
+          id: winner.id,
+          twitter_handle: winner.twitter_handle,
+          reply_link: winner.reply_link,
+          wallet_address: winner.wallet_address,
+          prize_won: prizeWon
+        });
+      }
+    }
 
     return res.status(200).json({
       success: true,
-      winner: {
-        id: winner.id,
-        twitter_handle: winner.twitter_handle,
-        reply_link: winner.reply_link,
-        wallet_address: winner.wallet_address
-      }
+      winners: winners
     });
 
   } catch (error) {

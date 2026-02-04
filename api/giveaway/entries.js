@@ -26,14 +26,30 @@ export default async function handler(req, res) {
     }
 
     const sql = getDb();
+    const { giveaway_id } = req.query;
 
-    // Get all entries
-    const entries = await sql`
-      SELECT id, giveaway_id, twitter_handle, reply_link, wallet_address, tasks_completed, 
-             created_at, is_winner, winner_drawn_at
-      FROM giveaway_entries
-      ORDER BY created_at DESC
-    `;
+    // Get entries with giveaway title, optionally filtered by giveaway_id
+    let entries;
+    if (giveaway_id) {
+      entries = await sql`
+        SELECT e.id, e.giveaway_id, e.twitter_handle, e.email, e.reply_link, e.wallet_address, 
+               e.tasks_completed, e.created_at, e.is_winner, e.winner_drawn_at,
+               g.title as giveaway_title
+        FROM giveaway_entries e
+        LEFT JOIN giveaways g ON e.giveaway_id = g.id
+        WHERE e.giveaway_id = ${parseInt(giveaway_id)}
+        ORDER BY e.created_at DESC
+      `;
+    } else {
+      entries = await sql`
+        SELECT e.id, e.giveaway_id, e.twitter_handle, e.email, e.reply_link, e.wallet_address, 
+               e.tasks_completed, e.created_at, e.is_winner, e.winner_drawn_at,
+               g.title as giveaway_title
+        FROM giveaway_entries e
+        LEFT JOIN giveaways g ON e.giveaway_id = g.id
+        ORDER BY e.created_at DESC
+      `;
+    }
 
     return res.status(200).json({
       success: true,
