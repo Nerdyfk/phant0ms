@@ -488,6 +488,18 @@ initVisitorTracking();
 let currentGiveaways = [];
 let currentGiveawayFilter = 'live';
 
+function getEffectiveStatus(giveaway) {
+  const now = Date.now();
+  const startTime = new Date(giveaway.start_time).getTime();
+  const endTime = new Date(giveaway.end_time).getTime();
+
+  if (!Number.isNaN(endTime) && now > endTime) return 'ended';
+  if (giveaway.status === 'scheduled' && !Number.isNaN(startTime) && now < startTime) return 'scheduled';
+  if (giveaway.status === 'ended') return 'ended';
+  if (giveaway.status === 'live' || giveaway.status === 'scheduled') return 'live';
+  return giveaway.status || 'live';
+}
+
 // Load giveaways on page load
 async function loadGiveaways() {
   try {
@@ -528,10 +540,11 @@ function renderGiveaways() {
   container.innerHTML = '';
   
   const filtered = currentGiveaways.filter(g => {
+    const effectiveStatus = getEffectiveStatus(g);
     if (currentGiveawayFilter === 'live') {
-      return g.status === 'live' || g.status === 'scheduled';
+      return effectiveStatus === 'live' || effectiveStatus === 'scheduled';
     }
-    return g.status === currentGiveawayFilter;
+    return effectiveStatus === currentGiveawayFilter;
   });
   
   if (filtered.length === 0) {
@@ -547,9 +560,10 @@ function renderGiveaways() {
     const now = new Date().getTime();
     const endTime = new Date(giveaway.end_time).getTime();
     const startTime = new Date(giveaway.start_time).getTime();
-    const isEnded = giveaway.status === 'ended' || now > endTime;
-    const isLive = giveaway.status === 'live';
-    const isScheduled = giveaway.status === 'scheduled' && now < startTime;
+    const effectiveStatus = getEffectiveStatus(giveaway);
+    const isEnded = effectiveStatus === 'ended';
+    const isLive = effectiveStatus === 'live';
+    const isScheduled = effectiveStatus === 'scheduled';
     const card = document.createElement('div');
     card.className = 'glass-card';
     card.style.marginBottom = '16px';

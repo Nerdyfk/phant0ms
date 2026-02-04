@@ -664,7 +664,7 @@ async function deleteGiveaway(giveawayId) {
   if (!confirm('Delete this giveaway?')) return;
   
   try {
-    const response = await fetch('/api/giveaway/giveaways', {
+    const response = await fetch(`/api/giveaway/giveaways?id=${giveawayId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -722,16 +722,18 @@ async function addTask() {
     });
     
     const data = await response.json();
-    if (data.success) {
+    if (response.ok && data.success) {
       refreshTasks();
       document.getElementById('newTaskInput').value = '';
       document.getElementById('newTaskLink').value = '';
       document.getElementById('newTaskRequired').checked = false;
+    } else if (response.status === 401) {
+      alert('Authentication failed. Please log in again.');
     } else {
-      alert('Failed to add task: ' + (data.message || 'Unknown error'));
+      alert('Failed to add task: ' + (data.message || data.error || 'Unknown error'));
     }
   } catch (e) {
-    alert('Error adding task');
+    alert('Error adding task: ' + e.message);
     console.error(e);
   }
 }
@@ -740,7 +742,7 @@ async function removeTask(taskId) {
   if (!confirm('Delete this task?')) return;
   
   try {
-    const response = await fetch('/api/giveaway/tasks', {
+    const response = await fetch(`/api/giveaway/tasks?id=${taskId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -750,13 +752,15 @@ async function removeTask(taskId) {
     });
     
     const data = await response.json();
-    if (data.success) {
+    if (response.ok && data.success) {
       refreshTasks();
+    } else if (response.status === 401) {
+      alert('Authentication failed. Please log in again.');
     } else {
-      alert('Failed to delete task');
+      alert('Failed to delete task: ' + (data.message || data.error || 'Unknown error'));
     }
   } catch (e) {
-    alert('Error deleting task');
+    alert('Error deleting task: ' + e.message);
   }
 }
 
@@ -937,7 +941,7 @@ async function editGiveawayDesc(giveawayId) {
   if (newDesc === null) return;
   
   try {
-    const response = await fetch('/api/giveaway/giveaways', {
+    const response = await fetch(`/api/giveaway/giveaways?id=${giveawayId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -950,14 +954,16 @@ async function editGiveawayDesc(giveawayId) {
     });
     
     const data = await response.json();
-    if (data.success) {
+    if (response.ok && data.success) {
       refreshGiveaways();
       alert('Description updated!');
+    } else if (response.status === 401) {
+      alert('Authentication failed. Please log in again.');
     } else {
-      alert('Failed to update description');
+      alert('Failed to update description: ' + (data.message || data.error || 'Unknown error'));
     }
   } catch (e) {
-    alert('Error updating description');
+    alert('Error updating description: ' + e.message);
   }
 }
 

@@ -99,7 +99,11 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const { id } = req.body;
+      const id = req.body?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
+
+      if (!id) {
+        return res.status(400).json({ success: false, message: 'Task id is required' });
+      }
 
       await sql`
         UPDATE giveaway_tasks 
@@ -111,16 +115,6 @@ export default async function handler(req, res) {
         success: true,
         message: 'Task removed'
       });
-    } catch (error) {
-      console.error('Delete task error:', error);
-      return res.status(500).json({ success: false, message: 'Server error' });
-    }
-  }
-
-  return res.status(405).json({ error: 'Method not allowed' });
-}
-      });
-
     } catch (error) {
       console.error('Delete task error:', error);
       return res.status(500).json({ success: false, message: 'Server error' });

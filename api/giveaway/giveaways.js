@@ -129,7 +129,12 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const { id, description } = req.body;
+      const id = req.body?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
+      const description = req.body?.description;
+
+      if (!id) {
+        return res.status(400).json({ success: false, message: 'Giveaway id is required' });
+      }
 
       await sql`
         UPDATE giveaways 
@@ -167,7 +172,11 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const { id } = req.body;
+      const id = req.body?.id || (req.query?.id ? parseInt(req.query.id) : undefined);
+
+      if (!id) {
+        return res.status(400).json({ success: false, message: 'Giveaway id is required' });
+      }
 
       await sql`
         UPDATE giveaways 
