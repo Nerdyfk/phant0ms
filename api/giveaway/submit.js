@@ -11,7 +11,25 @@ export default async function handler(req, res) {
     
     // Ensure entries table exists with correct schema
     try {
-      // Check if giveaway_entries table exists and has correct giveaway_id type
+      await sql`
+        CREATE TABLE IF NOT EXISTS giveaway_entries (
+          id SERIAL PRIMARY KEY,
+          giveaway_id TEXT,
+          twitter_handle VARCHAR(255),
+          email VARCHAR(255),
+          reply_link VARCHAR(500) NOT NULL,
+          wallet_address VARCHAR(255) NOT NULL,
+          tasks_completed INT[],
+          ip_address VARCHAR(45),
+          user_agent TEXT,
+          created_at TIMESTAMP DEFAULT NOW(),
+          is_winner BOOLEAN DEFAULT FALSE,
+          winner_drawn_at TIMESTAMP,
+          prize_won TEXT
+        )
+      `;
+
+      // Check if giveaway_entries table has correct giveaway_id type
       const checkTable = await sql`
         SELECT column_name, data_type 
         FROM information_schema.columns 
@@ -136,10 +154,14 @@ export default async function handler(req, res) {
       });
     }
 
+    const normalizedTasks = Array.isArray(tasks_completed)
+      ? tasks_completed.map(Number).filter(Number.isFinite)
+      : null;
+
     // Insert new entry
     const result = await sql`
       INSERT INTO giveaway_entries (giveaway_id, twitter_handle, reply_link, wallet_address, tasks_completed, ip_address, user_agent)
-      VALUES (${giveaway_id || null}, ${twitter_handle || null}, ${reply_link}, ${wallet_address}, ${tasks_completed ? JSON.stringify(tasks_completed) : null}, ${ipAddress}, ${userAgent})
+      VALUES (${giveaway_id || null}, ${twitter_handle || null}, ${reply_link}, ${wallet_address}, ${normalizedTasks}, ${ipAddress}, ${userAgent})
       RETURNING id
     `;
 
