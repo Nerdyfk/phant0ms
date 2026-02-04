@@ -59,7 +59,7 @@ export default async function handler(req, res) {
                e.tasks_completed, e.created_at, e.is_winner, e.winner_drawn_at,
                g.title as giveaway_title
         FROM giveaway_entries e
-        LEFT JOIN giveaways g ON e.giveaway_id = g.id
+        LEFT JOIN giveaways g ON e.giveaway_id = g.id::text
         WHERE e.giveaway_id = ${giveaway_id}
         ORDER BY e.created_at DESC
       `;
@@ -69,7 +69,7 @@ export default async function handler(req, res) {
                e.tasks_completed, e.created_at, e.is_winner, e.winner_drawn_at,
                g.title as giveaway_title
         FROM giveaway_entries e
-        LEFT JOIN giveaways g ON e.giveaway_id = g.id
+        LEFT JOIN giveaways g ON e.giveaway_id = g.id::text
         ORDER BY e.created_at DESC
       `;
     }
