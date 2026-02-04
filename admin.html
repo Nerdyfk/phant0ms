@@ -1085,7 +1085,8 @@ function refreshVisitorStats() {
   
   stats.innerHTML = `
     <p>📊 Current Period: <strong>${data.currentVisitors || 0}</strong> visitors</p>
-    <p>📅 Daily Total: <strong>${data.dailyVisitors || 0}</strong> visitors</p>
+    <p>🕒 Last 24h: <strong>${data.dailyVisitors || 0}</strong> visitors</p>
+    <p>🌐 Total Visitors: <strong>${data.totalVisitors || 0}</strong> visitors</p>
     <p style="font-size:12px;opacity:0.7">Updates every 15 minutes</p>
   `;
 }

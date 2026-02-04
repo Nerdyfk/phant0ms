@@ -443,6 +443,10 @@ const ADMIN_CREDENTIALS={
 function initVisitorTracking(){
   const now=Date.now();
   const data=JSON.parse(localStorage.getItem('visitorData')||'{}');
+
+  if(!data.totalVisitors){
+    data.totalVisitors=0;
+  }
   
   // Reset daily stats if 24h passed
   if(!data.dailyReset || now-data.dailyReset>86400000){
@@ -454,6 +458,7 @@ function initVisitorTracking(){
   if(!data.lastVisit || now-data.lastVisit>900000){ // 15 min
     data.currentVisitors=(data.currentVisitors||0)+1;
     data.dailyVisitors=(data.dailyVisitors||0)+1;
+    data.totalVisitors=(data.totalVisitors||0)+1;
     data.lastVisit=now;
   }
   
@@ -476,7 +481,8 @@ function updateVisitorDisplay(){
   if(adminStats && adminLoggedIn){
     adminStats.innerHTML=`
       <p style="margin:4px 0">📊 Current Period: <strong>${data.currentVisitors||0}</strong> visitors</p>
-      <p style="margin:4px 0">📅 Daily Total: <strong>${data.dailyVisitors||0}</strong> visitors</p>
+      <p style="margin:4px 0">🕒 Last 24h: <strong>${data.dailyVisitors||0}</strong> visitors</p>
+      <p style="margin:4px 0">🌐 Total Visitors: <strong>${data.totalVisitors||0}</strong> visitors</p>
       <p style="margin:4px 0;font-size:12px;opacity:0.7">Updates every 15 minutes</p>
     `;
   }
