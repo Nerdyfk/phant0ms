@@ -1304,8 +1304,10 @@ async function drawWinners() {
       winnersList.innerHTML = data.winners.map((w, i) => `
         <p style="margin:8px 0;padding:8px;background:rgba(60,255,143,0.1);border-radius:6px">
           <strong>${i + 1}.</strong> ${w.twitter_handle || 'N/A'}<br>
-          <span style="font-size:12px;opacity:0.8">${w.wallet_address}</span>
-          ${w.prize_won ? `<br><span style="color:#FFD36A">🏆 ${w.prize_won}</span>` : ''}
+          <span style="font-size:12px;opacity:0.8">${w.wallet_address}</span><br>
+          <span style="font-size:12px;opacity:0.8">Reply: <a href="${w.reply_link}" target="_blank">${w.reply_link || 'N/A'}</a></span><br>
+          <span style="font-size:12px;opacity:0.8">Task Proof: ${(w.tasks_completed && w.tasks_completed.length > 0) ? w.tasks_completed.join(' ') : 'N/A'}</span>
+          ${w.prize_won ? `<br><span style=\"color:#FFD36A\">🏆 ${w.prize_won}</span>` : ''}
         </p>
       `).join('');
       display.style.display = 'block';
@@ -1363,7 +1365,9 @@ async function setManualWinners() {
       winnersList.innerHTML = data.winners.map((w, i) => `
         <p style="margin:8px 0;padding:8px;background:rgba(60,255,143,0.1);border-radius:6px">
           <strong>${i + 1}.</strong> ${w.twitter_handle || 'N/A'}<br>
-          <span style="font-size:12px;opacity:0.8">${w.wallet_address}</span>
+          <span style="font-size:12px;opacity:0.8">${w.wallet_address}</span><br>
+          <span style="font-size:12px;opacity:0.8">Reply: <a href="${w.reply_link}" target="_blank">${w.reply_link || 'N/A'}</a></span><br>
+          <span style="font-size:12px;opacity:0.8">Task Proof: ${(w.tasks_completed && w.tasks_completed.length > 0) ? w.tasks_completed.join(' ') : 'N/A'}</span>
           ${w.prize_won ? `<br><span style=\"color:#FFD36A\">🏆 ${w.prize_won}</span>` : ''}
         </p>
       `).join('');

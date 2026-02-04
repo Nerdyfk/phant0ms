@@ -29,21 +29,33 @@ export default async function handler(req, res) {
     const sql = getDb();
     const { giveaway_id, format = 'csv' } = req.query;
 
-    const winners = await sql`
-      SELECT e.twitter_handle, e.email, e.wallet_address, e.reply_link, e.prize_won, e.winner_drawn_at, e.giveaway_id,
-             g.title AS giveaway_title
-      FROM giveaway_entries e
-      LEFT JOIN giveaways g ON e.giveaway_id = g.id::text
-      WHERE e.is_winner = true
-      ${giveaway_id ? sql`AND e.giveaway_id = ${giveaway_id}` : sql``}
-      ORDER BY e.winner_drawn_at DESC
-    `;
+    let winners;
+    if (giveaway_id) {
+      winners = await sql`
+        SELECT e.twitter_handle, e.email, e.wallet_address, e.reply_link, e.prize_won, e.winner_drawn_at, e.giveaway_id,
+               e.tasks_completed, g.title AS giveaway_title
+        FROM giveaway_entries e
+        LEFT JOIN giveaways g ON e.giveaway_id = g.id::text
+        WHERE e.is_winner = true AND e.giveaway_id = ${giveaway_id}
+        ORDER BY e.winner_drawn_at DESC
+      `;
+    } else {
+      winners = await sql`
+        SELECT e.twitter_handle, e.email, e.wallet_address, e.reply_link, e.prize_won, e.winner_drawn_at, e.giveaway_id,
+               e.tasks_completed, g.title AS giveaway_title
+        FROM giveaway_entries e
+        LEFT JOIN giveaways g ON e.giveaway_id = g.id::text
+        WHERE e.is_winner = true
+        ORDER BY e.winner_drawn_at DESC
+      `;
+    }
 
     const rows = winners.map(w => ({
       'Twitter Handle': w.twitter_handle || '',
       'Email': w.email || '',
       'Wallet Address': w.wallet_address || '',
       'Reply Link': w.reply_link || '',
+      'Task Proof (IDs)': Array.isArray(w.tasks_completed) ? w.tasks_completed.join(' ') : '',
       'Prize Won': w.prize_won || '',
       'Giveaway': w.giveaway_title || w.giveaway_id || '',
       'Winner Drawn At': w.winner_drawn_at ? new Date(w.winner_drawn_at).toLocaleString() : ''

@@ -63,7 +63,7 @@ export default async function handler(req, res) {
       for (let i = 0; i < entry_ids.length; i++) {
         const entryId = entry_ids[i];
         const rows = await sql`
-          SELECT id, twitter_handle, reply_link, wallet_address, is_winner
+          SELECT id, twitter_handle, reply_link, wallet_address, is_winner, tasks_completed
           FROM giveaway_entries
           WHERE id = ${entryId} AND giveaway_id = ${giveaway_id}
           LIMIT 1
@@ -92,6 +92,7 @@ export default async function handler(req, res) {
           twitter_handle: rows[0].twitter_handle,
           reply_link: rows[0].reply_link,
           wallet_address: rows[0].wallet_address,
+          tasks_completed: rows[0].tasks_completed || [],
           prize_won: prizeWon
         });
       }
@@ -113,14 +114,14 @@ export default async function handler(req, res) {
     let entries;
     if (giveaway_id) {
       entries = await sql`
-        SELECT id, twitter_handle, reply_link, wallet_address
+        SELECT id, twitter_handle, reply_link, wallet_address, tasks_completed
         FROM giveaway_entries
         WHERE is_winner = false AND giveaway_id = ${giveaway_id}
         ORDER BY created_at
       `;
     } else {
       entries = await sql`
-        SELECT id, twitter_handle, reply_link, wallet_address
+        SELECT id, twitter_handle, reply_link, wallet_address, tasks_completed
         FROM giveaway_entries
         WHERE is_winner = false
         ORDER BY created_at
@@ -168,6 +169,7 @@ export default async function handler(req, res) {
           twitter_handle: winner.twitter_handle,
           reply_link: winner.reply_link,
           wallet_address: winner.wallet_address,
+          tasks_completed: winner.tasks_completed || [],
           prize_won: prizeWon
         });
       }
