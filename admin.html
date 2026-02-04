@@ -414,7 +414,7 @@ a:hover{
         <option value="live">Live</option>
         <option value="ended">Ended</option>
       </select>
-      <button class="btn btn-success" onclick="createGiveaway()">Create Giveaway</button>
+      <button id="createGiveawayBtn" class="btn btn-success" onclick="createGiveaway()">Create Giveaway</button>
       <div id="giveawaysList" class="list" style="margin-top:12px"></div>
     </div>
 
@@ -690,7 +690,10 @@ async function deleteGiveaway(giveawayId) {
 
 function editGiveaway(giveawayId) {
   const giveaway = giveaways.find(g => g.id === giveawayId);
-  if (!giveaway) return;
+  if (!giveaway) {
+    alert('Giveaway not found');
+    return;
+  }
   
   // Populate form fields
   document.getElementById('giveawayTitle').value = giveaway.title;
@@ -704,9 +707,11 @@ function editGiveaway(giveawayId) {
   document.getElementById('giveawayStatus').value = giveaway.status;
   
   // Change button to update mode
-  const btn = document.querySelector('.btn.btn-success');
-  btn.textContent = 'Update Giveaway';
-  btn.onclick = () => updateGiveaway(giveawayId);
+  const btn = document.getElementById('createGiveawayBtn');
+  if (btn) {
+    btn.textContent = 'Update Giveaway';
+    btn.onclick = () => updateGiveaway(giveawayId);
+  }
   
   // Scroll to form
   document.querySelector('.section').scrollIntoView({ behavior: 'smooth' });
@@ -769,9 +774,13 @@ function resetGiveawayForm() {
   document.getElementById('giveawayDesc').value = '';
   document.getElementById('giveawayStart').value = '';
   document.getElementById('giveawayEnd').value = '';
-  const btn = document.querySelector('.btn.btn-success');
-  btn.textContent = 'Create Giveaway';
-  btn.onclick = createGiveaway;
+  document.getElementById('giveawayWinnerCount').value = '1';
+  document.getElementById('giveawayPrizes').value = '';
+  const btn = document.getElementById('createGiveawayBtn');
+  if (btn) {
+    btn.textContent = 'Create Giveaway';
+    btn.onclick = createGiveaway;
+  }
 }
 
 // ===== TASKS MANAGEMENT =====
