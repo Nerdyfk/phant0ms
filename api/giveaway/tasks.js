@@ -6,10 +6,47 @@ export default async function handler(req, res) {
 
   async function ensureTasksTable() {
     try {
+      // First, try to check if table exists and has correct schema
+      const checkTable = await sql`
+        SELECT column_name, data_type 
+        FROM information_schema.columns 
+        WHERE table_name = 'giveaway_tasks' AND column_name = 'giveaway_id'
+      `;
+      
+      // If table exists but giveaway_id is INT, we need to migrate it
+      if (checkTable.length > 0 && checkTable[0].data_type === 'integer') {
+        console.log('Migrating giveaway_tasks table to support TEXT giveaway_id...');
+        try {
+          // Drop the foreign key constraint first
+          await sql`
+            ALTER TABLE giveaway_tasks 
+            DROP CONSTRAINT IF EXISTS giveaway_tasks_giveaway_id_fkey
+          `;
+        } catch (e) {
+          console.log('Could not drop FK:', e.message);
+        }
+        
+        try {
+          // Change the column type
+          await sql`
+            ALTER TABLE giveaway_tasks 
+            ALTER COLUMN giveaway_id TYPE TEXT USING giveaway_id::TEXT
+          `;
+        } catch (e) {
+          console.log('Could not alter column:', e.message);
+        }
+      }
+    } catch (e) {
+      // Table doesn't exist yet, will create it below
+      console.log('Schema check info:', e.message);
+    }
+    
+    // Create table if it doesn't exist
+    try {
       await sql`
         CREATE TABLE IF NOT EXISTS giveaway_tasks (
           id SERIAL PRIMARY KEY,
-          giveaway_id TEXT REFERENCES giveaways(id),
+          giveaway_id TEXT,
           label VARCHAR(255) NOT NULL,
           url TEXT,
           is_required BOOLEAN DEFAULT FALSE,
@@ -18,16 +55,8 @@ export default async function handler(req, res) {
           is_active BOOLEAN DEFAULT TRUE
         )
       `;
-    } catch (createError) {
-      // Table might already exist, try altering to fix column type if needed
-      try {
-        await sql`
-          ALTER TABLE giveaway_tasks 
-          ALTER COLUMN giveaway_id TYPE TEXT USING giveaway_id::TEXT
-        `;
-      } catch (alterError) {
-        console.log('Could not alter column:', alterError.message);
-      }
+    } catch (e) {
+      console.log('Table creation info:', e.message);
     }
     
     try {
