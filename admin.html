@@ -681,14 +681,24 @@ async function deleteGiveaway(giveawayId) {
       body: JSON.stringify({ id: giveawayId })
     });
     
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      console.error('Failed to parse response:', parseError);
+      const text = await response.text();
+      console.error('Response text:', text);
+      throw new Error('Server returned invalid JSON');
+    }
+    
     if (response.ok && data.success) {
       alert('Giveaway deleted successfully');
-      refreshGiveaways();
-      refreshTasks();
+      await refreshGiveaways();
+      await refreshTasks();
     } else if (response.status === 401) {
       alert('Authentication failed. Please log in again.');
     } else {
+      console.error('Delete failed with data:', data);
       alert('Failed to delete giveaway: ' + (data.message || data.error || 'Unknown error'));
     }
   } catch (e) {
@@ -907,9 +917,14 @@ async function refreshTasks() {
         div.innerHTML = `
           <div style="display:flex;justify-content:space-between;align-items:center">
             <span>${task.label}${linkHtml}${requiredBadge}</span>
-            <button class="btn-small" onclick="removeTask(${task.id})">Remove</button>
+            <button class="btn-small remove-task-btn">Remove</button>
           </div>
         `;
+        
+        // Add event listener
+        const removeBtn = div.querySelector('.remove-task-btn');
+        removeBtn.addEventListener('click', () => removeTask(task.id));
+        
         list.appendChild(div);
       });
     } else if (data.success) {
