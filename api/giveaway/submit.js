@@ -162,13 +162,23 @@ export default async function handler(req, res) {
     const result = await sql`
       INSERT INTO giveaway_entries (giveaway_id, twitter_handle, reply_link, wallet_address, tasks_completed, ip_address, user_agent)
       VALUES (${giveaway_id || null}, ${twitter_handle || null}, ${reply_link}, ${wallet_address}, ${normalizedTasks}, ${ipAddress}, ${userAgent})
-      RETURNING id
+      RETURNING id, giveaway_id, reply_link, wallet_address, created_at
+    `;
+
+    // Verify insert and surface DB info for debugging
+    const verify = await sql`
+      SELECT COUNT(*)::int AS total FROM giveaway_entries
+    `;
+    const dbInfo = await sql`
+      SELECT current_database() AS db, current_schema() AS schema
     `;
 
     return res.status(200).json({
       success: true,
       message: 'Entry submitted successfully',
-      entryId: result[0].id
+      entry: result[0],
+      totalEntries: verify[0]?.total || 0,
+      db: dbInfo[0] || null
     });
 
   } catch (error) {

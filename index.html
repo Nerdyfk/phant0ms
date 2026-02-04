@@ -685,26 +685,26 @@ function openGiveawayForm(giveawayId) {
   fetch(`/api/giveaway/tasks?giveaway_id=${giveawayId}`)
     .then(r => r.json())
     .then(data => {
-      let tasksHtml = '<div style="margin:12px 0"><label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Complete Tasks</label>';
-      
-      if (data.success && data.tasks && data.tasks.length > 0) {
-        data.tasks.forEach(task => {
-          const required = task.is_required ? ' <span style="color:#ff4d4d">★ Required</span>' : ' <span style="color:#9fb2ff;font-size:11px">(Optional)</span>';
-          tasksHtml += `
-            <label style="display:flex;align-items:center;margin:8px 0;cursor:pointer">
-              <input type="checkbox" class="task-check-${giveawayId}" value="${task.id}" style="width:auto;margin-right:8px">
-              <span>${task.label}${required}</span>
-            </label>
-          `;
-        });
-      } else {
-        tasksHtml += '<p style="color:#9fb2ff;font-size:13px">No tasks for this giveaway</p>';
-      }
-      tasksHtml += '</div>';
+      let tasksLinksHtml = '';
+      const links = (data.success && data.tasks && data.tasks.length > 0)
+        ? data.tasks.map(task => {
+            const required = task.is_required ? ' <span style="color:#ff4d4d">★ Required</span>' : ' <span style="color:#9fb2ff;font-size:11px">(Optional)</span>';
+            const link = task.url ? `<a href="${task.url}" target="_blank" rel="noopener" style="color:#7afcff;text-decoration:underline">${task.label}</a>` : `<span>${task.label}</span>`;
+            return `<div style="margin:6px 0">${link}${required}</div>`;
+          }).join('')
+        : '<div style="color:#9fb2ff;font-size:13px">No tasks for this giveaway</div>';
+
+      tasksLinksHtml = `
+        <div style="margin:12px 0;padding:10px;background:rgba(122,252,255,0.08);border:1px solid rgba(122,252,255,0.25);border-radius:8px">
+          <div style="font-weight:600;color:#b7c5ff;margin-bottom:6px">Tasks (Links)</div>
+          ${links}
+        </div>
+      `;
       
       modalBox.innerHTML = `
         <h3 style="margin-top:0;color:#7afcff">${giveaway.title}</h3>
         <p style="color:#9fb2ff">${giveaway.description || ''}</p>
+        ${tasksLinksHtml}
         
         <div style="margin-bottom:16px">
           <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Twitter Handle (Optional)</label>
@@ -720,8 +720,6 @@ function openGiveawayForm(giveawayId) {
           <label style="display:block;margin-bottom:8px;font-weight:600;color:#b7c5ff">Wallet Address</label>
           <input id="modal-wallet" placeholder="0x..." style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box" required>
         </div>
-        
-        ${tasksHtml}
         
         <div id="modal-error" style="color:#ff9b9b;margin-bottom:12px;display:none"></div>
         
@@ -753,9 +751,6 @@ async function submitGiveawayEntry(giveawayId) {
     return;
   }
   
-  const taskChecks = document.querySelectorAll(`.task-check-${giveawayId}:checked`);
-  const completedTasks = Array.from(taskChecks).map(c => parseInt(c.value));
-  
   try {
     const response = await fetch('/api/giveaway/submit', {
       method: 'POST',
@@ -765,7 +760,7 @@ async function submitGiveawayEntry(giveawayId) {
         twitter_handle: twitter || null,
         reply_link: replyLink,
         wallet_address: wallet,
-        tasks_completed: completedTasks
+        tasks_completed: []
       })
     });
     
