@@ -687,8 +687,17 @@ async function deleteGiveaway(giveawayId) {
   console.log('deleteGiveaway called with ID:', giveawayId, 'Type:', typeof giveawayId);
   console.log('authToken exists:', !!authToken);
   
-  if (!confirm('Delete this giveaway?')) {
-    console.log('Delete canceled by user');
+  try {
+    const confirmed = confirm('Delete this giveaway?');
+    console.log('Confirmation result:', confirmed);
+    
+    if (!confirmed) {
+      console.log('Delete canceled by user');
+      return;
+    }
+  } catch (confirmError) {
+    console.error('Error in confirm dialog:', confirmError);
+    alert('Error: ' + confirmError.message);
     return;
   }
   
