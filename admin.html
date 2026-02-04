@@ -660,6 +660,7 @@ async function refreshGiveaways() {
 }
 
 async function deleteGiveaway(giveawayId) {
+  console.log('deleteGiveaway called with ID:', giveawayId);
   if (!confirm('Delete this giveaway?')) return;
   
   try {
@@ -689,11 +690,14 @@ async function deleteGiveaway(giveawayId) {
 }
 
 function editGiveaway(giveawayId) {
+  console.log('editGiveaway called with ID:', giveawayId);
   const giveaway = giveaways.find(g => g.id === giveawayId);
   if (!giveaway) {
+    console.error('Giveaway not found with ID:', giveawayId);
     alert('Giveaway not found');
     return;
   }
+  console.log('Found giveaway:', giveaway);
   
   // Populate form fields
   document.getElementById('giveawayTitle').value = giveaway.title;
