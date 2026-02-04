@@ -663,7 +663,7 @@ async function deleteGiveaway(giveawayId) {
   if (!confirm('Delete this giveaway?')) return;
   
   try {
-    const response = await fetch(`/api/giveaway/giveaways?id=${giveawayId}`, {
+    const response = await fetch(`/api/giveaway/giveaways`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -781,13 +781,13 @@ async function addTask() {
   const isRequired = document.getElementById('newTaskRequired').checked;
   const giveawayId = document.getElementById('giveawayTaskSelect').value;
 
-  if (!name) {
-    alert('Enter task name');
+  if (!giveawayId) {
+    alert('Select a giveaway first');
     return;
   }
 
-  if (!giveawayId) {
-    alert('Select a giveaway first');
+  if (!name) {
+    alert('Enter task name');
     return;
   }
 
@@ -807,7 +807,8 @@ async function addTask() {
     });
     
     const data = await response.json();
-    if (response.ok && data.success) {
+    if (data.success) {
+      alert('Task added successfully!');
       refreshTasks();
       document.getElementById('newTaskInput').value = '';
       document.getElementById('newTaskLink').value = '';
@@ -816,6 +817,7 @@ async function addTask() {
       alert('Authentication failed. Please log in again.');
     } else {
       alert('Failed to add task: ' + (data.message || data.error || 'Unknown error'));
+      console.error('Task add response:', data);
     }
   } catch (e) {
     alert('Error adding task: ' + e.message);
@@ -827,7 +829,7 @@ async function removeTask(taskId) {
   if (!confirm('Delete this task?')) return;
   
   try {
-    const response = await fetch(`/api/giveaway/tasks?id=${taskId}`, {
+    const response = await fetch(`/api/giveaway/tasks`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -1026,7 +1028,7 @@ async function editGiveawayDesc(giveawayId) {
   if (newDesc === null) return;
   
   try {
-    const response = await fetch(`/api/giveaway/giveaways?id=${giveawayId}`, {
+    const response = await fetch(`/api/giveaway/giveaways`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -1111,14 +1113,15 @@ async function endGiveaway() {
     
     const data = await response.json();
     if (data.success) {
-      refreshGiveaways();
-      updateSelectedGiveawayDisplay();
+      await refreshGiveaways();
+      setTimeout(() => updateSelectedGiveawayDisplay(), 100);
       alert('Giveaway ended!');
     } else {
       alert('Failed: ' + (data.message || 'Unknown error'));
     }
   } catch (e) {
-    alert('Error ending giveaway');
+    alert('Error ending giveaway: ' + e.message);
+    console.error(e);
   }
 }
 
