@@ -871,7 +871,7 @@ async function addTask() {
         'Authorization': 'Bearer ' + authToken
       },
       body: JSON.stringify({
-        giveaway_id: parseInt(giveawayId),
+        giveaway_id: giveawayId,
         label: name,
         url: link || null,
         is_required: isRequired
@@ -1152,7 +1152,7 @@ async function startGiveaway() {
         'Authorization': 'Bearer ' + authToken
       },
       body: JSON.stringify({
-        id: parseInt(giveawayId),
+        id: giveawayId,
         action: 'start'
       })
     });
@@ -1187,7 +1187,7 @@ async function endGiveaway() {
         'Authorization': 'Bearer ' + authToken
       },
       body: JSON.stringify({
-        id: parseInt(giveawayId),
+        id: giveawayId,
         action: 'end'
       })
     });
@@ -1235,7 +1235,7 @@ async function drawWinners() {
         'Authorization': 'Bearer ' + authToken
       },
       body: JSON.stringify({ 
-        giveaway_id: parseInt(giveawayId),
+        giveaway_id: giveawayId,
         count: giveaway.winner_count || 1
       })
     });

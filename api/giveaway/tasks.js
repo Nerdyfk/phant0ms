@@ -39,13 +39,25 @@ export default async function handler(req, res) {
       let tasks;
       if (giveaway_id) {
         // giveaway_id could be a UUID string or integer
-        const id = isNaN(giveaway_id) ? giveaway_id : parseInt(giveaway_id);
-        tasks = await sql`
-          SELECT id, giveaway_id, label, url, is_required, sort_order, created_at
-          FROM giveaway_tasks
-          WHERE is_active = true AND giveaway_id = ${id}
-          ORDER BY sort_order ASC, created_at ASC
-        `;
+        let id = giveaway_id;
+        
+        // Try to parse as integer if it looks like a number
+        if (!isNaN(giveaway_id) && giveaway_id.indexOf('-') === -1) {
+          id = parseInt(giveaway_id);
+        }
+        
+        try {
+          tasks = await sql`
+            SELECT id, giveaway_id, label, url, is_required, sort_order, created_at
+            FROM giveaway_tasks
+            WHERE is_active = true AND giveaway_id = ${id}
+            ORDER BY sort_order ASC, created_at ASC
+          `;
+        } catch (queryError) {
+          // If the query fails, giveaway_id might not exist or be invalid
+          console.error('Task query error:', queryError.message);
+          tasks = [];
+        }
       } else {
         tasks = await sql`
           SELECT id, giveaway_id, label, url, is_required, sort_order, created_at
@@ -94,21 +106,23 @@ export default async function handler(req, res) {
 
       // Validate giveaway_id if provided
       if (giveaway_id) {
-        const giveaway_id_num = parseInt(giveaway_id);
-        if (isNaN(giveaway_id_num)) {
-          return res.status(400).json({ success: false, message: 'Invalid giveaway_id' });
+        let giveaway_id_parsed = giveaway_id;
+        
+        // Try to parse as integer if it looks like a number
+        if (!isNaN(giveaway_id) && giveaway_id.toString().indexOf('-') === -1) {
+          giveaway_id_parsed = parseInt(giveaway_id);
         }
         
         // Check if giveaway exists
         const giveawayExists = await sql`
-          SELECT id FROM giveaways WHERE id = ${giveaway_id_num} AND is_active = true
+          SELECT id FROM giveaways WHERE id = ${giveaway_id_parsed} AND is_active = true
         `;
         
         if (!giveawayExists || giveawayExists.length === 0) {
           return res.status(400).json({ success: false, message: 'Giveaway not found' });
         }
         
-        giveaway_id = giveaway_id_num;
+        giveaway_id = giveaway_id_parsed;
       } else {
         giveaway_id = null;
       }
