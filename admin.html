@@ -1042,6 +1042,20 @@ async function refreshSubmissions() {
     });
   }
   
+  // Also ensure Actions dropdown has giveaways
+  const actionsSelect = document.getElementById('actionsGiveawaySelect');
+  if (actionsSelect && giveaways.length > 0 && actionsSelect.options.length === 1) {
+    giveaways.forEach(g => {
+      const exists = Array.from(actionsSelect.options).some(opt => opt.value === g.id);
+      if (!exists) {
+        const option = document.createElement('option');
+        option.value = g.id;
+        option.textContent = `${g.title} (${g.status})`;
+        actionsSelect.appendChild(option);
+      }
+    });
+  }
+  
   // If no giveaway selected, show message
   if (!selectedGiveaway) {
     list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#FFD36A;font-weight:600;padding:20px">👆 Select a giveaway from the filter above to view and select winners</p></div>';
