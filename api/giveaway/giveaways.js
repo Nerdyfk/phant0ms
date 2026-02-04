@@ -145,11 +145,23 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, message: 'Giveaway id is required' });
       }
 
-      await sql`
-        UPDATE giveaways 
-        SET description = ${description}, updated_at = NOW()
-        WHERE id = ${id}
-      `;
+      try {
+        await sql`
+          UPDATE giveaways 
+          SET description = ${description}, updated_at = NOW()
+          WHERE id = ${id}
+        `;
+      } catch (updateError) {
+        if (updateError.message?.includes('updated_at')) {
+          await sql`
+            UPDATE giveaways 
+            SET description = ${description}
+            WHERE id = ${id}
+          `;
+        } else {
+          throw updateError;
+        }
+      }
 
       return res.status(200).json({
         success: true,
@@ -157,7 +169,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error('Update giveaway error:', error);
-      return res.status(500).json({ success: false, message: 'Server error' });
+      return res.status(500).json({ success: false, message: error.message || 'Server error' });
     }
   }
 
@@ -187,11 +199,22 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, message: 'Giveaway id is required' });
       }
 
-      await sql`
-        UPDATE giveaways 
-        SET is_active = false 
-        WHERE id = ${id}
-      `;
+      try {
+        await sql`
+          UPDATE giveaways 
+          SET is_active = false 
+          WHERE id = ${id}
+        `;
+      } catch (deleteError) {
+        if (deleteError.message?.includes('is_active')) {
+          await sql`
+            DELETE FROM giveaways
+            WHERE id = ${id}
+          `;
+        } else {
+          throw deleteError;
+        }
+      }
 
       return res.status(200).json({
         success: true,
@@ -199,7 +222,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error('Delete giveaway error:', error);
-      return res.status(500).json({ success: false, message: 'Server error' });
+      return res.status(500).json({ success: false, message: error.message || 'Server error' });
     }
   }
 

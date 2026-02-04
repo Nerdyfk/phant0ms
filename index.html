@@ -539,7 +539,11 @@ function filterGiveaway(status) {
     endedBtn.setAttribute('aria-pressed', status === 'ended');
   }
   try {
-    renderGiveaways();
+    if (!currentGiveaways || currentGiveaways.length === 0) {
+      loadGiveaways();
+    } else {
+      renderGiveaways();
+    }
   } catch (e) {
     console.error('Render giveaways error:', e);
   }
