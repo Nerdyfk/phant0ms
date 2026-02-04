@@ -1010,11 +1010,22 @@ async function refreshSubmissions() {
       }
     });
     const data = await response.json();
+
+    if (!response.ok) {
+      const message = data?.message || data?.error || `Request failed (${response.status})`;
+      list.innerHTML = `<div class="list-item"><p style="text-align:center;color:#ff9b9b">${message}</p></div>`;
+      console.error('Entries API error:', data);
+      return;
+    }
     
     list.innerHTML = '';
     
     if (data.success && data.entries.length > 0) {
       countEl.textContent = data.entries.length;
+
+      if (data.totalEntries !== undefined) {
+        console.log('Entries total:', data.totalEntries, 'DB:', data.db);
+      }
       
       data.entries.forEach(entry => {
         const div = document.createElement('div');
@@ -1030,9 +1041,13 @@ async function refreshSubmissions() {
         `;
         list.appendChild(div);
       });
-    } else {
+    } else if (data.success) {
       countEl.textContent = '0';
       list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#9fb2ff">No entries yet</p></div>';
+    } else {
+      const message = data?.message || data?.error || 'Failed to load entries';
+      list.innerHTML = `<div class="list-item"><p style="text-align:center;color:#ff9b9b">${message}</p></div>`;
+      console.error('Entries API response:', data);
     }
   } catch (e) {
     list.innerHTML = '<div class="list-item"><p style="text-align:center;color:#ff9b9b">Error loading entries</p></div>';
