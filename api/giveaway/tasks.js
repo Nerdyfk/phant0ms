@@ -5,20 +5,42 @@ export default async function handler(req, res) {
   const sql = getDb();
 
   async function ensureTasksTable() {
-    await sql`
-      CREATE TABLE IF NOT EXISTS giveaway_tasks (
-        id SERIAL PRIMARY KEY,
-        giveaway_id INT REFERENCES giveaways(id),
-        label VARCHAR(255) NOT NULL,
-        url TEXT,
-        is_required BOOLEAN DEFAULT FALSE,
-        sort_order INT DEFAULT 0,
-        created_at TIMESTAMP DEFAULT NOW(),
-        is_active BOOLEAN DEFAULT TRUE
-      )
-    `;
-    await sql`CREATE INDEX IF NOT EXISTS idx_tasks_active ON giveaway_tasks(is_active)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_tasks_giveaway ON giveaway_tasks(giveaway_id)`;
+    try {
+      await sql`
+        CREATE TABLE IF NOT EXISTS giveaway_tasks (
+          id SERIAL PRIMARY KEY,
+          giveaway_id TEXT REFERENCES giveaways(id),
+          label VARCHAR(255) NOT NULL,
+          url TEXT,
+          is_required BOOLEAN DEFAULT FALSE,
+          sort_order INT DEFAULT 0,
+          created_at TIMESTAMP DEFAULT NOW(),
+          is_active BOOLEAN DEFAULT TRUE
+        )
+      `;
+    } catch (createError) {
+      // Table might already exist, try altering to fix column type if needed
+      try {
+        await sql`
+          ALTER TABLE giveaway_tasks 
+          ALTER COLUMN giveaway_id TYPE TEXT USING giveaway_id::TEXT
+        `;
+      } catch (alterError) {
+        console.log('Could not alter column:', alterError.message);
+      }
+    }
+    
+    try {
+      await sql`CREATE INDEX IF NOT EXISTS idx_tasks_active ON giveaway_tasks(is_active)`;
+    } catch (e) {
+      // Index might already exist
+    }
+    
+    try {
+      await sql`CREATE INDEX IF NOT EXISTS idx_tasks_giveaway ON giveaway_tasks(giveaway_id)`;
+    } catch (e) {
+      // Index might already exist
+    }
   }
 
   let parsedBody = req.body;
@@ -38,13 +60,8 @@ export default async function handler(req, res) {
       
       let tasks;
       if (giveaway_id) {
-        // giveaway_id could be a UUID string or integer
-        let id = giveaway_id;
-        
-        // Try to parse as integer if it looks like a number
-        if (!isNaN(giveaway_id) && giveaway_id.indexOf('-') === -1) {
-          id = parseInt(giveaway_id);
-        }
+        // giveaway_id is stored as TEXT, so convert to string
+        let id = giveaway_id.toString();
         
         try {
           tasks = await sql`
@@ -108,10 +125,8 @@ export default async function handler(req, res) {
       if (giveaway_id) {
         let giveaway_id_parsed = giveaway_id;
         
-        // Try to parse as integer if it looks like a number
-        if (!isNaN(giveaway_id) && giveaway_id.toString().indexOf('-') === -1) {
-          giveaway_id_parsed = parseInt(giveaway_id);
-        }
+        // Convert to string to match TEXT column type
+        giveaway_id_parsed = giveaway_id.toString();
         
         // Check if giveaway exists
         const giveawayExists = await sql`
